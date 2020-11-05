@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Venda Favorita</string>
+    <string name="facebook_app_id">338207750717203</string>
+    <string name="fb_login_protocol_scheme">fb338207750717203</string>
+
+    <string name="facebook_application_id" translatable="false">338207750717203</string>
+
+    <array name="categorias">
+        <item>Combos</item>
+        <item>SmartWatchs</item>
+        <item>Caixas De Som</item>
+        <item>Eletronicos</item>
+        <item>Salão e Barbearia</item>
+        <item>Automotivos</item>
+        <item>Videgame</item>
+        <item>Computador</item>
+        <item>Ferramentas</item>
+        <item>Brinquedos</item>
+        <item>Relogios</item>
+        <item>Headset e Fones</item>
+        <item>Relogios</item>
+        <item>Cameras</item>
+        <item>Oculos</item>
+        <item>Celulares</item>
+        <item>Capinhas</item>
+        <item>Piscinas</item>
+        <item>Microfones</item>
+        <item>Petshop</item>
+        <item>Tv e acessorios</item>
+        <item>Cabos</item>
+    </array>
+
+    <string name="title_activity_login_main">LoginMainActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>

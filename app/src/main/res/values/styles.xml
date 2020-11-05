@@ -1,0 +1,102 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryLight</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionMenuTextColor">@color/colorPrimaryLight</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryLight</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+    <style name="Pb" parent="AppTheme.NoActionBar">
+        <item name="colorAccent">#000</item>
+    </style>
+
+    <style name="MapaCar" parent="AppTheme">
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#fff</item>
+        <item name="colorPrimaryDark">#fff</item>
+    </style>
+
+    <style name="PbBranco" parent="Pb">
+        <item name="colorAccent">#fff</item>
+    </style>
+
+    <style name="MeuCollapseTolbar" parent="AppTheme.NoActionBar">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryLight</item>
+        <item name="colorPrimary">@color/colorPrimaryLight</item>
+    </style>
+
+    <style name="MeuTemaDark" parent="AppTheme">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorSecondaryDark</item>
+        <item name="colorPrimary">@color/colorSecondaryDark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    </style>
+
+    <style name="MeuEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="hintTextColor">@color/colorSecondary</item>
+        <item name="boxStrokeColor">@color/colorSecondaryLight</item>
+        <item name="helperTextTextColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MeuEditTextBrancoNovo" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="hintTextColor">@color/colorPrimaryLight</item>
+        <item name="boxStrokeColor">@color/colorPrimaryLight</item>
+        <item name="helperTextTextColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="MeuEditTextBranco" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="hintTextColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="helperTextTextColor">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppCompatAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorSecondaryDark</item>
+        <item name="android:textColorPrimary">@color/colorSecondaryDark</item>
+        <item name="android:background">#fff</item>
+        <item name="android:textColor">@color/colorSecondaryDark</item>
+    </style>
+
+
+    <style name="MeuCbBranco">
+        <item name="android:checkBoxPreferenceStyle">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <!--<style name="AppTheme.NoActionBar2" parent="Theme.MaterialComponents.Light.DarkActionBar">-->
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="windowNoTitle">true</item>-->
+    <!--<item name="android:windowFullscreen">false</item>-->
+    <!--<item name="android:windowContentOverlay">@null</item>-->
+    <!--<item name="android:fitsSystemWindows">false</item>-->
+    <!--</style>-->
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+</resources>

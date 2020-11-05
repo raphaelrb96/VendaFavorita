@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="6dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        app:cardCornerRadius="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+                <View
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_access_time_black_24dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <TextView
+                    android:id="@+id/hora_revenda"
+                    android:text="21/01/19     09:45"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <View
+                android:background="@color/back_rv"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginRight="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="top"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/nome_cliente_revenda"
+                        android:textColor="@color/colorSecondary"
+                        android:text="Nome cliente"
+                        android:textSize="18sp"
+                        android:lines="1"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/numero_cliente_revenda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="2dp"
+                        android:lines="1"
+                        android:text="Numero cliente"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/endereco_cliente_revenda"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/colorSecondary"
+                        android:text="Endereço cliente"
+                        android:textSize="16sp"
+                        android:lines="2"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="Comissão"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/comissao_revendedor_revenda"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="end|center_vertical"
+                    android:text="R$ 10,00"
+                    android:textSize="18sp"
+                    android:gravity="end"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="Total da venda"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/total_revenda"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="end|center_vertical"
+                    android:text="R$ 110,00"
+                    android:textSize="18sp"
+                    android:gravity="end"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_produtos_revenda"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/status_revender"
+                android:textStyle="italic"
+                android:textSize="22sp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Solicitada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

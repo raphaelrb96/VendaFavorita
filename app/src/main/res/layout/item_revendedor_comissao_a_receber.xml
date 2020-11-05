@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="180dp"
+    android:layout_height="100dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="match_parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="top|center"
+                    app:cardCornerRadius="17dp"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp">
+                    <ImageView
+                        android:id="@+id/img_user_comissoes"
+                        android:adjustViewBounds="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.cardview.widget.CardView>
+            </FrameLayout>
+            <LinearLayout
+                android:gravity="center|top"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_nome_revededor_comissoes"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:layout_marginLeft="5dp"
+                    android:text="Raphael almeida ribeiro"
+                    android:textSize="13sp"
+                    android:lines="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:gravity="center|start"
+                    android:id="@+id/tv_revendedor_comissao"
+                    android:textStyle="bold"
+                    android:text="R$ 30,00"
+                    android:textSize="13sp"
+                    android:lines="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/bt_telefone_revendedor_comissoes"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <View
+                    android:background="@drawable/ic_phone_black_30dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+                <TextView
+                    android:id="@+id/tv_numero_revendedor_comissoes"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="991933525"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

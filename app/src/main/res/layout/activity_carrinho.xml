@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--Fundo-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:alpha="0.1"
+                android:background="#000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <FrameLayout
+                android:alpha="0.3"
+                android:background="#000"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"/>
+            <androidx.cardview.widget.CardView
+                android:alpha="0.7"
+                map:cardCornerRadius="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_gravity="top|center"
+                map:icon="@drawable/ic_my_location_black_24dp"
+                map:iconSize="18dp"
+                android:textColor="@color/colorPrimary"
+                map:iconTint="@color/colorPrimary"
+                map:backgroundTint="@color/colorSecondaryLight"
+                android:padding="0dp"
+                android:textSize="12sp"
+                android:id="@+id/efab_current_place"
+                android:text="Localização Atual"
+                android:layout_marginTop="96dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
+            <ProgressBar
+                android:theme="@style/Pb"
+                android:id="@+id/pb_cart"
+                android:layout_marginTop="150dp"
+                android:layout_gravity="center|top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@+id/container_help"
+                android:padding="12dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/backgroud_endereco"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:layout_marginBottom="155dp">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="32dp">
+                            <TextView
+                                android:textStyle="bold"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:textSize="20sp"
+                                android:text="Endereço"
+                                android:layout_marginBottom="4dp"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content" />
+                            <View
+                                android:id="@+id/close_help"
+                                android:background="@drawable/ic_close_black_24dp"
+                                android:layout_gravity="end"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"/>
+                        </LinearLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/text_input_numero_casa"
+                            map:helperTextEnabled="true"
+                            map:helperText="Da casa ou imovel"
+                            app:boxCornerRadiusBottomEnd="5dp"
+                            app:boxCornerRadiusBottomStart="5dp"
+                            app:boxCornerRadiusTopEnd="5dp"
+                            app:boxCornerRadiusTopStart="5dp"
+                            style="@style/MeuEditText"
+                            map:helperTextTextColor="@color/colorSecondaryLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Número">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:imeOptions="actionDone"
+                                android:inputType="numberDecimal"
+                                android:id="@+id/et_numero_casa"
+                                android:lines="1"
+                                android:textCursorDrawable="@drawable/curso_text_input"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            map:helperTextTextColor="@color/colorSecondaryLight"
+                            android:layout_marginTop="6dp"
+                            android:id="@+id/text_input_complemento"
+                            map:helperTextEnabled="true"
+                            map:helperText="Informações que ajudam na entrega"
+                            app:boxCornerRadiusBottomEnd="5dp"
+                            app:boxCornerRadiusBottomStart="5dp"
+                            app:boxCornerRadiusTopEnd="5dp"
+                            app:boxCornerRadiusTopStart="5dp"
+                            style="@style/MeuEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Complemento">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:id="@+id/et_complemento"
+                                android:lines="1"
+                                android:textCursorDrawable="@drawable/curso_text_input"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                        <!--<TextView-->
+                            <!--android:text="Insira o nome da sua rua e o numero da sua casa, separados por uma virgula"-->
+                            <!--android:textSize="16sp"-->
+                            <!--android:textColor="@color/colorSecondary"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_marginBottom="6dp"-->
+                            <!--android:layout_height="wrap_content" />-->
+                        <!--<TextView-->
+                            <!--android:text="Exemplo:"-->
+                            <!--android:textSize="14sp"-->
+                            <!--android:textColor="@color/colorSecondaryLight"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content" />-->
+                        <!--<TextView-->
+                            <!--android:id="@+id/tv_exemplo_help"-->
+                            <!--android:text="Rua x, 10"-->
+                            <!--android:textSize="16sp"-->
+                            <!--android:textColor="@color/colorSecondaryLight"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content" />-->
+                        <TextView
+                            android:text="OBS: Sua rua pode ser reconhecida pelo nome antigo"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:textStyle="bold|italic"
+                            android:textColor="@color/colorSecondaryDark"
+                            android:textSize="14sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <Button
+                        android:visibility="gone"
+                        android:onClick="verProximidades"
+                        android:text="Sugestões"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:background="@color/fab1"
+                        android:layout_marginBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:minWidth="180dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </FrameLayout>
+        <!--Frente-->
+        <LinearLayout
+            android:clickable="true"
+            android:background="@drawable/ic_list_header_background"
+            android:paddingTop="20dp"
+            android:orientation="vertical"
+            android:id="@+id/content_layout_cart"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:elevation="10dp"
+            app:behavior_peekHeight="144dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            <!--Conteudo-->
+            <LinearLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="18sp"
+                        android:text="Entregar em:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginRight="16dp"
+                        android:id="@+id/bt_mudar_endereco"
+                        android:clickable="true"
+                        android:textStyle="bold|italic"
+                        android:textColor="@color/colorAccent"
+                        android:layout_gravity="top|end"
+                        android:textSize="14sp"
+                        android:text="Detalhes"
+                        android:textAllCaps="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+                <TextView
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_nome_rua_cart"
+                    android:textSize="22sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textColor="@color/colorSecondaryLight"/>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="2dp"
+                android:layout_height="26dp">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:text="Minhas compras:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginBottom="6dp"
+                android:id="@+id/rv_cart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+            <LinearLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="10sp"
+                        android:text="Taxa de entrega:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.robinhood.ticker.TickerView
+                        android:layout_marginTop="2dp"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        app:ticker_animationDuration="1500"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/taxa_entrega"
+                        android:textColor="@color/colorSecondaryLight"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="10sp"
+                        android:text="Valor das Compras:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <com.robinhood.ticker.TickerView
+                        android:id="@+id/total_compras"
+                        android:layout_marginTop="2dp"
+                        android:maxLines="1"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ticker_animationDuration="1500"
+                        android:textColor="@color/colorSecondaryLight"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bt_app_bar_cart"
+            style="@style/Widget.MaterialComponents.BottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabAlignmentMode="end"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="10dp"
+            app:fabCradleVerticalOffset="5dp"
+            app:hideOnScroll="true">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:backgroundTint="@color/colorSecondaryLight"
+                    android:background="@drawable/ic_arrow_back_black_24dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center|start"
+                    android:clickable="true"
+                    android:id="@+id/bt_voltar_cart"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:gravity="center|start"
+                    android:layout_gravity="center|start"
+                    android:layout_marginRight="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="19sp"
+                    android:text="Total:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.robinhood.ticker.TickerView
+                    android:gravity="center|start"
+                    android:layout_gravity="center|start"
+                    android:id="@+id/total_cart"
+                    android:maxLines="1"
+                    android:textStyle="bold"
+                    app:ticker_animationDuration="1500"
+                    android:textSize="23sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorSecondaryLight"/>
+            </LinearLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:layout_anchor="@id/bt_app_bar_cart"
+            android:id="@+id/fab_carrinho"
+            map:backgroundTint="@color/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_money_white_24dp"
+
+            app:fabSize="normal"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

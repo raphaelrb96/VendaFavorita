@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdmActivity">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="18dp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/red"
+                android:textSize="30sp"
+                android:text="VendaFavorita"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:visibility="gone"
+                android:text="Aguarde..."
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="18sp"
+                android:id="@+id/tv_drogaria_aberta_fechada"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:visibility="gone"
+                android:id="@+id/efab_abrir_fechar"
+                app:backgroundTint="@color/red"
+                android:textColor="#fff"
+                android:layout_gravity="center"
+                android:text="Abrir/Fechar"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verProdutos"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_produtos"
+                            android:backgroundTint="@color/red"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Produtos"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verMensagens"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_mensagem"
+                            android:layout_width="70dp"
+                            android:backgroundTint="@color/red"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Menssagens"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verVendas"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_vendas"
+                            android:layout_width="70dp"
+                            android:backgroundTint="@color/red"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Vendas"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verRevendas"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_revend"
+                            android:layout_width="70dp"
+                            android:backgroundTint="@color/red"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Revendas"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verClientes"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_clientes"
+                            android:backgroundTint="@color/red"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Clientes"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verAnalytics"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_analytics"
+                            android:layout_width="70dp"
+                            android:backgroundTint="@color/red"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Analytics"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="verFaltas"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_cupom"
+                            android:backgroundTint="@color/red"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Lista de Faltas"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:onClick="solicitacoesRevendedores"
+                    android:background="@color/colorPrimary"
+                    android:clickable="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="140dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:backgroundTint="@color/red"
+                            android:layout_gravity="center"
+                            android:background="@drawable/adm_solicitacao"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp" />
+                        <TextView
+                            android:gravity="center"
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="Solicitações Revendedores"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</FrameLayout>

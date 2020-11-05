@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CartActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:theme="@style/Pb"
+                android:id="@+id/pb_cart_main"
+                android:layout_marginTop="19dp"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="center|top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_marginBottom="14dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.robinhood.ticker.TickerView
+                    android:textColor="@color/colorSecondaryDark"
+                    app:ticker_animationDuration="1500"
+                    android:id="@+id/itens_cart"
+                    android:text="3"
+                    android:textSize="22sp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="itens"
+                    android:textSize="22sp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_economia_cart"
+                    android:textStyle="italic"
+                    android:text="Você vai economizar:"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+                <com.robinhood.ticker.TickerView
+                    android:id="@+id/economia_cert"
+                    android:maxLines="1"
+                    android:textStyle="italic"
+                    app:ticker_animationDuration="1500"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorSecondaryDark"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:id="@+id/rv_cart_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:text="Entrega Grátis"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:layout_marginTop="12dp"
+                android:text="Você recebe sua encomenda em poucas horas, sem precisar se preocupar com taxas extras"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:text="Pagamento Seguro"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:layout_marginTop="12dp"
+                android:text="Pague do jeito que achar melhor: dinheiro, débito ou crédito. E pague apenas quando ja tiver com a encomenda na mão"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:text="Qualidade Garantida"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:layout_marginBottom="6dp"
+                android:text="Produtos testados e qualificados por outros compradores"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <FrameLayout
+                android:layout_width="1dp"
+                android:layout_height="80dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/volar_cart_main"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorSecondaryLight"
+            android:text="Meu Carrinho"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.robinhood.ticker.TickerView
+                android:id="@+id/total_cart"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                app:ticker_animationDuration="1500"
+                android:textSize="28sp"
+                android:layout_gravity="center|end"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryLight"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/efab_cart_main"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center"
+        android:elevation="12dp"
+        android:background="@color/red"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <FrameLayout
+            android:backgroundTint="#fff"
+            android:background="@drawable/ic_check_black_100dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+        <FrameLayout
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:textAllCaps="true"
+            android:text="Comprar Agora !"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:background="@color/verdeDark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:textAllCaps="false"
+            android:textSize="50sp"
+            android:paddingTop="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="26dp"
+            android:textStyle="bold|italic"
+            android:layout_marginRight="26dp"
+            android:textColor="@color/colorPrimaryLight"
+            android:text="AmaCompras"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+        <TextView
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Produtos Populares e Variedades"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="start|center"
+                android:background="@drawable/local_pick"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:gravity="center|start"
+                android:text="Loja online em MANAUS"
+                android:layout_marginLeft="6dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_gravity="center|start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="26dp"
+                android:textSize="20sp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:textColor="@color/colorSecondaryDark"
+                android:text="Entrar com"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+            <ProgressBar
+                android:visibility="invisible"
+                android:id="@+id/pb_login_main"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_marginTop="22dp"
+                android:gravity="center"
+                android:id="@+id/face_login_main"
+                app:elevation="12dp"
+                app:iconTint="@color/red"
+                android:textColor="@color/red"
+                app:icon="@drawable/myface"
+                android:textSize="20sp"
+                app:iconSize="30dp"
+                android:text="Facebook"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                app:elevation="10dp"
+                app:iconTint="@color/red"
+                android:textColor="@color/red"
+                android:id="@+id/google_login_main"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                app:icon="@drawable/mygooglw"
+                android:textSize="20sp"
+                app:iconSize="30dp"
+                android:text="Google"
+                android:minWidth="140dp"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:padding="10dp"
+                android:textColor="@color/colorSecondaryLight"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="italic"
+                android:textSize="16sp"
+                android:text="Faça o Login para sua segurança e melhor experiencia no aplicativo."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <View
+                        android:backgroundTint="#fff"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/icon2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+                    <TextView
+                        android:textColor="#fff"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="Econômico"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <View
+                        android:backgroundTint="#fff"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/icon1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+                    <TextView
+                        android:textColor="#fff"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="Seguro"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <View
+                        android:backgroundTint="#fff"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/icon3"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
+                    <TextView
+                        android:textColor="#fff"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="Fácil e rápido"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

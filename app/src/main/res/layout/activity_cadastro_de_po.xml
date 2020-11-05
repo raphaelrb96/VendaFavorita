@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/coordinator_cadastro_prod"
+    tools:context=".CadastroDeProdutoActivity">
+
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/volar_cadastro_de_produtos"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorSecondaryLight"
+            android:text="Cadastro"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.robinhood.ticker.TickerView
+                android:id="@+id/total_cart"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                app:ticker_animationDuration="1500"
+                android:textSize="28sp"
+                android:layout_gravity="center|end"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryLight"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/scroll_cadastro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:padding="12dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginBottom="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:text="Fotos:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/rv_fotos_cadastro"
+                android:layout_height="300dp" />
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:text="Dados Principais:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_cadastro_de_produto_nome"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:counterMaxLength="50"
+                app:counterEnabled="true"
+                app:counterTextColor="@color/colorAccent"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome do produto">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_cadastro_de_produto_nome"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_cadastro_de_produto_labo"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:counterMaxLength="20"
+                app:counterEnabled="true"
+                app:counterTextColor="@color/colorAccent"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fabricante">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_cadastro_de_produto_labo"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_cadastro_de_produto_descricao"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descrição">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_cadastro_de_produto_descricao"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_cadastro_de_produto_quantidade"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:counterMaxLength="7"
+                app:counterEnabled="true"
+                app:counterTextColor="@color/colorAccent"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quantidade">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_cadastro_de_produto_quantidade"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_cadastro_de_produto_preco_consumidor"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:boxCornerRadiusBottomEnd="5dp"
+                    app:boxCornerRadiusBottomStart="5dp"
+                    app:boxCornerRadiusTopEnd="5dp"
+                    app:boxCornerRadiusTopStart="5dp"
+                    app:helperText="Preço de venda"
+                    style="@style/MeuEditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Preço consumidor">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_cadastro_de_produto_preco_consumidor"
+                        android:inputType="number"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <FrameLayout
+                    android:layout_width="6dp"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_cadastro_de_produto_preco_antigo"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:boxCornerRadiusBottomEnd="5dp"
+                    app:boxCornerRadiusBottomStart="5dp"
+                    app:boxCornerRadiusTopEnd="5dp"
+                    app:boxCornerRadiusTopStart="5dp"
+                    app:helperText="Preço antigo"
+                    style="@style/MeuEditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Preço antigo">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_cadastro_de_produto_preco_antigo"
+                        android:inputType="number"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_cadastro_de_produto_comissao"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                app:counterEnabled="true"
+                app:counterTextColor="@color/colorAccent"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Comissão">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_cadastro_de_produto_comissao"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:text="Cores:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_cadastro_de_produto_cores"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:boxCornerRadiusBottomEnd="5dp"
+                    app:boxCornerRadiusBottomStart="5dp"
+                    app:boxCornerRadiusTopEnd="5dp"
+                    app:boxCornerRadiusTopStart="5dp"
+                    app:helperText="Insira a cor do produto"
+                    style="@style/MeuEditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Insira a cor do produto">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_cadastro_de_produto_cores"
+                        android:lines="1"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/bt_add_cores_cadastro_de_prod"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="10dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_add_circle_outline_black_30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingStart="4dp"
+                android:id="@+id/rv_cores_cadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:text="Palavras chaves:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_cadastro_de_produto_tags"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:boxCornerRadiusBottomEnd="5dp"
+                    app:boxCornerRadiusBottomStart="5dp"
+                    app:boxCornerRadiusTopEnd="5dp"
+                    app:boxCornerRadiusTopStart="5dp"
+                    app:helperText="Palavras-chaves para serem pesquisadas"
+                    style="@style/MeuEditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Palavras chaves para pesquisas">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_cadastro_de_produto_tags"
+                        android:lines="1"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/bt_add_tag_cadastro_de_produto"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="10dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_add_circle_outline_black_30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_tags_cadastro_de_produto"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:id="@+id/bt_limpar_tags_cadastro_de_produto"
+                    android:background="@drawable/ic_delete_primary_secudary_25dp"
+                    android:layout_gravity="center|start"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp" />
+                <HorizontalScrollView
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_gravity="center|start"
+                        android:gravity="center|start"
+                        android:id="@+id/textview_tags_cadastro_de_produto"
+                        android:textStyle="italic|bold"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:text="Categorias:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingStart="4dp"
+                android:id="@+id/rv_categorias_cadastro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/cb_cadastro_de_produto_promocional"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"
+                android:text="Em promoção"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginBottom="12dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Switch
+                    android:id="@+id/switch_disponibilidade_cadastro_de_produto"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tv_switch_disponibilidade_cadastro_de_produto"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_fornecedor"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_gravity="start|bottom"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="22sp"
+                        android:text="Fornecedores:"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:textSize="12sp"
+                        android:id="@+id/bt_add_fornecedor"
+                        android:gravity="center"
+                        android:layout_gravity="end"
+                        android:text="Adicionar"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_cadastro_de_produto_fornecedores"
+                        app:errorEnabled="true"
+                        app:hintEnabled="true"
+                        app:boxCornerRadiusBottomEnd="5dp"
+                        app:boxCornerRadiusBottomStart="5dp"
+                        app:boxCornerRadiusTopEnd="5dp"
+                        app:boxCornerRadiusTopStart="5dp"
+                        style="@style/MeuEditText"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Fornecedor">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_cadastro_de_produto_fornecedores"
+                            android:lines="1"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <FrameLayout
+                        android:layout_width="16dp"
+                        android:layout_height="wrap_content"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_cadastro_de_produto_fornecedores_precos"
+                        app:errorEnabled="true"
+                        app:hintEnabled="true"
+                        app:boxCornerRadiusBottomEnd="5dp"
+                        app:boxCornerRadiusBottomStart="5dp"
+                        app:boxCornerRadiusTopEnd="5dp"
+                        app:boxCornerRadiusTopStart="5dp"
+                        style="@style/MeuEditText"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Preço">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_cadastro_de_produto_fornecedores_precos"
+                            android:lines="1"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/fornecedores_e_precos"
+                    android:textSize="22sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:id="@+id/tela_loading_cadastro_produto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:background="@color/colorSecondaryDark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textSize="26sp"
+                        android:text="Aguarde"
+                        android:textColor="#fff"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ProgressBar
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/bt_cadastro_de_produto_salvar"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                app:icon="@drawable/ic_save_branco_24dp"
+                app:iconTint="#fff"
+                android:textColor="#fff"
+                app:backgroundTint="@color/red"
+                android:text="Salvar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/bt_cadastro_de_produto_excluir"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:icon="@drawable/ic_delete_primary_secudary_25dp"
+                app:iconTint="#fff"
+                android:textColor="#fff"
+                app:backgroundTint="@color/red"
+                android:text="Excluir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

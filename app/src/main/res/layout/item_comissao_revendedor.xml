@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="8dp"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:orientation="vertical"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:padding="4dp"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:text="R$"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/valor_comissao"
+            android:textStyle="bold"
+            android:textColor="@color/colorSecondaryLight"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="80,00"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:padding="6dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/horario_comissao"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center|start"
+                android:text="Hoje, as 20:20"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <ToggleButton
+                android:id="@+id/status_pagamento_comissao"
+                android:textStyle="bold|italic"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/red"
+                android:textColor="#fff"
+                android:textSize="10sp"
+                android:padding="3dp"
+                android:textOn="Sim"
+                android:textOff="Nao"
+                android:gravity="center|end"
+                android:text="Pagamento concluido"
+                android:layout_width="45dp"
+                android:layout_height="22dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/descricao_comissao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:paddingRight="6dp"
+            android:text="Resultado de uma venda minha para a cliente x, de um smartband M4"
+            android:textSize="18sp" />
+        <View
+            android:alpha="0.2"
+            android:background="@color/colorSecondaryLight"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </LinearLayout>
+</LinearLayout>

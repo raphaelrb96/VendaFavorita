@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListaRevendaActivity">
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/voltar_lista_revendas"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorSecondaryLight"
+            android:text="Total: "
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <com.robinhood.ticker.TickerView
+                android:id="@+id/total_venda_lista_revenda"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                app:ticker_animationDuration="1500"
+                android:textSize="28sp"
+                android:layout_gravity="center|end"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondaryLight"/>
+        </FrameLayout>
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title_rv_minhas_ultimas_revendas"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:gravity="center|start"
+                android:layout_gravity=""
+                android:text="Produtos à Venda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <androidx.recyclerview.widget.RecyclerView
+                tools:listitem="@layout/item_lista_revanda"
+                tools:itemCount="1"
+                android:id="@+id/rv_lista_revenda"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_gravity="end"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="#000"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="8dp"
+                    android:textSize="18sp"
+                    android:gravity="bottom|end"
+                    android:text="Comissão pela venda :"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/total_lista_revenda"
+                    android:textColor="#000"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="18dp"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:gravity="center|start"
+                    android:text="25,00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="30dp"
+                android:text="Formas de Pagamento:"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="28sp"
+                android:gravity="center|top"
+                android:layout_gravity="top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="6dp"
+                android:text="Taxa de 10% se o pagamento for pelo cartão"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="12sp"
+                android:gravity="center|top"
+                android:layout_gravity="top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--dinheiro-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cb_dinheiro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|start"
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="@color/colorSecondaryDark"
+                        android:text="Dinheiro"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:id="@+id/icon_tipo_pagamento"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center|start"
+                        android:background="@drawable/ic_dinheiro_black_24dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/container_pagamento_dinheiro"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:hintEnabled="true"
+                        app:boxCornerRadiusBottomEnd="5dp"
+                        app:boxCornerRadiusBottomStart="5dp"
+                        app:helperText="Vai precisar de troco ?"
+                        app:boxCornerRadiusTopEnd="5dp"
+                        app:boxCornerRadiusTopStart="5dp"
+                        style="@style/MeuEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Troco">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:imeOptions="actionDone"
+                            android:id="@+id/text_input_troco_conf_revenda"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <CheckBox
+                        android:layout_marginTop="4dp"
+                        android:id="@+id/cb_nao_precisa_troco"
+                        android:text="Não vou precisar de troco"
+                        android:textSize="12sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--debitto-->
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_debito"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textSize="20sp"
+                        android:buttonTint="@color/colorSecondaryDark"
+                        android:text="Débito"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center|start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:layout_gravity="center|start"
+                        android:background="@drawable/ic_cartao_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="35dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_debito"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--credito-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_credito"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textSize="20sp"
+                        android:buttonTint="@color/colorSecondaryDark"
+                        android:text="Crédito"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center|start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:layout_gravity="center|start"
+                        android:background="@drawable/ic_cartao_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="35dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_credito"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <!--alimentacao-->
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <CheckBox
+                        android:id="@+id/cb_alimentacao"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textSize="20sp"
+                        android:buttonTint="@color/colorSecondaryDark"
+                        android:text="Alimentação"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center|start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <View
+                        android:layout_gravity="center|start"
+                        android:background="@drawable/ic_vale_alimentacao_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="35dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_alimentacao"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Informações do cliente: "
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="28sp"
+                android:gravity="center|top"
+                android:layout_gravity="top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/colorSecondaryDark"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                style="@style/MeuEditText"
+                app:hintAnimationEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_nome_conf_revenda"
+                    android:imeOptions="actionDone"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/colorSecondaryDark"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                style="@style/MeuEditText"
+                app:hintAnimationEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bairro">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_bairro_conf_revenda"
+                    android:imeOptions="actionDone"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/colorSecondaryDark"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                style="@style/MeuEditText"
+                app:hintAnimationEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome da Rua">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_rua_conf_revenda"
+                    android:imeOptions="actionDone"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="15dp"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/colorSecondaryDark"
+                app:helperTextTextColor="@color/colorSecondary"
+                app:boxCornerRadiusTopEnd="4dp"
+                app:boxCornerRadiusTopStart="4dp"
+                app:boxCornerRadiusBottomEnd="4dp"
+                app:boxCornerRadiusBottomStart="4dp"
+                app:helperText="De preferencia o WhatsApp ou celular"
+                app:helperTextEnabled="true"
+                style="@style/MeuEditText"
+                app:hintAnimationEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telefone pra Contato">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_celular_conf_revenda"
+                    android:inputType="phone"
+                    android:imeOptions="actionDone"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="80dp"/>
+
+
+
+
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/pb_lista_revenda"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:id="@+id/efab_concluir_revenda"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center"
+        android:elevation="12dp"
+        android:background="@color/red"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <FrameLayout
+            android:backgroundTint="#fff"
+            android:background="@drawable/ic_check_black_100dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+        <FrameLayout
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:textAllCaps="true"
+            android:text="Concluir revenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>

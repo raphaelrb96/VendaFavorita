@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <HorizontalScrollView
+        android:visibility="gone"
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="none"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:id="@+id/container_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <androidx.cardview.widget.CardView
+                    android:layout_gravity="center|start"
+                    app:cardCornerRadius="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:background="@drawable/ic_account_circle_black_24dp"
+                        android:backgroundTint="@color/colorSecondaryLight"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/img_perfil"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                </androidx.cardview.widget.CardView>
+
+            </FrameLayout>
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="6dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Ofertas"
+                android:textSize="13sp"
+                android:id="@+id/ll_bt_1"
+                app:iconSize="22dp"
+                app:icon="@drawable/ofertas"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Celular"
+                android:textSize="13sp"
+                app:iconSize="22dp"
+                app:icon="@drawable/celular"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_2"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Computador"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/computador"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_3"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Video Game"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/videogame"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_4"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Petshop"
+                android:textSize="13sp"
+                app:iconSize="22dp"
+                app:icon="@drawable/petshop"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_5"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Esportes"
+                android:textSize="13sp"
+                app:iconSize="22dp"
+                app:icon="@drawable/esporte"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_6"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                android:textSize="13sp"
+                app:iconPadding="6dp"
+                android:text="Relógios"
+                app:iconSize="22dp"
+                app:icon="@drawable/relogio"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_7"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:visibility="gone"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Mulheres"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/mulheres"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_8"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Homem"
+                app:iconSize="22dp"
+                app:icon="@drawable/homem"
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_9"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Brinquedos"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/brinquedos"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_10"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Beleza e saúde"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/beleza"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_11"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Viagens"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/viagem"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_12"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Escola e escritório"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/escolar"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_13"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Crianças"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/criancas"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_14"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Óculos"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/oculos"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_15"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Eletronicos"
+                app:iconSize="22dp"
+                android:textSize="13sp"
+                app:icon="@drawable/eletronicos"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_16"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:textSize="13sp"
+                android:text="Ferramentas"
+                app:iconSize="22dp"
+                app:icon="@drawable/ferramenta"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_17"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:textSize="13sp"
+                android:text="Automoveis"
+                app:iconSize="22dp"
+                app:icon="@drawable/automoveis"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_18"
+                android:layout_height="40dp" />
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_marginLeft="10dp"
+                app:elevation="1dp"
+                android:textSize="13sp"
+                android:elevation="1dp"
+                app:iconPadding="6dp"
+                android:text="Diversos"
+                app:iconSize="22dp"
+                app:icon="@drawable/diversos"
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimaryDark"
+                android:layout_width="wrap_content"
+                android:id="@+id/ll_bt_19"
+                android:layout_height="40dp" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="26dp"
+        app:cardElevation="5dp"
+        android:layout_marginRight="30dp"
+        app:cardCornerRadius="8dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="18dp">
+
+        <ImageView
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:src="@drawable/capa_venda_fav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+

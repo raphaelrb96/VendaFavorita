@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MinhasComprasActivity">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_width="match_parent"
+        android:background="@color/verdeDark"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+        <View
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center|start"
+            android:clickable="true"
+            android:id="@+id/bt_voltar_minhas_compras"
+            android:layout_marginLeft="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryLight"
+            android:layout_gravity="center_vertical"
+            android:text="Minhas Compras"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/toolbar_minhas_compras"
+            android:elevation="8dp"
+            android:background="@drawable/ic_list_header_background"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <View
+                    android:clickable="true"
+                    android:id="@+id/bt_abrir_chat"
+                    android:backgroundTint="@color/colorSecondary"
+                    android:background="@drawable/ic_action_chat_branco"
+                    android:layout_marginRight="12dp"
+                    android:layout_gravity="center|start"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <TextView
+                    android:text="Envie uma mensagem"
+                    android:layout_gravity="center|start"
+                    android:gravity="start|center"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:background="@color/colorPrimaryLight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
+                android:id="@+id/rv_minhas_compras"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ProgressBar
+                android:id="@+id/pb_minhas_compras"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center|top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_container_erro_minhas_compras"
+                android:orientation="vertical"
+                android:layout_gravity="center|top"
+                android:gravity="center|top"
+                android:layout_width="wrap_content"
+                android:paddingTop="20dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/no_compras"
+                    android:adjustViewBounds="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|top"
+                    android:text="Você ainda não fez nenhuma compra. O que acha de fazer a primeira agora ?"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

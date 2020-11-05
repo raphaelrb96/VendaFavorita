@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MeuPerfilActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="56dp"
+        android:id="@+id/scrol_meu_perfil"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="18dp"
+                app:cardCornerRadius="50dp"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:adjustViewBounds="true"
+                    android:id="@+id/imagem_meu_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:id="@+id/nome_usuario_meu_perfil"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_margin="2dp"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:id="@+id/email_usuario_meu_perfil"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/ll_bt_mensagem_menu"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="6dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <View
+                    android:backgroundTint="@color/colorSecondary"
+                    android:layout_gravity="start|center"
+                    android:background="@drawable/ic_chat_50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:gravity="center|start"
+                    android:text="Menssagem"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_bt_sair"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <View
+                    android:backgroundTint="@color/colorSecondary"
+                    android:layout_gravity="start|center"
+                    android:background="@drawable/ic_exit_to_app_branco_24dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <TextView
+                    android:gravity="center|start"
+                    android:text="Sair"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center|start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_username_usuario_meu_perfil"
+                android:layout_marginTop="30dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="UserName/Apelido">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
+                    android:drawablePadding="6dp"
+                    android:drawableTint="@color/colorSecondary"
+                    android:imeOptions="actionDone"
+                    android:id="@+id/et_username_usuario_meu_perfil"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_num_usuario_meu_perfil"
+                android:layout_marginTop="20dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contato">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:drawableLeft="@drawable/ic_phone_black_30dp"
+                    android:drawablePadding="6dp"
+                    android:drawableTint="@color/colorSecondary"
+                    android:imeOptions="actionDone"
+                    android:id="@+id/et_num_usuario_meu_perfil"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:id="@+id/container_adm_meu_perfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    android:id="@+id/card_solicitacao_adm_meu_perfil"
+                    app:cardElevation="2dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginRight="26dp"
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="#000"
+                            android:textStyle="bold"
+                            android:textSize="30sp"
+                            android:gravity="center|bottom"
+                            android:text="Confirmação"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp" />
+                        <TextView
+                            android:id="@+id/status_solicitacao_meu_perfil"
+                            android:textStyle="italic"
+                            android:textSize="12sp"
+                            android:gravity="center"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="Ao completar 100 reais em comissão você poderá solicitar seu pagamento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/bt_solicitacao_adm_meu_perfil"
+                            android:elevation="8dp"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:text="ACEITAR"
+                            android:background="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <LinearLayout
+                    android:layout_marginTop="30dp"
+                    android:visibility="gone"
+                    android:id="@+id/container_dados_adm_meu_perfil"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="12dp"
+                            app:cardCornerRadius="19dp"
+                            android:layout_width="38dp"
+                            android:layout_height="38dp">
+                            <ImageView
+                                android:id="@+id/img_adm_meu_perfil"
+                                android:adjustViewBounds="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </androidx.cardview.widget.CardView>
+
+                        <LinearLayout
+                            android:layout_marginLeft="8dp"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/tv_nome_adm_meu_perfil"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorSecondary"
+                                android:layout_gravity="bottom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:text="Administrador"
+                                android:textSize="12sp"
+                                android:textColor="@color/colorSecondary"
+                                android:layout_gravity="top"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="70dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/bt_voltar_meu_perfil"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <FrameLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_bt_divulgar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="12dp"
+            android:textColor="@color/red"
+            android:text="Divulgar"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_gravity="end|right"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <View
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_baseline_share_24"
+            android:backgroundTint="@color/red"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_marginTop="80dp"
+        android:id="@+id/pb_meu_perfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top" />
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/bt_salvar_dados_meu_perfil"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal|bottom"
+                android:gravity="center"
+                android:elevation="16dp"
+                android:background="@color/red"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <FrameLayout
+                    android:backgroundTint="#fff"
+                    android:background="@drawable/ic_save_branco_24dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"/>
+                <FrameLayout
+                    android:layout_width="8dp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#fff"
+                    android:textAllCaps="true"
+                    android:text="Salvar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

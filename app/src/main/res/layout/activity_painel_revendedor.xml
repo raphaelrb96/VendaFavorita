@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PainelRevendedorActivity">
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:id="@+id/scrol_revendedor"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/bt_afiliados_painel_revenda"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/red"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="4dp"
+                android:layout_width="match_parent"
+                android:minHeight="80dp"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_gravity="center|start"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp">
+                    <ImageView
+                        android:backgroundTint="@color/colorPrimaryLight"
+                        android:layout_gravity="center"
+                        android:background="@drawable/rede_afiliados"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+                </FrameLayout>
+
+
+                <LinearLayout
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimaryLight"
+                        android:gravity="bottom|start"
+                        android:text="Afiliados"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+                    <TextView
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="6dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorPrimaryLight"
+                        android:gravity="start|top"
+                        android:text="Recrute outros vendedores e ganhe dinheiro a cada venda que eles fizerem"
+                        android:layout_width="match_parent"
+                        android:minHeight="45dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_gravity="end"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:minWidth="30dp"
+                        android:maxHeight="30dp"
+                        android:backgroundTint="@color/colorPrimaryLight"
+                        android:background="@drawable/ic_action_ir_right"
+                        android:layout_gravity="center|start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/card_carteira_painel_revenda"
+                app:cardElevation="2dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="140dp">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textColor="#000"
+                        android:textStyle="bold"
+                        android:textSize="26sp"
+                        android:gravity="center|bottom"
+                        android:text="Comissões"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+                    <TextView
+                        android:id="@+id/status_carteira_painel"
+                        android:textStyle="italic"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="Ao completar 100 reais em comissões você poderá solicitar seu pagamento"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" />
+                    <TextView
+                        android:id="@+id/bt_carteira_painel"
+                        android:elevation="8dp"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:text="VER DETALHES"
+                        android:textColor="@color/red"
+                        android:background="@color/colorPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/title_rv_minhas_ultimas_revendas"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="18sp"
+                    android:gravity="center|start"
+                    android:text="Ultimas Vendas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp"
+                    android:textSize="18sp"
+                    android:gravity="center|start"
+                    android:textColor="@color/red_dark"
+                    android:id="@+id/link_historico_revendas"
+                    android:text="Ver mais"
+                    android:textStyle="italic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                android:id="@+id/rv_ultimas_revendas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="20sp"
+                android:gravity="center|start"
+                android:text="Produtos"
+                android:id="@+id/title_rv_produtos_painel_revenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                android:id="@+id/rv_produtos_painel_revenda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                android:id="@+id/pb_painel_revenda"
+                android:layout_marginTop="28dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/voltar_painel_revendedor"
+            android:layout_marginStart="8dp"
+            android:layout_marginRight="12dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <LinearLayout
+            android:layout_gravity="center"
+            android:id="@+id/top_bar"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:focusable="false"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:id="@+id/et_pesquisar_painel_revendedor"
+                android:lines="1"
+                android:hint="Pesquisar"
+                android:textColorHint="@color/colorSecondaryLight"
+                android:textColor="@color/colorSecondary"
+                android:background="@drawable/background_et_pesquisar_dark"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"/>
+
+            <ImageButton
+                android:id="@+id/bt_pesquisar_painel_revendedor"
+                android:background="@drawable/background_botao_pesquisar"
+                android:src="@drawable/ic_search_branco_24dp"
+                android:layout_gravity="end|center"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:layout_marginRight="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/efab_painel_revendedor"
+        android:textSize="14sp"
+        app:backgroundTint="@color/red"
+        android:text="Lista de revenda"
+        app:icon="@drawable/ic_playlist_add_minhas_compras_50dp"
+        app:iconSize="24dp"
+        app:iconTint="#fff"
+        android:textColor="#fff"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ComissoesActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:padding="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:textStyle="italic"
+                        android:text="à receber "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+                        <TextView
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginRight="8dp"
+                            android:text="R$"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/total_a_receber_comissao"
+                            android:textStyle="bold"
+                            android:gravity="center|start"
+                            android:textSize="30sp"
+                            android:text="0,00"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        app:elevation="8dp"
+                        android:textColor="@color/red"
+                        android:text="Pagar Tudo"
+                        android:id="@+id/efab_pagar_comissoes"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="6dp"
+                        android:padding="1dp"
+                        android:layout_width="match_parent"
+                        app:backgroundTint="@color/colorPrimaryLight"
+                        android:layout_height="40dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/pb_comissoes"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center|top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/text_erro_comissao"
+                android:textSize="20sp"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center|top"
+                android:text="Lista vazia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/titulo_comissoes_afiliados"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                android:text="Comissões de afiliados:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="true"
+                android:id="@+id/rv_comissoes_afiliados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/titulo_comissoes_revendas"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                android:text="Revendas:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:nestedScrollingEnabled="true"
+                android:id="@+id/rv_comissoes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</FrameLayout>

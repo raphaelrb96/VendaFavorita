@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/root_mensagem"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--Frente-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/content_layout_chat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--Este é o Toolbar com um título e um ícone-->
+            <FrameLayout
+                android:id="@+id/toolbar_chat"
+                android:background="@color/colorPrimaryLight"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:clickable="true"
+                android:elevation="8dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <View
+                        android:id="@+id/bt_voltar_chat"
+                        android:backgroundTint="@color/colorSecondaryLight"
+                        android:background="@drawable/ic_arrow_back_black_24dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_gravity="center|start"
+                        android:clickable="true"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                    <TextView
+                        android:id="@+id/tv_toolbar_chat"
+                        android:text="Ola, em que podemos lhe ajudar?"
+                        android:layout_gravity="center|start"
+                        android:gravity="start|center"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:visibility="gone"
+                    android:maxWidth="200dp"
+                    android:id="@+id/filterIcon"
+                    android:layout_width="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/baner_mini"
+                    android:layout_gravity="center"/>
+
+            </FrameLayout>
+            <!--Conteudo-->
+            <FrameLayout
+                android:background="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/tv_lista_vazia_mensagem"
+                    android:gravity="center|top"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_gravity="center|top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/no_messagens"
+                        android:adjustViewBounds="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="22sp"
+                        android:textStyle="italic"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:text="Aqui você poderá tirar suas duvidas, pesquisar produtos, da sugestões e relatar falhas e erros" />
+                </LinearLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_mensagens"
+                    android:visibility="gone"
+                    android:background="@color/colorPrimaryLight"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:reverseLayout="true" />
+
+                <ProgressBar
+                    android:theme="@style/Pb"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="40dp"
+                    android:id="@+id/pb_mensagem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/bt_escolher_foto_chat"
+                    android:orientation="vertical"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="112dp">
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                            android:layout_margin="26dp"
+                            android:text="Abrir Galeria"
+                            map:backgroundTint="@color/back_rv"
+                            android:id="@+id/efab_acao_chat"
+                            android:textColor="@color/colorSecondaryDark"
+                            map:icon="@drawable/ic_photo_library_black_40dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </FrameLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_mensagem_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bt_app_bar_chat"
+            style="@style/Widget.MaterialComponents.BottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabAlignmentMode="end"
+            app:fabCradleMargin="10dp"
+            app:fabCradleRoundedCornerRadius="10dp"
+            app:fabCradleVerticalOffset="5dp"
+            app:hideOnScroll="false">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:background="@color/colorPrimary"
+                    android:focusable="false"
+                    android:id="@+id/et_mensagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="120dp"
+                    android:paddingBottom="6dp"
+                    android:hint="Escreva uma menssagem"
+                    android:lines="1"
+                    android:maxLength="80"/>
+            </LinearLayout>
+        </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            app:layout_anchor="@id/bt_app_bar_chat"
+            android:id="@+id/fab_enviar_mensagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorPrimary"
+            app:backgroundTint="@color/fab1"
+            android:src="@drawable/ic_send_black_30dp"
+            app:fabSize="normal"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_margin="6dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <CheckBox
+        android:textColor="#fff"
+        android:shadowColor="#fff"
+        android:buttonTint="#fff"
+        android:drawableTint="#fff"
+        android:id="@+id/cb_cores_prod_revenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</FrameLayout>

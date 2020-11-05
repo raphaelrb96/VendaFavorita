@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/coordinatorLayout_pai"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/toolbar_main"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:clickable="true"
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp">
+
+        <LinearLayout
+            android:layout_gravity="end"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/bt_chat"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="start|center"
+                android:background="@drawable/ic_baseline_chat_24"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <View
+                android:id="@+id/bt_negocios"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="start|center"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:background="@drawable/ic_baseline_business_center_24"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+            <View
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:id="@+id/bt_perfil"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|center"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/ic_baseline_person_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:id="@+id/top_bar"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:focusable="false"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:id="@+id/et_pesquisar"
+                android:lines="1"
+                android:hint="Pesquisar"
+                android:textColorHint="@color/colorSecondaryLight"
+                android:textColor="@color/colorSecondary"
+                android:background="@drawable/background_et_pesquisar_dark"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"/>
+
+            <ImageButton
+                android:id="@+id/bt_pesquisar"
+                android:background="@drawable/background_botao_pesquisar"
+                android:src="@drawable/ic_search_branco_24dp"
+                android:layout_gravity="end|center"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:layout_marginRight="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_marginTop="56dp"
+        android:id="@+id/scrol_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:theme="@style/Pb"
+            android:id="@+id/pb_main"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center|top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:nestedScrollingEnabled="false"
+            android:visibility="visible"
+            android:id="@+id/rv_fragment_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="center|top"
+            android:id="@+id/tv_error_main"
+            android:textColor="#fff"
+            android:maxWidth="300dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
+
+    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        app:backgroundTint="@color/red"
+        android:textColor="#fff"
+        app:iconTint="#fff"
+        android:id="@+id/efab_meu_carrinho"
+        app:icon="@drawable/ic_add_shopping_cart_black_24dp"
+        android:text="Meu carrinho"
+        app:iconSize="24dp"
+        android:textSize="14sp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center|bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bt_app_bar_cart"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabAlignmentMode="center"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="10dp"
+        app:fabCradleVerticalOffset="5dp"
+        app:hideOnScroll="true">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/mensagem_main"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:background="@drawable/ic_chat_50dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+            </FrameLayout>
+            <FrameLayout
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:background="@drawable/ic_baseline_store_24"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/bt_painel_revendedor"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:background="@drawable/ic_dinheiro_black_24dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+            </FrameLayout>
+            <FrameLayout
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:background="@drawable/ic_account_circle_black_24dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+            </FrameLayout>
+        </LinearLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        app:layout_anchor="@id/bt_app_bar_cart"
+        android:id="@+id/efab_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorPrimaryLight"
+        android:src="@drawable/ic_baseline_shopping_cart_24"
+        app:fabSize="normal"/>
+
+    -->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
