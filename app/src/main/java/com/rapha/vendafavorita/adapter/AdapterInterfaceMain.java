@@ -34,6 +34,8 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
     private ArrayList<ProdObj> gameAcessorios;
     private ArrayList<ProdObj> ferramentas;
     private ArrayList<ProdObj> acessoriosAutomotivos;
+    private ArrayList<ProdObj> relogios;
+    private ArrayList<ProdObj> brinquedos;
     private ListenerPrincipal listenerPrincipal;
 
 
@@ -98,12 +100,24 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
                 vh.titulo.setText("Computador");
                 vh.setRv(computadorAcessorios, context);
                 break;
+            case 8:
+                vh.titulo.setText("Ferramentas");
+                vh.setRv(ferramentas, context);
+                break;
+            case 9:
+                vh.titulo.setText("Brinquedos");
+                vh.setRv(brinquedos, context);
+                break;
+            case 10:
+                vh.titulo.setText("Relogios");
+                vh.setRv(relogios, context);
+                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 11;
     }
 
     public interface ListenerPrincipal {
@@ -123,7 +137,10 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
         this.acessoriosAutomotivos = pegarProdutos("5");
         this.gameAcessorios = pegarProdutos("6");
         this.computadorAcessorios = pegarProdutos("7");
-        //this.ferramentas = pegarProdutos("8");
+        this.ferramentas = pegarProdutos("8");
+        this.brinquedos = pegarProdutos("9");
+        this.relogios = pegarProdutos("10");
+
     }
 
     private ArrayList<ProdObj> pegarProdutos(String catg) {

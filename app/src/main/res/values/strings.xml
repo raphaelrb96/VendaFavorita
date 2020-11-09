@@ -5,6 +5,7 @@
 
     <string name="facebook_application_id" translatable="false">338207750717203</string>
 
+
     <array name="categorias">
         <item>Combos</item>
         <item>SmartWatchs</item>
@@ -18,7 +19,7 @@
         <item>Brinquedos</item>
         <item>Relogios</item>
         <item>Headset e Fones</item>
-        <item>Relogios</item>
+        <item>Luzes e iluminação</item>
         <item>Cameras</item>
         <item>Oculos</item>
         <item>Celulares</item>
@@ -28,6 +29,35 @@
         <item>Petshop</item>
         <item>Tv e acessorios</item>
         <item>Cabos</item>
+        <item>Roupas</item>
+        <item>Boné e chapeu</item>
+        <item>Calçados</item>
+        <item>Roupa infantil</item>
+        <item>Calçado infantil</item>
+        <item>Bebê e mamãe</item>
+        <item>Cama, mesa e banho</item>
+        <item>Saúde e beleza</item>
+        <item>Instrumentos musicais</item>
+        <item>Moveis</item>
+        <item>Decoração</item>
+        <item>Fantasia</item>
+        <item>Esportivos</item>
+        <item>Malas e bolsas</item>
+        <item>Livraria e papelaria</item>
+        <item>Caça e pesca</item>
+        <item>Agrorural</item>
+        <item>Alianças</item>
+        <item>Bijuterias</item>
+        <item>Piscinas</item>
+        <item>Adaptadores</item>
+        <item>Inversores</item>
+        <item>Maquiagem</item>
+        <item>Cosmeticos</item>
+        <item>Perfumes</item>
+        <item>Drones</item>
+        <item>Ventiladores</item>
+        <item>Linha e costura</item>
+        <item>Panelas</item>
     </array>
 
     <string name="title_activity_login_main">LoginMainActivity</string>

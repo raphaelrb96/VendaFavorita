@@ -339,9 +339,16 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         perfilBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(prodObjs.size() < 50) {
+
+                    obterListaDeProdutos(tipoReferencia);
+                    return;
+
+                }
                 mAdapter = new AdapterInterfaceMain(getActivity(), prodObjs, FragmentMain.this);
                 mListMercadorias.setLayoutManager(new LinearLayoutManager(getActivity()));
                 mListMercadorias.setAdapter(mAdapter);
+                mListMercadorias.scrollTo(0,0);
             }
         });
 
@@ -973,11 +980,18 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                         }
                     }
 
-                    mAdapter = new AdapterInterfaceMain(getActivity(), prodObjs, FragmentMain.this);
-                    mListMercadorias.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    mListMercadorias.setAdapter(mAdapter);
-                    telaInicialSucesso();
-
+                    if(isPesquisa) {
+                        AdapterProdutos adapterProdutos = new AdapterProdutos(FragmentMain.this, getActivity(), prodObjs, true);
+                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                        mListMercadorias.setLayoutManager(layoutManager);
+                        mListMercadorias.setAdapter(adapterProdutos);
+                        telaInicialSucesso();
+                    } else {
+                        mAdapter = new AdapterInterfaceMain(getActivity(), prodObjs, FragmentMain.this);
+                        mListMercadorias.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        mListMercadorias.setAdapter(mAdapter);
+                        telaInicialSucesso();
+                    }
 
                     return;
                 }
@@ -1199,6 +1213,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         mListMercadorias.setLayoutManager(layoutManager);
         mListMercadorias.setAdapter(adapterProdutos);
+        mListMercadorias.scrollTo(0,0);
     }
 
     @Override

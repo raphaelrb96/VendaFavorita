@@ -31,14 +31,6 @@
                 android:backgroundTint="@color/colorSecondaryLight"
                 android:layout_width="30dp"
                 android:layout_height="30dp"/>
-            <View
-                android:id="@+id/bt_negocios"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="start|center"
-                android:backgroundTint="@color/colorSecondaryLight"
-                android:background="@drawable/ic_baseline_business_center_24"
-                android:layout_width="35dp"
-                android:layout_height="35dp"/>
 
             <View
                 android:backgroundTint="@color/colorSecondaryLight"
@@ -47,7 +39,16 @@
                 android:layout_height="35dp"
                 android:layout_gravity="start|center"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/ic_baseline_person_24" />
+                android:background="@drawable/ic_baseline_home_24" />
+
+            <View
+                android:id="@+id/bt_negocios"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="start|center"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:background="@drawable/ic_baseline_business_center_24"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
 
         </LinearLayout>
 
