@@ -2,6 +2,7 @@ package com.rapha.vendafavorita;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -148,27 +149,31 @@ public class MeuPerfilActivity extends AppCompatActivity {
             }
         });
 
-        et_num_usuario_meu_perfil.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    esconderTeclado(et_num_usuario_meu_perfil);
-                    et_num_usuario_meu_perfil.clearFocus();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            et_num_usuario_meu_perfil.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        esconderTeclado(et_num_usuario_meu_perfil);
+                        et_num_usuario_meu_perfil.clearFocus();
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
-        et_username_usuario_meu_perfil.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    esconderTeclado(et_username_usuario_meu_perfil);
-                    et_username_usuario_meu_perfil.clearFocus();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            et_username_usuario_meu_perfil.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        esconderTeclado(et_username_usuario_meu_perfil);
+                        et_username_usuario_meu_perfil.clearFocus();
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
         bt_salvar_dados_meu_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,8 +278,10 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
 
     private void esconderTeclado(TextInputEditText et) {
-        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(et.getWindowToken(), 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(et.getWindowToken(), 0);
+        }
     }
 
 
@@ -346,7 +353,6 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
         if (usuario.getUserName() != null && usuario.getUserName().length() > 0) {
             et_username_usuario_meu_perfil.setEnabled(false);
-            et_username_usuario_meu_perfil.setActivated(false);
             et_username_usuario_meu_perfil.setFocusable(false);
             et_username_usuario_meu_perfil.setFocusableInTouchMode(false);
 
@@ -354,7 +360,6 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
         if (usuario.getCelular() != null && usuario.getCelular().length() > 0) {
             et_num_usuario_meu_perfil.setEnabled(false);
-            et_num_usuario_meu_perfil.setActivated(false);
             et_num_usuario_meu_perfil.setFocusable(false);
         }
 

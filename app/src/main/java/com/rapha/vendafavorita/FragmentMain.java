@@ -137,7 +137,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     private int tipoReferencia = 0;
     private Query query;
-    public static final boolean ADMINISTRADOR = true;
+    public static final boolean ADMINISTRADOR = false;
     private ImageView fundo;
 
     private FrameLayout bt_carrinho_revenda_main, bt_meu_perfil_main, bt_afiliados_main, bt_comissoes_main;

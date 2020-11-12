@@ -228,7 +228,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:elevation="4dp"
-        android:backgroundTint="@color/colorPrimaryLight"
         app:backgroundTint="@color/colorPrimaryLight"
         android:src="@drawable/ic_baseline_chat_24"
         app:fabSize="normal"/>

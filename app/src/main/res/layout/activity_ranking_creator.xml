@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".rankings.RankingListActivity">
+    tools:context=".rankings.RankingCreator">
     <LinearLayout
         android:background="@color/colorPrimaryLight"
         android:elevation="6dp"
@@ -23,19 +23,44 @@
         <TextView
             android:layout_marginLeft="10dp"
             android:textColor="@color/colorSecondaryLight"
-            android:text="Rankings"
+            android:text="Criar Ranking"
             android:textSize="18sp"
             android:gravity="center"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="60dp"
         android:layout_marginTop="56dp"
-        android:id="@+id/rv_ranking_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_titulo_ranking"
+            app:errorEnabled="true"
+            app:hintEnabled="true"
+            app:boxCornerRadiusBottomEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusTopStart="5dp"
+            app:counterMaxLength="20"
+            app:counterEnabled="true"
+            app:counterTextColor="@color/colorAccent"
+            style="@style/MeuEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titulo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:imeOptions="actionNext"
+                android:id="@+id/et_titulo_ranking"
+                android:textCursorDrawable="@drawable/curso_text_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:id="@+id/bt_criar_ranking"
         android:orientation="horizontal"
@@ -47,7 +72,7 @@
         android:layout_height="60dp">
         <FrameLayout
             android:backgroundTint="#fff"
-            android:background="@drawable/ic_action_add_preto"
+            android:background="@drawable/ic_save_branco_24dp"
             android:layout_width="35dp"
             android:layout_height="35dp"/>
         <FrameLayout
@@ -58,7 +83,7 @@
             android:textSize="20sp"
             android:textColor="#fff"
             android:textAllCaps="true"
-            android:text="Criar Ranking !"
+            android:text="Salvar !"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

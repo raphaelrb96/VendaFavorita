@@ -2,6 +2,7 @@ package com.rapha.vendafavorita;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -176,19 +177,21 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             }
         });
 
-        et_pesquisar_painel_revendedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String pesq = et_pesquisar_painel_revendedor.getText().toString();
-                    if (pesq.length() > 0) {
-                        pesquisar(pesq);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            et_pesquisar_painel_revendedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        String pesq = et_pesquisar_painel_revendedor.getText().toString();
+                        if (pesq.length() > 0) {
+                            pesquisar(pesq);
+                        }
+                        return true;
                     }
-                    return true;
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
         efab_painel_revendedor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,8 +233,15 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     @Override
     protected void onResume() {
         super.onResume();
-        if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() < 1) {
+        if (documentoPrincipalDoUsuario != null) {
+            if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() < 1) {
+                cadastrar();
+            }
+        } else {
+
             cadastrar();
+            finish();
+
         }
     }
 
@@ -284,8 +294,10 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     }
 
     private void esconderTeclado() {
-        ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(et_pesquisar_painel_revendedor.getWindowToken(), 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(et_pesquisar_painel_revendedor.getWindowToken(), 0);
+        }
     }
 
     private void telaInicialLoadding() {

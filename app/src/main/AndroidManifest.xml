@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_venda_favorita"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".rankings.RankingListActivity"></activity>
+        <activity android:name=".rankings.RankingCreator"></activity>
+        <activity android:name=".rankings.RankingListActivity" />
         <activity
             android:name=".PainelDeAfiliados"
             android:screenOrientation="portrait"

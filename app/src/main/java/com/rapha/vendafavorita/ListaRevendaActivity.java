@@ -3,6 +3,7 @@ package com.rapha.vendafavorita;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -322,18 +323,14 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                telefoneMain = s.toString();
 
-                if (telefoneMain.length() > 0 && nomeCliente.length() > 0 && bairroMain.length() > 0 && ruaMain.length() > 0) {
-
-                    if (!ADMINISTRADOR) {
-
-                        analitycsFacebook.logFormularioRevendaConcluido(user.getDisplayName(), user.getUid(), pathFotoUser);
-                        analitycsGoogle.logFormularioRevendaConcluido(user.getDisplayName(), user.getUid(), pathFotoUser);
-
-                    }
-
+                if (s != null) {
+                    telefoneMain = s.toString();
+                } else {
+                    telefoneMain = "";
                 }
+
+
 
             }
 
@@ -360,16 +357,18 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             }
         });
 
-        et_celular_conf_revenda.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    esconderTeclado(et_celular_conf_revenda);
-                    et_celular_conf_revenda.clearFocus();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            et_celular_conf_revenda.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        esconderTeclado(et_celular_conf_revenda);
+                        et_celular_conf_revenda.clearFocus();
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
         et_nome_conf_revenda.addTextChangedListener(new TextWatcher() {
             @Override
@@ -523,8 +522,10 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     }
 
     private void esconderTeclado(TextInputEditText et) {
-        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(et.getWindowToken(), 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(et.getWindowToken(), 0);
+        }
     }
 
     private void myShowDialog(int tipo) {

@@ -88,9 +88,15 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
             }
         });
 
-        refRevenda = firebaseFirestore.collection("MinhasRevendas").document("Usuario").collection(documentoPrincipalDoUsuario.getUid());
+        String uid = documentoPrincipalDoUsuario.getUid();
 
-        refComissoes = firebaseFirestore.collection("MinhasComissoesAfiliados").document("Usuario").collection(documentoPrincipalDoUsuario.getUid());
+        if (uid == null) {
+            uid = auth.getUid();
+        }
+
+        refRevenda = firebaseFirestore.collection("MinhasRevendas").document("Usuario").collection(uid);
+
+        refComissoes = firebaseFirestore.collection("MinhasComissoesAfiliados").document("Usuario").collection(uid);
 
         scrol_list_minhas_comissoes.setVisibility(View.GONE);
         refRevenda.orderBy("hora", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
