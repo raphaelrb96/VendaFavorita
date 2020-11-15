@@ -23,10 +23,9 @@
             android:layout_marginLeft="20dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="54dp">
             <View
                 android:layout_gravity="center"
-                android:layout_margin="8dp"
                 android:id="@+id/fab_img_cadastro_principal"
                 android:backgroundTint="@color/red"
                 android:background="@drawable/ic_star_black_24dp"

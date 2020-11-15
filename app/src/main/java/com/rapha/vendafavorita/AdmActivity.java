@@ -14,6 +14,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.rapha.vendafavorita.adapter.RevendaActivity;
+import com.rapha.vendafavorita.rankings.RankingListActivity;
 
 import javax.annotation.Nullable;
 
@@ -65,7 +66,7 @@ public class AdmActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     public void verVendas(View view) {
-        Intent intent = new Intent(this, CentralComprasActivity.class);
+        Intent intent = new Intent(this, RankingListActivity.class);
         startActivity(intent);
     }
 

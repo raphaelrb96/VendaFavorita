@@ -137,7 +137,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     private int tipoReferencia = 0;
     private Query query;
-    public static final boolean ADMINISTRADOR = false;
+    public static final boolean ADMINISTRADOR = true;
     private ImageView fundo;
 
     private FrameLayout bt_carrinho_revenda_main, bt_meu_perfil_main, bt_afiliados_main, bt_comissoes_main;
@@ -1211,9 +1211,10 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     public void clickCategoria(ArrayList<ProdObj> produtos) {
         AdapterProdutos adapterProdutos = new AdapterProdutos(this, getActivity(), produtos, true);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mListMercadorias.scrollTo(0,0);
         mListMercadorias.setLayoutManager(layoutManager);
         mListMercadorias.setAdapter(adapterProdutos);
-        mListMercadorias.scrollTo(0,0);
+
     }
 
     @Override

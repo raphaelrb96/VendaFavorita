@@ -9,12 +9,12 @@ public class RankingObj {
 
     long inicio;
     String inicioString;
-    long fim;
     String fimString;
 
     String titulo;
     String descricao;
     String regras;
+    String premio;
 
     int tipo;
     int tipoRakingAfiliado;
@@ -34,14 +34,14 @@ public class RankingObj {
 
     }
 
-    public RankingObj(long inicio, String inicioString, long fim, String fimString, String titulo, String descricao, String regras, int tipo, int tipoRakingAfiliado, int tipoRakingVenda, int meta, long ultimaAtualizacao, String ultimaAtualizacaoString, ArrayList<Usuario> vendedoresParticipantes, ArrayList<Usuario> ganhadores, ArrayList<ObjectRevenda> revendasContabilizadas) {
+    public RankingObj(long inicio, String inicioString, String fimString, String titulo, String descricao, String regras, String premio, int tipo, int tipoRakingAfiliado, int tipoRakingVenda, int meta, long ultimaAtualizacao, String ultimaAtualizacaoString, ArrayList<Usuario> vendedoresParticipantes, ArrayList<Usuario> ganhadores, ArrayList<ObjectRevenda> revendasContabilizadas) {
         this.inicio = inicio;
         this.inicioString = inicioString;
-        this.fim = fim;
         this.fimString = fimString;
         this.titulo = titulo;
         this.descricao = descricao;
         this.regras = regras;
+        this.premio = premio;
         this.tipo = tipo;
         this.tipoRakingAfiliado = tipoRakingAfiliado;
         this.tipoRakingVenda = tipoRakingVenda;
@@ -53,16 +53,16 @@ public class RankingObj {
         this.revendasContabilizadas = revendasContabilizadas;
     }
 
+    public String getPremio() {
+        return premio;
+    }
+
     public long getInicio() {
         return inicio;
     }
 
     public String getInicioString() {
         return inicioString;
-    }
-
-    public long getFim() {
-        return fim;
     }
 
     public String getFimString() {

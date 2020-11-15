@@ -77,7 +77,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/rv_fotos_cadastro"
-                android:layout_height="300dp" />
+                android:layout_height="320dp" />
 
             <TextView
                 android:layout_marginTop="8dp"

@@ -24,7 +24,8 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/colorSecondaryLight"
             android:text="Criar Ranking"
-            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:gravity="center"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -36,30 +37,160 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_titulo_ranking"
-            app:errorEnabled="true"
-            app:hintEnabled="true"
-            app:boxCornerRadiusBottomEnd="5dp"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp"
-            app:counterMaxLength="20"
-            app:counterEnabled="true"
-            app:counterTextColor="@color/colorAccent"
-            style="@style/MeuEditText"
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Titulo">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:imeOptions="actionNext"
-                android:id="@+id/et_titulo_ranking"
-                android:textCursorDrawable="@drawable/curso_text_input"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_titulo_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                android:layout_marginTop="16dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Titulo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_titulo_ranking"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_premio_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Prêmio">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_premio_ranking"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_regras_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Regras">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_regras_ranking"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_descricao_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descrição">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_descricao_ranking"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="140dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_meta_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Meta de Itens Vendidos">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_meta_ranking"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_vencimento_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                android:layout_marginBottom="16dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vencimento">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_vencimento_ranking"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:visibility="invisible"
+                android:id="@+id/pb_criar_ranking"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
         android:id="@+id/bt_criar_ranking"
