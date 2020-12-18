@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="6dp"
+        app:cardCornerRadius="5dp"
+        android:layout_width="130dp"
+        android:layout_height="180dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_posicao_classificacao"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="12sp"
+                android:layout_gravity="center|top"
+                android:layout_margin="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="center|top"
+                app:cardCornerRadius="25dp"
+                android:layout_marginTop="4dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp">
+                <ImageView
+                    android:background="@drawable/ic_baseline_person_24"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/img_vendedor_item_classificacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_vendedor_classificacao"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="14sp"
+                android:layout_gravity="center|top"
+                android:gravity="center"
+                android:layout_margin="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_num_vendas_classficacao"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_gravity="center|top"
+                android:gravity="center"
+                android:layout_margin="4dp"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginBottom="4dp"
+                android:layout_height="0dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

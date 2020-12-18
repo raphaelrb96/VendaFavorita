@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rapha.vendafavorita.R;
+import com.rapha.vendafavorita.objects.TopRevendedores;
 
 import java.util.ArrayList;
 

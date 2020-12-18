@@ -50,6 +50,10 @@ public class TopProdutosRevenda implements Comparable<TopProdutosRevenda> {
         this.numeroDeRevendas = numeroDeRevendas;
     }
 
+    public TopProdutosParcelable getParcelable() {
+        return new TopProdutosParcelable(nomeProduto, pathProduto, idProduto, numeroDeRevendas);
+    }
+
     @Override
     public int compareTo (TopProdutosRevenda topProdutosRevenda) {
         if (this.numeroDeRevendas > topProdutosRevenda.getNumeroDeRevendas()) {

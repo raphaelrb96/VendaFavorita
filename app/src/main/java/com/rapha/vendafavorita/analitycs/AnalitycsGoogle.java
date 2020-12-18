@@ -3,8 +3,12 @@ package com.rapha.vendafavorita.analitycs;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.rapha.vendafavorita.objects.ObjectRevenda;
+
+import java.util.ArrayList;
 
 public class AnalitycsGoogle {
 
@@ -64,6 +68,29 @@ public class AnalitycsGoogle {
         params.putString("IdUser", idUser);
         params.putString("ImagemUser", imagemUser);
         logger.logEvent("Revenda", params);
+    }
+
+    public void logVenda (ObjectRevenda novaCompra) {
+        Bundle params = new Bundle();
+
+        params.putDouble(FirebaseAnalytics.Param.VALUE, novaCompra.getCompraValor());
+        params.putString(FirebaseAnalytics.Param.CURRENCY, "BRL");
+        params.putString(FirebaseAnalytics.Param.TRANSACTION_ID, novaCompra.getIdCompra());
+
+        ArrayList<ItemAnalise> itens = new ArrayList<>();
+
+
+        for (int i = 0; i < novaCompra.getListaDeProdutos().size(); i++) {
+
+            ItemAnalise itemAnalise = new ItemAnalise(novaCompra.getListaDeProdutos().get(i).getProdutoName(), novaCompra.getListaDeProdutos().get(i).getIdProdut(), "");
+            itens.add(itemAnalise);
+        }
+
+        params.putParcelableArray(FirebaseAnalytics.Param.ITEMS, (Parcelable[]) itens.toArray());
+
+
+        logger.logEvent(FirebaseAnalytics.Event.PURCHASE, params);
+
     }
 
     public void logFormularioRevendaConcluido (String nomeUser, String idUser, String imagemUser) {

@@ -11,13 +11,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
+            android:name=".informacoes.AnalisarDadosActivity"
+            android:label="@string/title_activity_analisar_dados"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".rankings.ResumeRankingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".rankings.RankingDetalheAdm"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".rankings.RankingCreator"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".rankings.RankingListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PainelDeAfiliados"
             android:screenOrientation="portrait"

@@ -8,6 +8,11 @@ import com.facebook.FacebookSdk;
 import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
+import com.rapha.vendafavorita.objects.ObjectRevenda;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Currency;
 
 public class AnalitycsFacebook {
 
@@ -69,6 +74,24 @@ public class AnalitycsFacebook {
         params.putString("IdUser", idUser);
         params.putString("ImagemUser", imagemUser);
         logger.logEvent("Revenda", params);
+    }
+
+    public void logVenda (ObjectRevenda novaCompra) {
+        Bundle params = new Bundle();
+        params.putString(AppEventsConstants.EVENT_PARAM_CURRENCY, "BRL");
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "product");
+
+        ArrayList<ItemFace> faces = new ArrayList<>();
+
+        for (int i = 0; i < novaCompra.getListaDeProdutos().size(); i++) {
+
+            ItemFace itemAnalise = new ItemFace(novaCompra.getListaDeProdutos().get(i).getProdutoName(), novaCompra.getListaDeProdutos().get(i).getIdProdut());
+            faces.add(itemAnalise);
+        }
+
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT, faces.toArray().toString());
+
+        logger.logPurchase(BigDecimal.valueOf(novaCompra.getCompraValor()), Currency.getInstance("BRL"), params);
     }
 
     public void logFormularioRevendaConcluido (String nomeUser, String idUser, String imagemUser) {

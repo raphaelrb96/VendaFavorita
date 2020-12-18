@@ -40,8 +40,11 @@ import com.rapha.vendafavorita.adapter.AdapterProdutosPainelRevendedor;
 import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
+import com.rapha.vendafavorita.rankings.ResumeRankingActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
@@ -65,7 +68,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     private ArrayList<ProdObj> listProds;
     private ArrayList<ObjectRevenda> listMinhasRevendas;
     private ArrayList<ObjectRevenda> aReceber;
-    private View voltar;
+    private View voltar, bt_ranking;
     private CardView carteira, bt_afiliados_painel_revenda;
     private TextView statusCarteira, btCarteira, title_rv_produtos_painel_revenda, link_historico_revendas;
     private ExtendedFloatingActionButton efab_painel_revendedor;
@@ -87,6 +90,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         rvProdutos = (RecyclerView) findViewById(R.id.rv_produtos_painel_revenda);
         pb = (ProgressBar) findViewById(R.id.pb_painel_revenda);
         voltar = (View) findViewById(R.id.voltar_painel_revendedor);
+        bt_ranking = (View) findViewById(R.id.bt_ranking);
         bt_pesquisar_painel_revendedor = (ImageButton) findViewById(R.id.bt_pesquisar_painel_revendedor);
         //totalCarteira = (TextView) findViewById(R.id.total_carteira_painel);
         statusCarteira = (TextView) findViewById(R.id.status_carteira_painel);
@@ -111,6 +115,14 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PainelRevendedorActivity.this, PainelDeAfiliados.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PainelRevendedorActivity.this, ResumeRankingActivity.class);
                 startActivity(intent);
             }
         });
@@ -380,7 +392,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
     private void listarProdutos() {
 
-        queryProd.whereEqualTo("disponivel", true).limit(100).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        queryProd.whereEqualTo("disponivel", true).limit(200).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
@@ -391,6 +403,15 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
                     ProdObj prod = queryDocumentSnapshots.getDocuments().get(i).toObject(ProdObj.class);
                     listProds.add(prod);
                 }
+
+                Collections.sort(listProds, new Comparator<ProdObj>() {
+                    @Override
+                    public int compare(ProdObj obj, ProdObj t1) {
+                        return Integer.compare(obj.getComissao(), t1.getComissao());
+                    }
+                });
+
+                Collections.reverse(listProds);
 
                 AdapterProdutosPainelRevendedor adapter = new AdapterProdutosPainelRevendedor(listProds, PainelRevendedorActivity.this, PainelRevendedorActivity.this);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);

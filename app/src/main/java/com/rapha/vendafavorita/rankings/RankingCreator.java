@@ -3,7 +3,6 @@ package com.rapha.vendafavorita.rankings;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -16,6 +15,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rapha.vendafavorita.DateFormatacao;
 import com.rapha.vendafavorita.R;
+import com.rapha.vendafavorita.rankings.objcts.RankingObj;
 
 import java.util.Date;
 
@@ -32,6 +32,9 @@ public class RankingCreator extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
 
+    private View voltar_criar_ranking;
+    private TextInputEditText et_inicio_ranking;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +45,9 @@ public class RankingCreator extends AppCompatActivity {
         etDescricao = (TextInputEditText) findViewById(R.id.et_descricao_ranking);
         etMeta = (TextInputEditText) findViewById(R.id.et_meta_ranking);
         etVencimento = (TextInputEditText) findViewById(R.id.et_vencimento_ranking);
+        et_inicio_ranking = (TextInputEditText) findViewById(R.id.et_inicio_ranking);
         bt_criar_ranking = (LinearLayout) findViewById(R.id.bt_criar_ranking);
+        voltar_criar_ranking = (View) findViewById(R.id.voltar_criar_ranking);
 
         progressBar = (ProgressBar) findViewById(R.id.pb_criar_ranking);
 
@@ -53,6 +58,13 @@ public class RankingCreator extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 criarRanking();
+            }
+        });
+
+        voltar_criar_ranking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 
@@ -67,7 +79,10 @@ public class RankingCreator extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         DocumentReference documentReference = firestore.collection("ranking").document();
-        documentReference.set(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        RankingObj ofc = new RankingObj(obj.getInicio(), obj.getInicioString(), obj.getFimString(), obj.getTitulo(), obj.getDescricao(), obj.getRegras(), obj.getPremio(), obj.getTipo(), obj.getTipoRakingAfiliado(), obj.getTipoRakingVenda(), obj.getMeta(), obj.getUltimaAtualizacao(), obj.getUltimaAtualizacaoString(), obj.getGanhadores(), obj.getRevendasContabilizadas(), documentReference.getId(), true);
+
+        documentReference.set(ofc).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 finish();
@@ -79,7 +94,6 @@ public class RankingCreator extends AppCompatActivity {
 
     private RankingObj getDadosRanking() {
         long time = System.currentTimeMillis();
-        String inicioString = DateFormatacao.getDiaString(new Date(time));
 
         String fimString = pegarTexto(etVencimento);
         if (fimString == null) {
@@ -105,6 +119,12 @@ public class RankingCreator extends AppCompatActivity {
             return null;
         }
 
+        String inicio = pegarTexto(et_inicio_ranking);
+        if (inicio == null) {
+            toast("Insira o inicio");
+            return null;
+        }
+
         String descricao = pegarTexto(etDescricao);
         if (descricao == null) {
             toast("Insira uma descrição");
@@ -118,7 +138,7 @@ public class RankingCreator extends AppCompatActivity {
         }
         int metaItens = Integer.valueOf(meta);
 
-        RankingObj rankingObj = new RankingObj(time, inicioString, fimString, titulo, descricao, regras, premio, 0, 0, 0, metaItens, time, inicioString, null, null, null);
+        RankingObj rankingObj = new RankingObj(time, inicio, fimString, titulo, descricao, regras, premio, 0, 0, 0, metaItens, time, inicio, null, null, "", true);
 
         return rankingObj;
     }

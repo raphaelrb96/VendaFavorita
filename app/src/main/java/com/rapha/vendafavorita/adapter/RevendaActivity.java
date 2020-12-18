@@ -20,6 +20,7 @@ import com.rapha.vendafavorita.ComissoesActivity;
 import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.objects.TopProdutosRevenda;
+import com.rapha.vendafavorita.objects.TopRevendedores;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +65,7 @@ public class RevendaActivity extends AppCompatActivity implements AdapterRevenda
     private void getRevendas() {
 
 
-        firestore.collection("Revendas").orderBy("hora", Query.Direction.DESCENDING).limit(100).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        firestore.collection("Revendas").orderBy("hora", Query.Direction.DESCENDING).limit(150).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 

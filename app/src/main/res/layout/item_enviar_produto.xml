@@ -13,7 +13,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="16dp"
         android:layout_width="150dp"
-        android:layout_height="180dp">
+        android:layout_height="220dp">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="30dp">
@@ -33,22 +33,23 @@
         </androidx.cardview.widget.CardView>
         <ImageView
             android:id="@+id/img_produto_cart"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:layout_marginBottom="50dp"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            android:layout_height="150dp" />
         <androidx.cardview.widget.CardView
             android:id="@+id/bt_enviar_prod"
             app:cardElevation="16dp"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:layout_gravity="bottom">
             <TextView
                 android:id="@+id/tv_n_itens_top"
                 android:textStyle="bold"
                 android:gravity="center"
+                android:textSize="10sp"
                 android:text="ENVIAR"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

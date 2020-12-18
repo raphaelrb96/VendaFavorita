@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".rankings.ResumeRankingActivity">
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/voltar_ranking_resume"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/colorSecondaryLight"
+            android:text="Detalhes Ranking"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_resume_ranking"
+        android:layout_width="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_height="match_parent"/>
+    <ProgressBar
+        android:id="@+id/pb_ranking"
+        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"/>
+</FrameLayout>

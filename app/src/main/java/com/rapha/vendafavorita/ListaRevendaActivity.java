@@ -874,6 +874,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
                     analitycsFacebook.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
                     analitycsGoogle.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
+                    analitycsGoogle.logVenda(novaCompra);
+                    analitycsFacebook.logVenda(novaCompra);
 
                 }
 

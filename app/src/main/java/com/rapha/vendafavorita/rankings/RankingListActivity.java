@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,8 +18,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.R;
+import com.rapha.vendafavorita.rankings.adapters.AdapterRankingList;
+import com.rapha.vendafavorita.rankings.objcts.RankingObj;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,8 @@ public class RankingListActivity extends AppCompatActivity implements AdapterRan
     private FirebaseAuth auth;
 
     private RecyclerView rv;
+    private ArrayList<RankingObj> rankings;
+    private AdapterRankingList adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +51,12 @@ public class RankingListActivity extends AppCompatActivity implements AdapterRan
 
         CollectionReference ref = firestore.collection("ranking");
 
-        ref.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ref.orderBy("inicio", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (queryDocumentSnapshots != null) {
 
-                    ArrayList<RankingObj> rankings = new ArrayList<>();
+                    rankings = new ArrayList<>();
 
                     for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                         RankingObj o = queryDocumentSnapshots.getDocuments().get(i).toObject(RankingObj.class);
@@ -58,7 +64,8 @@ public class RankingListActivity extends AppCompatActivity implements AdapterRan
                     }
 
                     rv.setLayoutManager(new LinearLayoutManager(RankingListActivity.this));
-                    rv.setAdapter(new AdapterRankingList(RankingListActivity.this, rankings, RankingListActivity.this));
+                    adapter = new AdapterRankingList(RankingListActivity.this, rankings, RankingListActivity.this);
+                    rv.setAdapter(adapter);
 
                 }
             }
@@ -75,6 +82,37 @@ public class RankingListActivity extends AppCompatActivity implements AdapterRan
 
     @Override
     public void verRanking(RankingObj rankingObj) {
+
         Log.d("Ranking", "ver " + rankingObj.getTitulo());
+        Intent intent = new Intent(this, RankingDetalheAdm.class);
+
+        intent.putExtra("id", rankingObj.getId());
+
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void excluir(String id, int p) {
+        DocumentReference documentReference = firestore.collection("ranking").document(id);
+        rankings.remove(p);
+        adapter.notifyDataSetChanged();
+        documentReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(RankingListActivity.this, "Excluida com sucesso", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void concluir(String id) {
+        DocumentReference documentReference = firestore.collection("ranking").document(id);
+        documentReference.update("ativa", false).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(RankingListActivity.this, "Concluida com sucesso", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

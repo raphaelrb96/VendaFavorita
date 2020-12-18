@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:orientation="horizontal">
         <View
-            android:id="@+id/voltar_lista_revendas"
+            android:id="@+id/voltar_criar_ranking"
             android:layout_marginStart="8dp"
             android:backgroundTint="@color/colorSecondaryLight"
             android:layout_gravity="end|center"
@@ -25,7 +25,7 @@
             android:textColor="@color/colorSecondaryLight"
             android:text="Criar Ranking"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:gravity="center"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -126,6 +126,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:imeOptions="actionNext"
                     android:id="@+id/et_descricao_ranking"
+                    android:gravity="top"
                     android:textCursorDrawable="@drawable/curso_text_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -157,6 +158,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_inicio_ranking"
+                app:errorEnabled="true"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp"
+                style="@style/MeuEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Inicio">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:imeOptions="actionNext"
+                    android:id="@+id/et_inicio_ranking"
+                    android:textCursorDrawable="@drawable/curso_text_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_vencimento_ranking"
                 app:errorEnabled="true"
                 app:hintEnabled="true"
@@ -168,7 +191,7 @@
                 style="@style/MeuEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Vencimento">
+                android:hint="Fim">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:imeOptions="actionNext"
