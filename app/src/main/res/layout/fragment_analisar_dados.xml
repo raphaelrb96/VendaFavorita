@@ -340,6 +340,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="Atualizar Feed"
+                android:padding="0dp"
+                android:textColor="@color/colorPrimaryLight"
+                android:textSize="14sp"
+                app:backgroundTint="@color/red"
+                android:id="@+id/efab_analytics_atualizar_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="100dp"/>

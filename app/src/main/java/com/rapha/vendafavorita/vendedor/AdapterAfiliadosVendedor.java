@@ -1,4 +1,4 @@
-package com.rapha.vendafavorita.adapter;
+package com.rapha.vendafavorita.vendedor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,27 +16,34 @@ import com.rapha.vendafavorita.objects.Usuario;
 
 import java.util.ArrayList;
 
-public class AdapterAfilidos extends RecyclerView.Adapter<AdapterAfilidos.AfiliadosViewHolder> {
+public class AdapterAfiliadosVendedor extends RecyclerView.Adapter<AdapterAfiliadosVendedor.AfiliadosVendedorViewHolder> {
 
 
-    private ArrayList<Usuario> usuarios;
     private Context context;
+    private ArrayList<Usuario> afiliados;
+    private AfiliadosVendedorListaner listaner;
 
-    public AdapterAfilidos(ArrayList<Usuario> usuarios, Context context) {
-        this.usuarios = usuarios;
+
+    public AdapterAfiliadosVendedor(Context context, ArrayList<Usuario> afiliados, AfiliadosVendedorListaner listaner) {
         this.context = context;
+        this.afiliados = afiliados;
+        this.listaner = listaner;
+    }
+
+    public interface AfiliadosVendedorListaner {
+        void verAfiliado(Usuario usuario);
     }
 
     @NonNull
     @Override
-    public AfiliadosViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_usuario_afiliado, parent, false);
-        return new AfiliadosViewHolder(view);
+    public AfiliadosVendedorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_usuario_afiliado, parent,false);
+        return new AfiliadosVendedorViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AfiliadosViewHolder holder, int position) {
-        Usuario usuario = usuarios.get(position);
+    public void onBindViewHolder(@NonNull AfiliadosVendedorViewHolder holder, int position) {
+        Usuario usuario = afiliados.get(position);
 
         Glide.with(context).load(usuario.getPathFoto()).into(holder.img_perfil_usuario_afiliado);
 
@@ -59,26 +66,33 @@ public class AdapterAfilidos extends RecyclerView.Adapter<AdapterAfilidos.Afilia
         } else {
             holder.tv_nome_afiliado.setText("Usuario sem nome");
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return usuarios.size();
+        if (afiliados == null) return 0;
+
+        return afiliados.size();
     }
 
-    class AfiliadosViewHolder extends RecyclerView.ViewHolder {
+    class AfiliadosVendedorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView img_perfil_usuario_afiliado, icon_afiliado_em_autenticado, icon_afiliado_em_analise;
         private TextView tv_nome_afiliado, tv_apelido_afiliado;
 
-        public AfiliadosViewHolder(@NonNull View itemView) {
+        public AfiliadosVendedorViewHolder(@NonNull View itemView) {
             super(itemView);
             img_perfil_usuario_afiliado = (ImageView) itemView.findViewById(R.id.img_perfil_usuario_afiliado);
             icon_afiliado_em_autenticado = (ImageView) itemView.findViewById(R.id.icon_afiliado_em_autenticado);
             icon_afiliado_em_analise = (ImageView) itemView.findViewById(R.id.icon_afiliado_em_analise);
             tv_nome_afiliado = (TextView) itemView.findViewById(R.id.tv_nome_afiliado);
             tv_apelido_afiliado = (TextView) itemView.findViewById(R.id.tv_apelido_afiliado);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            listaner.verAfiliado(afiliados.get(getAdapterPosition()));
         }
     }
 

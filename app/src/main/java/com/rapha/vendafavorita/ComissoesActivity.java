@@ -37,9 +37,8 @@ public class ComissoesActivity extends AppCompatActivity implements AdapterComis
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth auth;
 
-    private String idUsuario, nome, path, zap;
+    private String idUsuario, nome, path;
     private int total;
-    private long time;
     private Query refRevenda;
     private ArrayList<ObjectRevenda> listaDeComissoes;
     private CollectionReference refComissoesAfiliados;
@@ -71,8 +70,6 @@ public class ComissoesActivity extends AppCompatActivity implements AdapterComis
         idUsuario = getIntent().getStringExtra("id");
         nome = getIntent().getStringExtra("nome");
         path = getIntent().getStringExtra("path");
-        zap = getIntent().getStringExtra("zap");
-        time = getIntent().getLongExtra("time", 0);
 
         Log.d("ComissoesActivity", "Id: " + idUsuario);
 
@@ -172,17 +169,26 @@ public class ComissoesActivity extends AppCompatActivity implements AdapterComis
 
                 } else {
 
-                    if (listaDeComissoes.size() > 0) {
-
-                        //sem comissoes de afiliados mas possui revendas
-                        semComissoesAfiliados();
-                        comComissoesRevendas();
-
-                    } else {
-                        //sem comissoes de afiliados e sem revendas
+                    if (listaDeComissoes == null) {
                         semComissoesRevendas();
                         semComissoesAfiliados();
+                    } else {
+
+                        if (listaDeComissoes.size() > 0) {
+
+                            //sem comissoes de afiliados mas possui revendas
+                            semComissoesAfiliados();
+                            comComissoesRevendas();
+
+                        } else {
+                            //sem comissoes de afiliados e sem revendas
+                            semComissoesRevendas();
+                            semComissoesAfiliados();
+                        }
+
                     }
+
+
                 }
 
                 total_a_receber_comissao.setText(total + ",00");

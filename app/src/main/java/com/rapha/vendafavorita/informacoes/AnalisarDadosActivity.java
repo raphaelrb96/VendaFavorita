@@ -8,6 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -224,6 +225,7 @@ public class AnalisarDadosActivity extends AppCompatActivity {
                 SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(AnalisarDadosActivity.this, getSupportFragmentManager(), topProdutosRevendas30, topRevendedores30, revendas30, topProdutosRevendas7, topRevendedores7, revendas7, topProdutosRevendas1, topRevendedores1, revendas1, topProdutosRevendasHoje, topRevendedoresHoje, revendasHoje);
                 viewPager.setAdapter(sectionsPagerAdapter);
                 tabs.setupWithViewPager(viewPager);
+
 
             }
         });

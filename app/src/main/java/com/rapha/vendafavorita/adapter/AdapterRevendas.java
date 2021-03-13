@@ -54,6 +54,7 @@ public class AdapterRevendas extends RecyclerView.Adapter<AdapterRevendas.Revend
         holder.setHora_revenda(obj.getHora());
         holder.setNome_cliente_revenda(obj.getNomeCliente());
         holder.setNumero_cliente_revenda(obj.getPhoneCliente());
+        holder.setForma_de_pagamento_cliente_revenda(obj.getFormaDePagar());
         String rua = obj.getAdress();
         if (obj.getComplemento().length() > 0) {
             rua = rua + "(" + obj.getComplemento() + ")";
@@ -66,7 +67,7 @@ public class AdapterRevendas extends RecyclerView.Adapter<AdapterRevendas.Revend
         int status = obj.getStatusCompra();
         switch (status) {
             case 1:
-                holder.setStatus_revender("Aguardando a confirmação do pedido");
+                holder.setStatus_revender("Aguardando a confirmação");
                 break;
             case 2:
                 holder.setStatus_revender("Confirmada");
@@ -105,7 +106,7 @@ public class AdapterRevendas extends RecyclerView.Adapter<AdapterRevendas.Revend
 
         private LinearLayout ll_bt_confirmar_revenda, ll_bt_entregar_revenda, ll_bt_cancelar_revenda, ll_bt_concluir_revenda;
 
-        private TextView status_revender;
+        private TextView status_revender, forma_de_pagamento_cliente_revenda;
 
         private ToggleButton status_pagamento_comissao;
 
@@ -117,6 +118,7 @@ public class AdapterRevendas extends RecyclerView.Adapter<AdapterRevendas.Revend
             numero_cliente_revenda = (TextView) itemView.findViewById(R.id.numero_cliente_revenda);
             nome_cliente_revenda = (TextView) itemView.findViewById(R.id.nome_cliente_revenda);
             hora_revenda = (TextView) itemView.findViewById(R.id.hora_revenda);
+            forma_de_pagamento_cliente_revenda = (TextView) itemView.findViewById(R.id.forma_de_pagamento_cliente_revenda);
             nome_revendedor_revenda = (TextView) itemView.findViewById(R.id.nome_revendedor_revenda);
             comissao_revendedor_revenda = (TextView) itemView.findViewById(R.id.comissao_revendedor_revenda);
             total_revenda = (TextView) itemView.findViewById(R.id.total_revenda);
@@ -155,6 +157,17 @@ public class AdapterRevendas extends RecyclerView.Adapter<AdapterRevendas.Revend
         public void setHora_revenda(long hora) {
             String horaString = DateFormatacao.dataCompletaCorrigidaSmall2(new Date(hora), new Date());
             this.hora_revenda.setText(horaString);
+        }
+
+        public void setForma_de_pagamento_cliente_revenda(int forma) {
+
+            String formaDePagamento = "Cartão";
+            if (forma == 4) {
+                formaDePagamento = "Dinheiro";
+            }
+
+            this.forma_de_pagamento_cliente_revenda.setText(formaDePagamento);
+
         }
 
         public void setNome_revendedor_revenda(String nomeRev) {

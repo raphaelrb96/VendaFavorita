@@ -45,14 +45,11 @@ public class AdapterProdutosRevenda extends RecyclerView.Adapter<AdapterProdutos
             s3 = " itens";
         }
 
-        holder.quantidade.setText(obj.getQuantidade() + " " + obj.getProdutoName());
-        holder.total.setText("Total: " + String.valueOf((int) obj.getValorTotalComComissao()) + ",00");
+        holder.total.setText(obj.getQuantidade() + " " + obj.getProdutoName());
+        holder.nome.setText("Total: " + String.valueOf((int) obj.getValorTotalComComissao()) + ",00");
 
         int lucroPrd = obj.getComissaoTotal();
 
-        String lucroPorItem = "Lucro: R$" + lucroPrd + ",00";
-
-        holder.nome.setText(lucroPorItem);
     }
 
     @Override

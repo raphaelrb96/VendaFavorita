@@ -1,24 +1,36 @@
 package com.rapha.vendafavorita.informacoes.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.rapha.vendafavorita.ClienteDetalhesActivity;
+import com.rapha.vendafavorita.ComissoesActivity;
+import com.rapha.vendafavorita.InventarioActivity;
 import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.adapter.AdapterTopProdutos;
 import com.rapha.vendafavorita.adapter.AdapterTopRevendedores;
+import com.rapha.vendafavorita.objectfeed.ProdutoObj;
+import com.rapha.vendafavorita.objectfeed.RevendedorObj;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.objects.TopRevendedores;
 import com.rapha.vendafavorita.objects.TopProdutosParcelable;
 import com.rapha.vendafavorita.objects.TopProdutosRevenda;
 import com.rapha.vendafavorita.objects.TopRevendedoresParcelable;
+import com.rapha.vendafavorita.vendedor.VendedorActivity;
 
 import java.util.ArrayList;
 
@@ -38,6 +50,8 @@ public class PlaceholderFragment extends Fragment implements AdapterTopRevendedo
     private static final String ARG_TICKET_MEDIO = "ticket";
     private static final String ARG_MEDIA_VENDEDOR = "media";
 
+    private Toast mToats;
+
     private PageViewModel pageViewModel;
 
     private ArrayList<TopProdutosRevenda> topProdutosRevendas;
@@ -49,6 +63,9 @@ public class PlaceholderFragment extends Fragment implements AdapterTopRevendedo
     private RecyclerView rvTopProd;
     private AdapterTopProdutos adapterTopProdutos;
     private AdapterTopRevendedores adapterTopRevendedores;
+    private ExtendedFloatingActionButton efabAtualizarHome;
+
+    private FirebaseFirestore firestore;
 
     public static PlaceholderFragment newInstance(ArrayList<TopProdutosRevenda> topProdutosRevendas30, ArrayList<TopRevendedores> topRevendedores, ArrayList<ObjectRevenda> revendas) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -146,6 +163,9 @@ public class PlaceholderFragment extends Fragment implements AdapterTopRevendedo
         tv_media_vendedor = (TextView) root.findViewById(R.id.tv_media_vendedor);
         rvTopRevendedores = (RecyclerView) root.findViewById(R.id.rv_top_revendedores);
         rvTopProd = (RecyclerView) root.findViewById(R.id.rv_top_produtos);
+        efabAtualizarHome = (ExtendedFloatingActionButton) root.findViewById(R.id.efab_analytics_atualizar_home);
+
+        firestore = FirebaseFirestore.getInstance();
 
         ArrayList<TopProdutosParcelable> topProdutosParcelables = getArguments().getParcelableArrayList(ARG_TOP_PRODUTOS);
         ArrayList<TopRevendedoresParcelable> topRevendedoresParcelables = getArguments().getParcelableArrayList(ARG_TOP_VENDEDORES);
@@ -180,11 +200,76 @@ public class PlaceholderFragment extends Fragment implements AdapterTopRevendedo
         rvTopRevendedores.setAdapter(adapterTopRevendedores);
         rvTopProd.setAdapter(adapterTopProdutos);
 
+        efabAtualizarHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mToats != null) {
+
+                    mToats.cancel();
+
+                }
+
+                mToats.makeText(getActivity(), "Atualizando Feed...", Toast.LENGTH_LONG).show();
+
+                efabAtualizarHome.setVisibility(View.GONE);
+
+                ArrayList<ProdutoObj> topsProd = new ArrayList<>();
+                ArrayList<RevendedorObj> topsRev = new ArrayList<>();
+
+                for (int i = 0; i < topProdutosRevendas.size(); i++) {
+                    TopProdutosRevenda ob = topProdutosRevendas.get(i);
+                    ProdutoObj produtoObj = new ProdutoObj(ob.getNomeProduto(), ob.getPathProduto(), ob.getIdProduto());
+                    topsProd.add(produtoObj);
+                    if (i > 19) break;
+                }
+
+                for (int j = 0; j < topRevendedores.size(); j++) {
+                    TopRevendedores rev = topRevendedores.get(j);
+                    RevendedorObj rObj = new RevendedorObj(rev.getNomeRevendedor(), rev.getPathFotoRevendedor(), rev.getUidRevendedor(), rev.getNumeroItensReveendas());
+                    topsRev.add(rObj);
+                    if (j > 2) break;
+                }
+
+
+
+                firestore.collection("Feed").document("Main").update("topRevendedores", topsRev, "topProdutos", topsProd, "timeStamp", System.currentTimeMillis()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        efabAtualizarHome.setVisibility(View.VISIBLE);
+                        if (mToats != null) {
+
+                            mToats.cancel();
+
+                        }
+                        mToats.makeText(getActivity(), "Feed atualizado", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        efabAtualizarHome.setVisibility(View.VISIBLE);
+                        if (mToats != null) {
+
+                            mToats.cancel();
+
+                        }
+                        mToats.makeText(getActivity(), "Falha ao atualizar Feed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
         return root;
     }
 
     @Override
     public void verRevendedor(String uid, String path, String nome) {
 
+
+        Intent intent = new Intent(getContext(), VendedorActivity.class);
+
+        intent.putExtra("uid", uid);
+
+        startActivity(intent);
     }
 }

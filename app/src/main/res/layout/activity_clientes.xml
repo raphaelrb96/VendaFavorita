@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,9 +7,117 @@
     android:layout_height="match_parent"
     tools:context=".ClientesActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_clientes"
+    <LinearLayout
+        android:background="@color/colorPrimaryLight"
+        android:elevation="6dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+        <View
+            android:id="@+id/voltar_clientes"
+            android:layout_marginStart="8dp"
+            android:layout_marginRight="12dp"
+            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_gravity="end|center"
+            android:background="@drawable/ic_arrow_back_black_24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:id="@+id/top_bar"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:focusable="false"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:id="@+id/et_pesquisar_cliente"
+                android:lines="1"
+                android:hint="Pesquisar apelido"
+                android:textColorHint="@color/colorSecondaryLight"
+                android:textColor="@color/colorSecondary"
+                android:background="@drawable/background_et_pesquisar_dark"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"/>
+
+            <ImageButton
+                android:id="@+id/bt_pesquisar_cliente"
+                android:background="@drawable/background_botao_pesquisar"
+                android:src="@drawable/ic_search_branco_24dp"
+                android:layout_gravity="end|center"
+                android:backgroundTint="@color/colorSecondaryLight"
+                android:layout_marginRight="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:id="@+id/scrol_revendedor"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:id="@+id/tv_titulo_top_adms"
+                android:visibility="gone"
+                android:text="Top ADMs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_top_adms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="22sp"
+                android:id="@+id/tv_titulo_vendedores"
+                android:text="Vendedores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:layout_marginTop="10dp"
+                android:id="@+id/pb_vendedor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_clientes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</FrameLayout>

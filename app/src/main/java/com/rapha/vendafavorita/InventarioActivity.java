@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,8 +32,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.rapha.vendafavorita.objectfeed.ProdutoObj;
+import com.rapha.vendafavorita.objects.TopProdutosRevenda;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -55,18 +61,11 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
     private boolean automatico = false;
     private boolean isPesquisa = false;
     private Toast mToats;
+    private ArrayList<TopProdutosRevenda> notificarAtualiz;
 
     @Override
     protected void onStart() {
         super.onStart();
-        refProdutos.orderBy("prodValor", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                mQueryDocumentSnapshots = queryDocumentSnapshots;
-                lista(true);
-                carregarListaMain(queryDocumentSnapshots);
-            }
-        });
     }
 
     @Override
@@ -89,6 +88,16 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
 //
 //            }
 //        });
+
+        refProdutos.orderBy("prodValor", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                mQueryDocumentSnapshots = queryDocumentSnapshots;
+                lista(true);
+
+                carregarListaMain(queryDocumentSnapshots);
+            }
+        });
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -219,9 +228,31 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
         if (queryDocumentSnapshots != null) {
             if (queryDocumentSnapshots.size() >= 0) {
                 produtos = new ArrayList<>();
+                ArrayList<ProdObj> atualiazacoes = new ArrayList<>();
                 for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                     ProdObj ob = queryDocumentSnapshots.getDocuments().get(i).toObject(ProdObj.class);
                     produtos.add(ob);
+                    atualiazacoes.add(ob);
+                }
+
+                Collections.sort(atualiazacoes, new Comparator<ProdObj>() {
+                    @Override
+                    public int compare(ProdObj prodObj, ProdObj t1) {
+                        return Long.compare(t1.getTimeUpdate(), prodObj.getTimeUpdate());
+                    }
+                });
+
+
+
+                notificarAtualiz = new ArrayList<TopProdutosRevenda>();
+
+                for (int i = 0; i < atualiazacoes.size(); i++) {
+                    ProdObj ob = atualiazacoes.get(i);
+                    String d = DateFormatacao.dataCompletaCorrigidaSmall2(new Date(ob.getTimeUpdate()), new Date());
+                    Log.d("Atualizacoes Inventario", atualiazacoes.get(i).getProdName() + " Data " + d);
+                    TopProdutosRevenda tpr = new TopProdutosRevenda(ob.getProdName(), ob.getImgCapa(), ob.getIdProduto(), 0);
+                    notificarAtualiz.add(tpr);
+                    if(i > 19) break;
                 }
 
                 rv.setLayoutManager(new LinearLayoutManager(InventarioActivity.this));
@@ -347,6 +378,48 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
         });
 
 
+    }
+
+    @Override
+    public void notificarAtualizacoes() {
+
+        if (mToats != null) {
+
+            mToats.cancel();
+
+        }
+        mToats.makeText(InventarioActivity.this, "Atualizando Feed...", Toast.LENGTH_LONG).show();
+
+        ArrayList<ProdutoObj> list = new ArrayList<>();
+
+        for (int i = 0; i < notificarAtualiz.size(); i++) {
+            TopProdutosRevenda tprd = notificarAtualiz.get(i);
+            ProdutoObj produtoObj = new ProdutoObj(tprd.getNomeProduto(), tprd.getPathProduto(), tprd.getIdProduto());
+            list.add(produtoObj);
+        }
+
+        firestore.collection("Feed").document("Main").update("atualizacoesProds", list, "timeStamp", System.currentTimeMillis()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (mToats != null) {
+
+                    mToats.cancel();
+
+                }
+                mToats.makeText(InventarioActivity.this, "Feed atualizado", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                if (mToats != null) {
+
+                    mToats.cancel();
+
+                }
+                mToats.makeText(InventarioActivity.this, "Falha ao atualizar Feed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private ArrayList<String> mapParaArray(Map<String, Boolean> map) {

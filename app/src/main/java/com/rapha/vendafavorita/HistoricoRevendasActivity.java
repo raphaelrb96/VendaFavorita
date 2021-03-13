@@ -42,7 +42,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
     private NestedScrollView scrol_list_minhas_comissoes;
 
     private String idUsuario, nome, path, zap;
-    private int total;
+    private int total = 0;
     private long time;
     private Query refRevenda, refComissoes;
     private ArrayList<ObjectRevenda> listaDeComissoes;
@@ -103,11 +103,12 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 listaDeComissoes = new ArrayList<>();
+                total = 0;
                 if (queryDocumentSnapshots != null) {
 
                     if (queryDocumentSnapshots.getDocuments().size() > 0) {
 
-                        total = 0;
+
 
                         for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
 
@@ -197,6 +198,8 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
                     }
 
                 } else {
+
+                    valor_a_receber.setText(total + ",00");
 
                     if (listaDeComissoes.size() > 0) {
 

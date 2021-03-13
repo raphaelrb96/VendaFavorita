@@ -153,21 +153,28 @@ public class AdapterProdutosInventario extends RecyclerView.Adapter<RecyclerView
         void criarProduto();
         void disponibilidade(ProdObj obj, boolean disponivel);
         void atualizar(ProdObj obj);
+        void notificarAtualizacoes();
     }
 
     class CriarProdViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ExtendedFloatingActionButton efab;
+        private ExtendedFloatingActionButton efab, efabNotAtu;
 
         public CriarProdViewHolder(@NonNull View itemView) {
             super(itemView);
             efab = (ExtendedFloatingActionButton) itemView.findViewById(R.id.efab_criar_produto);
+            efabNotAtu = (ExtendedFloatingActionButton) itemView.findViewById(R.id.efab_notificar_atualizacoes);
             efab.setOnClickListener(this);
+            efabNotAtu.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            listener.criarProduto();
+            if (v.getId() == R.id.efab_criar_produto) {
+                listener.criarProduto();
+            } else {
+                listener.notificarAtualizacoes();
+            }
         }
     }
 

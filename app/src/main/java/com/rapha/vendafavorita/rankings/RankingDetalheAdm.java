@@ -146,7 +146,7 @@ public class RankingDetalheAdm extends AppCompatActivity implements AdapterNaoRa
     }
 
     private void getRevendas() {
-        firestore.collection("Revendas").orderBy("hora", Query.Direction.DESCENDING).limit(150).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        firestore.collection("Revendas").orderBy("hora", Query.Direction.DESCENDING).limit(700).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 

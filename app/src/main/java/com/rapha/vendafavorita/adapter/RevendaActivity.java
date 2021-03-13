@@ -21,6 +21,7 @@ import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.objects.TopProdutosRevenda;
 import com.rapha.vendafavorita.objects.TopRevendedores;
+import com.rapha.vendafavorita.vendedor.VendedorActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -213,19 +214,26 @@ public class RevendaActivity extends AppCompatActivity implements AdapterRevenda
 
     @Override
     public void verRevended(String uidUserRevendedor, String userNomeRevendedor, String pathFotoUserRevenda) {
-        Intent intent = new Intent(this, ComissoesActivity.class);
+        Intent intent = new Intent(this, VendedorActivity.class);
 
-        intent.putExtra("id", uidUserRevendedor);
-        intent.putExtra("nome", userNomeRevendedor);
-        intent.putExtra("path", pathFotoUserRevenda);
-        intent.putExtra("zap", "");
-        intent.putExtra("time", 0);
+        intent.putExtra("uid", uidUserRevendedor);
 
         startActivity(intent);
     }
 
     @Override
     public void verRevendedor(String uid, String path, String nome) {
+
+        Intent intent = new Intent(this, VendedorActivity.class);
+
+        intent.putExtra("uid", uid);
+
+        startActivity(intent);
+
+
+    }
+
+    private void abrirComissoes(String uid, String path, String nome) {
         Intent intent = new Intent(this, ComissoesActivity.class);
 
         intent.putExtra("id", uid);
@@ -236,6 +244,7 @@ public class RevendaActivity extends AppCompatActivity implements AdapterRevenda
 
         startActivity(intent);
     }
+
 
     private ArrayList<TopRevendedores> ordenarRevendedores (ArrayList<TopRevendedores> topRevendedores) {
 

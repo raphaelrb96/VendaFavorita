@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
 import static com.rapha.vendafavorita.FragmentMain.user;
 
 
-public class ClienteDetalhesActivity extends AppCompatActivity implements AdapterEnviarProduto.EnviarProdutoListener {
+public class ClienteDetalhesActivity extends AppCompatActivity {
 
     private View bt_voltar_cliente, bt_enviar_mensagem_cliente;
     private ImageView img_perfil_cliente;
@@ -132,85 +132,6 @@ public class ClienteDetalhesActivity extends AppCompatActivity implements Adapte
 
         listeners();
 
-        firestore.collection("produtos").get().addOnSuccessListener(this, new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots1) {
-                if (queryDocumentSnapshots1 != null) {
-                    if (queryDocumentSnapshots1.size() > 0) {
-                        produtos = new ArrayList<>();
-                        for (int i = 0; i < queryDocumentSnapshots1.size(); i++) {
-                            ProdObj ob = queryDocumentSnapshots1.getDocuments().get(i).toObject(ProdObj.class);
-                            produtos.add(ob);
-                        }
-
-                        if (produtos.size() > 0) {
-                            container_enviar_produto_cliente.setVisibility(View.VISIBLE);
-                            adapterEnviarProduto = new AdapterEnviarProduto(ClienteDetalhesActivity.this, produtos, ClienteDetalhesActivity.this);
-                            rv_enviar_produtos_cliente.setAdapter(adapterEnviarProduto);
-                        } else {
-                            container_enviar_produto_cliente.setVisibility(View.GONE);
-                        }
-                    }
-                }
-
-
-                firestore.collection("CarrinhoAnalytics").document(usuarioParcelable.getUid()).collection("produtos").orderBy("ultimaVezAdicionadoAoCart", Query.Direction.DESCENDING).limit(100).addSnapshotListener(ClienteDetalhesActivity.this, new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        if (queryDocumentSnapshots != null) {
-
-                            prods = new ArrayList<>();
-                            for(int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
-                                ProdutoCartUserAnalyics obj = queryDocumentSnapshots.getDocuments().get(i).toObject(ProdutoCartUserAnalyics.class);
-                                prods.add(obj);
-                            }
-
-                            if (prods.size() > 0) {
-                                container_carrinho_analyics_cliente.setVisibility(View.VISIBLE);
-                                adapterCarrinhoAnalyics = new AdapterCarrinhoAddUserAnalyics(ClienteDetalhesActivity.this, prods);
-                                rv_produtos_cart_add_analyics.setAdapter(adapterCarrinhoAnalyics);
-                            } else {
-                                container_carrinho_analyics_cliente.setVisibility(View.GONE);
-                            }
-
-                        }
-
-
-                        firestore.collection("termosDePesquisaUser").document(usuarioParcelable.getUid()).collection("termos").orderBy("ultimaPesquisa", Query.Direction.DESCENDING).limit(150).addSnapshotListener(ClienteDetalhesActivity.this, new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                if (queryDocumentSnapshots == null) {
-                                    pb.setVisibility(View.GONE);
-                                    return;
-                                }
-
-                                ArrayList<TermosDePesquisa> termos = new ArrayList<>();
-                                for(int j = 0; j < queryDocumentSnapshots.getDocuments().size(); j++) {
-                                    TermosDePesquisa o = queryDocumentSnapshots.getDocuments().get(j).toObject(TermosDePesquisa.class);
-                                    termos.add(o);
-                                }
-
-                                if (termos.size() > 0) {
-                                    container_termos_pesquisa_cliente.setVisibility(View.VISIBLE);
-                                    adapterTermos = new AdapterTermos(ClienteDetalhesActivity.this, termos);
-                                    rv_termo_pesquisa_user.setAdapter(adapterTermos);
-                                    rv_termo_pesquisa_user.setNestedScrollingEnabled(false);
-                                } else {
-                                    container_termos_pesquisa_cliente.setVisibility(View.GONE);
-                                }
-
-                                pb.setVisibility(View.GONE);
-
-                            }
-                        });
-
-                    }
-                });
-
-
-            }
-        });
-
 
     }
 
@@ -293,42 +214,6 @@ public class ClienteDetalhesActivity extends AppCompatActivity implements Adapte
             }
         });
 
-        bt_pesquisar_produto_enviar_cliente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String s = et_pesquisar_produto_enviar_cliente.getText().toString();
-                ArrayList<ProdObj> resultadoPesquisa = new ArrayList<>();
-
-                for (int x = 0; x < produtos.size(); x++) {
-                    Log.d("Teste123", String.valueOf(x));
-                    String nomeProd = produtos.get(x).getProdName().toLowerCase();
-                    boolean palavraIdentica = nomeProd.equals(s.toLowerCase());
-                    boolean palavraParecida = nomeProd.contains(s.toLowerCase());
-                    boolean palavraChaveExiste = produtos.get(x).getTag().containsKey(s.toLowerCase());
-                    if (palavraChaveExiste || palavraIdentica || palavraParecida) {
-                        resultadoPesquisa.add(produtos.get(x));
-                        //Log.d("Teste123", String.valueOf(x) + " adicionada a liste");
-                        //Log.d("Teste123", resultadoPesquisa.toString());
-                    }
-                }
-
-                if (resultadoPesquisa.size() > 0) {
-                    container_enviar_produto_cliente.setVisibility(View.VISIBLE);
-                    adapterEnviarProduto = new AdapterEnviarProduto(ClienteDetalhesActivity.this, resultadoPesquisa, ClienteDetalhesActivity.this);
-                    rv_enviar_produtos_cliente.setAdapter(adapterEnviarProduto);
-                }
-            }
-        });
-
-        bt_pesquisar_produto_enviar_cliente.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                container_enviar_produto_cliente.setVisibility(View.VISIBLE);
-                adapterEnviarProduto = new AdapterEnviarProduto(ClienteDetalhesActivity.this, produtos, ClienteDetalhesActivity.this);
-                rv_enviar_produtos_cliente.setAdapter(adapterEnviarProduto);
-                return false;
-            }
-        });
     }
 
     private ArrayList<ProdutoCartUserAnalyics> bubbleSortCartAnalyicsRecentes(ArrayList<ProdutoCartUserAnalyics> array) {
@@ -359,22 +244,5 @@ public class ClienteDetalhesActivity extends AppCompatActivity implements Adapte
         return array;
     }
 
-    @Override
-    public void enviarProduto(ProdObj obj) {
-        CollectionReference collection = firestore.collection("centralMensagens");
-        CollectionReference collectionMensagens = firestore.collection("mensagens").document("ativas").collection(usuarioParcelable.getUid());
-        WriteBatch batch = firestore.batch();
-        MensagemObject mensagemObject = new MensagemObject(System.currentTimeMillis(), user.getUid(), 2, "", obj, "");
 
-        CentralMensagens centralMensagens = new CentralMensagens(new Date(), System.currentTimeMillis(), usuarioParcelable.getUid(), usuarioParcelable.getPathFoto(), mensagemObject.getMenssagemText(), 0, 0, usuarioParcelable.getNome());
-
-        batch.set(collection.document(usuarioParcelable.getUid()), centralMensagens);
-        batch.set(collectionMensagens.document(), mensagemObject);
-        batch.commit();
-        et_mensagem_cliente.clearFocus();
-        et_mensagem_cliente.setText("");
-        container_enviar_produto_cliente.setVisibility(View.VISIBLE);
-        adapterEnviarProduto = new AdapterEnviarProduto(ClienteDetalhesActivity.this, produtos, ClienteDetalhesActivity.this);
-        rv_enviar_produtos_cliente.setAdapter(adapterEnviarProduto);
-    }
 }

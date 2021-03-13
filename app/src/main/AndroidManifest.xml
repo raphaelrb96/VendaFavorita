@@ -12,9 +12,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".vendedor.VendedorActivity"></activity>
+        <activity
             android:name=".informacoes.AnalisarDadosActivity"
             android:label="@string/title_activity_analisar_dados"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".rankings.ResumeRankingActivity"
             android:screenOrientation="portrait"

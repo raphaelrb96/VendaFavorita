@@ -69,7 +69,8 @@ public class AdapterTopRevendedores extends RecyclerView.Adapter<AdapterTopReven
 
         @Override
         public void onClick(View v) {
-
+            TopRevendedores topR = revendedores.get(getAdapterPosition());
+            topRevendedoresListener.verRevendedor(topR.getUidRevendedor(), topR.getPathFotoRevendedor(), topR.getNomeRevendedor());
         }
     }
 
