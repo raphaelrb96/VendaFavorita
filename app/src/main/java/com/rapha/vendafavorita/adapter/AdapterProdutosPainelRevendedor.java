@@ -44,11 +44,16 @@ public class AdapterProdutosPainelRevendedor extends RecyclerView.Adapter<Adapte
     public void onBindViewHolder(@NonNull ProdutosRevendaViewHolder holder, int position) {
         ProdObj prodObj = prodObjs.get(position);
         holder.setImageView(prodObj.getImgCapa(), context);
-        holder.textView.setText("R$ " + prodObj.getComissao() + ",00");
+        holder.textView.setText("Lucre R$ " + prodObj.getComissao() + ",00 por cada " + prodObj.getProdName());
     }
 
     @Override
     public int getItemCount() {
+
+        if (prodObjs == null) return 0;
+
+        if (prodObjs.size() > 30) return 50;
+
         return prodObjs.size();
     }
 

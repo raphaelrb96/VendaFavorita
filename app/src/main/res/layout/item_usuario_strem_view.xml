@@ -10,9 +10,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:cardCornerRadius="50dp">
+        app:cardCornerRadius="5dp">
         <ImageView
-            android:background="@drawable/ic_person_pin_black_40dp"
+            android:background="@drawable/topvendedor"
             android:id="@+id/img_perfil_stream_view"
             android:adjustViewBounds="true"
             android:layout_width="match_parent"

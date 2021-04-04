@@ -83,6 +83,8 @@ public class ProdutoDetalheActivity extends AppCompatActivity implements Adapter
         bt_voltar_produto_detalhe = (View) findViewById(R.id.bt_voltar_produto_detalhe);
         analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
+
+
         prodObjParcelable = getIntent().getParcelableExtra("prod");
         if (prodObjParcelable == null) {
             finish();

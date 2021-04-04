@@ -22,7 +22,7 @@ import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
 import static com.rapha.vendafavorita.MainActivity.ids;
 
 
-public class AdapterProdutos extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.ProdutoPrincipalViewHolder> {
 
     private ClickProdutoCliente clickProdutoCliente;
     private Context context;
@@ -44,54 +44,23 @@ public class AdapterProdutos extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.revenda = revenda;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-
-        if (position == 0) {
-            if (revenda) {
-                return 1;
-            } else {
-                return 2;
-            }
-        } else return 2;
-    }
-
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProdutoPrincipalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         if (context == null) {
             context = parent.getContext();
         }
 
-        if (viewType == 2) {
-            View view = LayoutInflater.from(context).inflate(R.layout.item_produto_principal, parent, false);
-            return new ProdutoPrincipalViewHolder(view, context, produtos);
-        } else {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_produto_principal, parent, false);
+        return new ProdutoPrincipalViewHolder(view, context, produtos);
 
-            View view2 = LayoutInflater.from(context).inflate(R.layout.item_abrir_chat, parent, false);
-            AbrirChatViewHolder vh = new AbrirChatViewHolder(view2);
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) vh.itemView.getLayoutParams();
-            layoutParams.setFullSpan(true);
-            return vh;
-        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == 2 && revenda) {
-            ProdObj obj = produtos.get(position - 1);
-            ProdutoPrincipalViewHolder vh = (ProdutoPrincipalViewHolder) holder;
-            vh.setImagem(obj.imgCapa);
-            vh.setPreco(String.valueOf((int) obj.prodValor) + ",00");
-            vh.setNome(obj.prodName);
-            vh.fab.setBackgroundTintList(ColorStateList.valueOf(this.context.getResources().getColor(R.color.fab1)));
-            if (ids.contains(obj.getIdProduto())) {
-                vh.fab.setBackgroundTintList(ColorStateList.valueOf(this.context.getResources().getColor(R.color.colorPrimaryDark)));
-            }
-        } else if(holder.getItemViewType() == 2 && !revenda) {
+    public void onBindViewHolder(@NonNull ProdutoPrincipalViewHolder vh, int position) {
+        if (revenda) {
             ProdObj obj = produtos.get(position);
-            ProdutoPrincipalViewHolder vh = (ProdutoPrincipalViewHolder) holder;
             vh.setImagem(obj.imgCapa);
             vh.setPreco(String.valueOf((int) obj.prodValor) + ",00");
             vh.setNome(obj.prodName);
@@ -100,14 +69,21 @@ public class AdapterProdutos extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 vh.fab.setBackgroundTintList(ColorStateList.valueOf(this.context.getResources().getColor(R.color.colorPrimaryDark)));
             }
         } else {
-
+            ProdObj obj = produtos.get(position);
+            vh.setImagem(obj.imgCapa);
+            vh.setPreco(String.valueOf((int) obj.prodValor) + ",00");
+            vh.setNome(obj.prodName);
+            vh.fab.setBackgroundTintList(ColorStateList.valueOf(this.context.getResources().getColor(R.color.fab1)));
+            if (ids.contains(obj.getIdProduto())) {
+                vh.fab.setBackgroundTintList(ColorStateList.valueOf(this.context.getResources().getColor(R.color.colorPrimaryDark)));
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        if (!revenda) return produtos.size();
-        return produtos.size() + 1;
+        if (produtos == null) return 0;
+        return produtos.size();
     }
 
     public class AbrirChatViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -221,12 +197,7 @@ public class AdapterProdutos extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         @Override
         public void onClick(View v) {
-            int prodPosition = 0;
-            if (revenda) {
-                prodPosition = getAdapterPosition() - 1;
-            } else {
-                prodPosition = getAdapterPosition();
-            }
+            int prodPosition = getAdapterPosition();
 
             if (v.getId() == R.id.fab_produto_item) {
                 clickProdutoCliente.onclick(prodPosition, fab.getBackgroundTintList(), v, produtos.get(prodPosition));

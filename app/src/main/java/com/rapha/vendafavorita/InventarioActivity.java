@@ -251,8 +251,11 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
                     String d = DateFormatacao.dataCompletaCorrigidaSmall2(new Date(ob.getTimeUpdate()), new Date());
                     Log.d("Atualizacoes Inventario", atualiazacoes.get(i).getProdName() + " Data " + d);
                     TopProdutosRevenda tpr = new TopProdutosRevenda(ob.getProdName(), ob.getImgCapa(), ob.getIdProduto(), 0);
-                    notificarAtualiz.add(tpr);
-                    if(i > 19) break;
+
+                    if (ob.isDisponivel()) {
+                        notificarAtualiz.add(tpr);
+                    }
+                    if(notificarAtualiz.size() > 19) break;
                 }
 
                 rv.setLayoutManager(new LinearLayoutManager(InventarioActivity.this));

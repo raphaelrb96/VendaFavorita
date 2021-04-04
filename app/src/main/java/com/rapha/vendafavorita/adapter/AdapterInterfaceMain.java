@@ -39,23 +39,9 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
     private ListenerPrincipal listenerPrincipal;
 
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        if (viewType == 0) {
-            View view2 = LayoutInflater.from(context).inflate(R.layout.item_abrir_chat, parent, false);
-            return new AbrirPainelViewHolder(view2);
-        }
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_main_catg_atalho, parent, false);
         return new CatgViewHolder(view, context, produtos);
@@ -63,11 +49,6 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-        if (position == 0) {
-
-            return;
-        }
 
         CatgViewHolder vh = (CatgViewHolder) holder;
 
@@ -117,13 +98,12 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return 11;
+        return 10;
     }
 
     public interface ListenerPrincipal {
         void clickCategoria(ArrayList<ProdObj> produtos);
         void clickProduto(ProdObj prod);
-        void abriPainelRevendedor();
     }
 
     public AdapterInterfaceMain(Context context, ArrayList<ProdObj> produtos, ListenerPrincipal listenerPrincipal) {
@@ -158,31 +138,6 @@ public class AdapterInterfaceMain extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
-
-    public class AbrirPainelViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        private ImageView imgPerfil;
-        private ExtendedFloatingActionButton btOfertas1, btCelular2, btComputador3, btVideoGame4, btPetshop5, btEletronicos16, btFerramentas17, btDiversos19;
-
-        public AbrirPainelViewHolder(@NonNull View view) {
-            super(view);
-            imgPerfil = (ImageView) view.findViewById(R.id.img_perfil);
-            btOfertas1 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_1);
-            btCelular2 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_2);
-            btComputador3 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_3);
-            btVideoGame4 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_4);
-            btPetshop5 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_5);
-            btEletronicos16 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_16);
-            btFerramentas17 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_17);
-            btDiversos19 = (ExtendedFloatingActionButton) view.findViewById(R.id.ll_bt_19);
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            listenerPrincipal.abriPainelRevendedor();
-        }
-    }
 
     class CatgViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, AdapterProdutoAtalho.HandlerProdAtalho {
 

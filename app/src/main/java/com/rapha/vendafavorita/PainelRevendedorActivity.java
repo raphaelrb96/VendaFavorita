@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -35,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.rapha.vendafavorita.adapter.AdapterInterfaceMain;
 import com.rapha.vendafavorita.adapter.AdapterMinhasRevendas;
 import com.rapha.vendafavorita.adapter.AdapterProdutosPainelRevendedor;
 import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
@@ -53,7 +56,7 @@ import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
 import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
 import static com.rapha.vendafavorita.FragmentMain.user;
 
-public class PainelRevendedorActivity extends AppCompatActivity implements AdapterProdutosPainelRevendedor.ProdutoPainelListener {
+public class PainelRevendedorActivity extends AppCompatActivity implements AdapterProdutosPainelRevendedor.ProdutoPainelListener, AdapterInterfaceMain.ListenerPrincipal {
 
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
@@ -63,50 +66,50 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     private ArrayList<ProdObj> resultadoPesquisa;
     private ListenerRegistration registroRevendedor;
     private ProgressBar pb;
-    private RecyclerView rvProdutos, rvMinhasRevendas;
+    private RecyclerView rvProdutos;
     private Query minhasRevendasQuery;
     private ArrayList<ProdObj> listProds;
     private ArrayList<ObjectRevenda> listMinhasRevendas;
     private ArrayList<ObjectRevenda> aReceber;
     private View voltar, bt_ranking;
-    private CardView carteira, bt_afiliados_painel_revenda;
-    private TextView statusCarteira, btCarteira, title_rv_produtos_painel_revenda, link_historico_revendas;
+    private CardView bt_afiliados_painel_revenda;
+    private TextView title_rv_produtos_painel_revenda;
     private ExtendedFloatingActionButton efab_painel_revendedor;
     private NestedScrollView scrolRevend;
 
-    private EditText et_pesquisar_painel_revendedor;
-    private ImageButton bt_pesquisar_painel_revendedor;
+    private LinearLayout meu_historico_rendededor, minhas_comissoes_revendedor;
+
     private String idUsuario, nome, path, zap;
     private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
+    private TextView titulo_painel_revendedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_painel_revendedor);
-        rvMinhasRevendas = (RecyclerView) findViewById(R.id.rv_ultimas_revendas);
         scrolRevend = (NestedScrollView) findViewById(R.id.scrol_revendedor);
         rvProdutos = (RecyclerView) findViewById(R.id.rv_produtos_painel_revenda);
         pb = (ProgressBar) findViewById(R.id.pb_painel_revenda);
         voltar = (View) findViewById(R.id.voltar_painel_revendedor);
         bt_ranking = (View) findViewById(R.id.bt_ranking);
-        bt_pesquisar_painel_revendedor = (ImageButton) findViewById(R.id.bt_pesquisar_painel_revendedor);
         //totalCarteira = (TextView) findViewById(R.id.total_carteira_painel);
-        statusCarteira = (TextView) findViewById(R.id.status_carteira_painel);
-        link_historico_revendas = (TextView) findViewById(R.id.link_historico_revendas);
-        carteira = (CardView) findViewById(R.id.card_carteira_painel_revenda);
+        title_rv_produtos_painel_revenda = (TextView) findViewById(R.id.title_rv_produtos_painel_revenda);
+        titulo_painel_revendedor = (TextView) findViewById(R.id.titulo_painel_revendedor);
+        minhas_comissoes_revendedor = (LinearLayout) findViewById(R.id.minhas_comissoes_revendedor);
+        meu_historico_rendededor = (LinearLayout) findViewById(R.id.meu_historico_rendededor);
         bt_afiliados_painel_revenda = (CardView) findViewById(R.id.bt_afiliados_painel_revenda);
         efab_painel_revendedor = (ExtendedFloatingActionButton) findViewById(R.id.efab_painel_revendedor);
-        et_pesquisar_painel_revendedor = (EditText) findViewById(R.id.et_pesquisar_painel_revendedor);
-        btCarteira = (TextView) findViewById(R.id.bt_carteira_painel);
-        title_rv_produtos_painel_revenda = (TextView) findViewById(R.id.title_rv_produtos_painel_revenda);
         firestore = FirebaseFirestore.getInstance();
         idUsuario = getIntent().getStringExtra("id");
         nome = getIntent().getStringExtra("nome");
         path = getIntent().getStringExtra("path");
         zap = getIntent().getStringExtra("zap");
         auth = FirebaseAuth.getInstance();
+
+        titulo_painel_revendedor.setText("Olá, " + nome);
+
         queryProd = firestore.collection("produtos");
         revendedorDocRef = firestore.collection("Revendedores").document("amacompras").collection("ativos").document(auth.getCurrentUser().getUid());
         minhasRevendasQuery = firestore.collection("MinhasRevendas").document("Usuario").collection(auth.getCurrentUser().getUid()).orderBy("hora", Query.Direction.DESCENDING);
@@ -127,7 +130,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             }
         });
 
-        btCarteira.setOnClickListener(new View.OnClickListener() {
+        minhas_comissoes_revendedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PainelRevendedorActivity.this, HistoricoRevendasActivity.class);
@@ -164,65 +167,18 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             }
         });
 
-        bt_pesquisar_painel_revendedor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String textoPesquisa = et_pesquisar_painel_revendedor.getText().toString();
-                if (textoPesquisa.length() > 0) {
 
-                    pesquisar(textoPesquisa);
-
-                }
-            }
-        });
 
         analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
 
-        et_pesquisar_painel_revendedor.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                et_pesquisar_painel_revendedor.setFocusable(true);
-                et_pesquisar_painel_revendedor.setFocusableInTouchMode(true);
-                return false;
-            }
-        });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
-            et_pesquisar_painel_revendedor.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        String pesq = et_pesquisar_painel_revendedor.getText().toString();
-                        if (pesq.length() > 0) {
-                            pesquisar(pesq);
-                        }
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
 
         efab_painel_revendedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PainelRevendedorActivity.this, ListaRevendaActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        link_historico_revendas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PainelRevendedorActivity.this, HistoricoRevendasActivity.class);
-
-                intent.putExtra("id", idUsuario);
-                intent.putExtra("nome", nome);
-                intent.putExtra("path", path);
-                intent.putExtra("zap", zap);
-
                 startActivity(intent);
             }
         });
@@ -261,7 +217,6 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
         String busca = "tag." + st.toLowerCase();
         telaInicialLoadding();
-        esconderTeclado();
 
         resultadoPesquisa = new ArrayList<>();
 
@@ -281,8 +236,8 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
                     if (listMinhasRevendas == null) {
 
-                        rvMinhasRevendas.setVisibility(View.GONE);
-                        carteira.setVisibility(View.GONE);
+                        minhas_comissoes_revendedor.setVisibility(View.GONE);
+                        meu_historico_rendededor.setVisibility(View.GONE);
                         //title_rv_minhas_ultimas_revendas.setVisibility(View.GONE);
 
                     }
@@ -305,31 +260,23 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
     }
 
-    private void esconderTeclado() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
-            ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .hideSoftInputFromWindow(et_pesquisar_painel_revendedor.getWindowToken(), 0);
-        }
-    }
 
     private void telaInicialLoadding() {
         pb.setVisibility(View.VISIBLE);
         rvProdutos.setVisibility(View.GONE);
         title_rv_produtos_painel_revenda.setVisibility(View.GONE);
         bt_afiliados_painel_revenda.setVisibility(View.GONE);
-        rvMinhasRevendas.setVisibility(View.GONE);
-        carteira.setVisibility(View.GONE);
-        link_historico_revendas.setVisibility(View.GONE);
+        minhas_comissoes_revendedor.setVisibility(View.GONE);
+        meu_historico_rendededor.setVisibility(View.GONE);
     }
 
     private void telaSucess() {
         pb.setVisibility(View.GONE);
-        rvProdutos.setVisibility(View.VISIBLE);
         title_rv_produtos_painel_revenda.setVisibility(View.VISIBLE);
-        rvMinhasRevendas.setVisibility(View.VISIBLE);
-        carteira.setVisibility(View.VISIBLE);
+        rvProdutos.setVisibility(View.VISIBLE);
+        minhas_comissoes_revendedor.setVisibility(View.VISIBLE);
+        meu_historico_rendededor.setVisibility(View.VISIBLE);
         bt_afiliados_painel_revenda.setVisibility(View.VISIBLE);
-        link_historico_revendas.setVisibility(View.VISIBLE);
     }
 
     private void cadastrar() {
@@ -361,17 +308,9 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
                     //totalCarteira.setText("R$ " + soma + ",00");
 
-                    if (soma < 100) {
-                        statusCarteira.setText("Ao completar 100 reais você poderá retirar seu dinheiro");
-                    } else {
-                        statusCarteira.setText("Você ja pode receber suas comissões");
-                    }
-
                     AdapterMinhasRevendas adapterMinhasRevendas = new AdapterMinhasRevendas(listMinhasRevendas, PainelRevendedorActivity.this);
-                    rvMinhasRevendas.setLayoutManager(new LinearLayoutManager(PainelRevendedorActivity.this, RecyclerView.HORIZONTAL, false));
-                    rvMinhasRevendas.setAdapter(adapterMinhasRevendas);
-                    carteira.setVisibility(View.VISIBLE);
-                    rvMinhasRevendas.setVisibility(View.VISIBLE);
+                    minhas_comissoes_revendedor.setVisibility(View.VISIBLE);
+                    meu_historico_rendededor.setVisibility(View.VISIBLE);
                     scrolRevend.smoothScrollTo(0,0);
 
                 }
@@ -392,7 +331,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
     private void listarProdutos() {
 
-        queryProd.whereEqualTo("disponivel", true).limit(200).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        queryProd.orderBy("comissao", Query.Direction.DESCENDING).limit(150).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
@@ -401,7 +340,9 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
                 for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                     ProdObj prod = queryDocumentSnapshots.getDocuments().get(i).toObject(ProdObj.class);
-                    listProds.add(prod);
+                    if (prod.isDisponivel()) {
+                        listProds.add(prod);
+                    }
                 }
 
                 Collections.sort(listProds, new Comparator<ProdObj>() {
@@ -413,15 +354,27 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
                 Collections.reverse(listProds);
 
+
                 AdapterProdutosPainelRevendedor adapter = new AdapterProdutosPainelRevendedor(listProds, PainelRevendedorActivity.this, PainelRevendedorActivity.this);
-                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                 rvProdutos.setLayoutManager(layoutManager);
                 rvProdutos.setAdapter(adapter);
+
+
                 telaSucess();
                 scrolRevend.smoothScrollTo(0,0);
 
+                //AdapterInterfaceMain mAdapter = new AdapterInterfaceMain(PainelRevendedorActivity.this, listProds, PainelRevendedorActivity.this);
+                //rvProdutos.setLayoutManager(new LinearLayoutManager(PainelRevendedorActivity.this));
+                //rvProdutos.setAdapter(mAdapter);
+
             }
         });
+
+    }
+
+    @Override
+    public void clickCategoria(ArrayList<ProdObj> produtos) {
 
     }
 
@@ -435,4 +388,5 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
         startActivity(intent);
     }
+
 }

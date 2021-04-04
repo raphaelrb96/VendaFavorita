@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="3dp"
         android:layout_width="150dp"
-        android:layout_height="280dp">
+        android:layout_height="250dp">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -25,18 +25,17 @@
                 <ImageView
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:minHeight="200dp"
                     android:id="@+id/img_item_produto_principal"
-                    android:layout_marginBottom="80dp"
+                    android:layout_marginBottom="70dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="180dp" />
 
                 <androidx.cardview.widget.CardView
                     android:layout_gravity="bottom"
                     app:cardElevation="6dp"
                     app:cardBackgroundColor="#fff"
                     android:layout_width="match_parent"
-                    android:layout_height="90dp">
+                    android:layout_height="70dp">
                     <LinearLayout
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
@@ -53,15 +52,16 @@
                             android:layout_marginRight="6dp"
                             android:textSize="18sp"
                             android:text="$5.00"
+                            android:visibility="gone"
                             android:textColor="#212020"
                             android:layout_width="match_parent"
                             android:layout_height="22dp" />
                         <TextView
-                            android:textStyle="italic"
                             android:id="@+id/nome_produto_principal"
                             android:textColor="#6e6e6e"
                             android:maxLines="2"
-                            android:textSize="16sp"
+                            android:textSize="15sp"
+                            android:textAllCaps="true"
                             android:layout_marginTop="3dp"
                             android:layout_width="match_parent"
                             android:layout_height="48dp" />

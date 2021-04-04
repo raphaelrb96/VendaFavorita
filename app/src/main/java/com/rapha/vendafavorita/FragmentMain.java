@@ -33,6 +33,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,9 +76,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.rapha.vendafavorita.adapter.AdapterEmAlta;
 import com.rapha.vendafavorita.adapter.AdapterInterfaceMain;
+import com.rapha.vendafavorita.adapter.AdapterLancamentos;
 import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
+import com.rapha.vendafavorita.objectfeed.ProdutoObj;
+import com.rapha.vendafavorita.objects.FeedPrincipalObj;
 import com.rapha.vendafavorita.objects.TokenFcm;
 import com.rapha.vendafavorita.objects.UserStreamView;
 import com.rapha.vendafavorita.objects.Usuario;
@@ -88,7 +94,7 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.rapha.vendafavorita.MainActivity.ids;
 
-public class FragmentMain extends Fragment implements FacebookCallback<LoginResult>, AdapterInterfaceMain.ListenerPrincipal, AdapterProdutos.ClickProdutoCliente {
+public class FragmentMain extends Fragment implements FacebookCallback<LoginResult>, AdapterInterfaceMain.ListenerPrincipal, AdapterProdutos.ClickProdutoCliente, AdapterLancamentos.HandlerProdAtalho, AdapterEmAlta.EmaltaListener {
 
     private AnalitycsGoogle analitycsGoogle;
     private AnalitycsFacebook analitycsFacebook;
@@ -125,13 +131,19 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private TextView tvErro;
     private LinearLayout toolbar;
 
+    private CardView botao_topo;
+
     private FrameLayout scrol_main;
+
+    private RecyclerView rv_novidades, rv_em_alta;
 
     private LinearLayout btZap, btSair, btMensagem, btMinhasCompras;
     //private ExtendedFloatingActionButton btMeuCarrinho;
     private EditText etpesquisar;
 
     private FloatingActionButton efabCart;
+
+    private TextView nome_top_vend_1, nome_top_vend_2, nome_top_vend_3;
 
     private View whatsappBt, faceBt, instaBt, chatBt, negociosBt, perfilBt;
 
@@ -141,6 +153,18 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private ImageView fundo;
 
     private FrameLayout bt_carrinho_revenda_main, bt_meu_perfil_main, bt_afiliados_main, bt_comissoes_main;
+    private NestedScrollView lista_principal;
+    private LinearLayout ll_bt_smart_watch;
+    private LinearLayout ll_bt_caixa_som;
+    private LinearLayout ll_bt_eletronicos;
+    private LinearLayout ll_bt_salao;
+    private LinearLayout ll_bt_video_game;
+    private LinearLayout ll_bt_comp;
+    private LinearLayout ll_bt_ferramentas;
+    private LinearLayout ll_bt_brinquedos;
+    private LinearLayout ll_bt_acc_tv, ll_bt_fones, ll_bt_oculos, ll_bt_microfones;
+    private LinearLayout ll_bt_camera, ll_bt_mochilas, ll_bt_relogios;
+    private LinearLayout ll_bt_automotivos;
 
     //private FrameLayout  bt_painel_revendedor;
 
@@ -161,7 +185,12 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         negociosBt = (View) view.findViewById(R.id.bt_negocios);
         perfilBt = (View) view.findViewById(R.id.bt_perfil);
 
+        botao_topo = (CardView) view.findViewById(R.id.botao_topo);
+
         scrol_main = (FrameLayout) view.findViewById(R.id.scrol_main);
+
+        rv_novidades = (RecyclerView) view.findViewById(R.id.rv_novidades);
+        rv_em_alta = (RecyclerView) view.findViewById(R.id.rv_em_alta);
 
         bt_carrinho_revenda_main = (FrameLayout) view.findViewById(R.id.bt_carrinho_revenda_main);
         bt_afiliados_main = (FrameLayout) view.findViewById(R.id.bt_afiliados_main);
@@ -172,6 +201,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
         efabCart = (FloatingActionButton) view.findViewById(R.id.efab_main);
 
+        categoriaFindView(view);
+
         mListMercadorias = (RecyclerView) view.findViewById(R.id.rv_fragment_main);
         toolbar = (LinearLayout) view.findViewById(R.id.toolbar_main);
         etpesquisar= (EditText) view.findViewById(R.id.et_pesquisar);
@@ -179,6 +210,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         btSair = (LinearLayout) view.findViewById(R.id.ll_bt_sair);
         btMensagem = (LinearLayout) view.findViewById(R.id.ll_bt_mensagem_menu);
         btMinhasCompras = (LinearLayout) view.findViewById(R.id.ll_bt_minhas_compras_menu);
+
+        lista_principal = (NestedScrollView) view.findViewById(R.id.lista_principal);
 
         containerMenu = (HorizontalScrollView) view.findViewById(R.id.container_menu);
         btPesquisar = (ImageButton) view.findViewById(R.id.bt_pesquisar);
@@ -188,6 +221,10 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         pb = (ProgressBar) view.findViewById(R.id.pb_main);
         //efabCart = (ExtendedFloatingActionButton) view.findViewById(R.id.efab_meu_carrinho);
         tvErro = (TextView) view.findViewById(R.id.tv_error_main);
+
+        nome_top_vend_1 = (TextView) view.findViewById(R.id.nome_top_vend_1);
+        nome_top_vend_2 = (TextView) view.findViewById(R.id.nome_top_vend_2);
+        nome_top_vend_3 = (TextView) view.findViewById(R.id.nome_top_vend_3);
 
 
         //View btChat = (View) view.findViewById(R.id.bt_abrir_chat);
@@ -294,6 +331,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         btPesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lista_principal.scrollTo(0,0);
                 String pesq = etpesquisar.getText().toString();
                 if (pesq.length() > 0) {
                     pesquisar(pesq);
@@ -367,6 +405,20 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         });
 
+        botao_topo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user == null) return;
+
+                Intent intent = new Intent(getActivity(), PainelRevendedorActivity.class);
+                intent.putExtra("id", user.getUid());
+                intent.putExtra("nome", user.getDisplayName());
+                intent.putExtra("path", user.getPhotoUrl());
+                intent.putExtra("zap", user.getPhoneNumber());
+                startActivity(intent);
+            }
+        });
+
         bt_meu_perfil_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -377,6 +429,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                 }
             }
         });
+
+        categoriaListeners();
 
         /*
         mensagem_main.setOnClickListener(new View.OnClickListener() {
@@ -529,11 +583,190 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String pesq = etpesquisar.getText().toString();
                     if (pesq.length() > 0) {
+                        lista_principal.scrollTo(0, 0);
                         pesquisar(pesq);
                     }
                     return true;
                 }
                 return false;
+            }
+        });
+
+    }
+
+    private void categoriaFindView(View view) {
+
+        ll_bt_smart_watch = (LinearLayout) view.findViewById(R.id.ll_bt_smart_watch);
+        ll_bt_caixa_som = (LinearLayout) view.findViewById(R.id.ll_bt_caixa_som);
+        ll_bt_eletronicos = (LinearLayout) view.findViewById(R.id.ll_bt_eletronicos);
+        ll_bt_salao = (LinearLayout) view.findViewById(R.id.ll_bt_salao);
+
+        ll_bt_video_game = (LinearLayout) view.findViewById(R.id.ll_bt_video_game);
+        ll_bt_comp = (LinearLayout) view.findViewById(R.id.ll_bt_comp);
+        ll_bt_ferramentas = (LinearLayout) view.findViewById(R.id.ll_bt_ferramentas);
+        ll_bt_brinquedos = (LinearLayout) view.findViewById(R.id.ll_bt_brinquedos);
+
+        ll_bt_acc_tv = (LinearLayout) view.findViewById(R.id.ll_bt_acc_tv);
+        ll_bt_fones = (LinearLayout) view.findViewById(R.id.ll_bt_fones);
+        ll_bt_oculos = (LinearLayout) view.findViewById(R.id.ll_bt_oculos);
+        ll_bt_microfones = (LinearLayout) view.findViewById(R.id.ll_bt_microfones);
+
+        ll_bt_automotivos = (LinearLayout) view.findViewById(R.id.ll_bt_automotivos);
+        ll_bt_relogios = (LinearLayout) view.findViewById(R.id.ll_bt_relogios);
+        ll_bt_mochilas = (LinearLayout) view.findViewById(R.id.ll_bt_mochilas);
+        ll_bt_camera = (LinearLayout) view.findViewById(R.id.ll_bt_camera);
+
+    }
+
+    private void categoriaListeners() {
+
+        ll_bt_smart_watch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.1", true), false, "", -1);
+            }
+        });
+
+        ll_bt_caixa_som.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.2", true), false, "", -1);
+            }
+        });
+
+        ll_bt_eletronicos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.3", true), false, "", -1);
+            }
+        });
+
+        ll_bt_salao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.4", true), false, "", -1);
+            }
+        });
+
+        //linha 2
+
+        ll_bt_video_game.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.6", true), false, "", -1);
+            }
+        });
+
+        ll_bt_comp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.7", true), false, "", -1);
+            }
+        });
+
+        ll_bt_ferramentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.8", true), false, "", -1);
+            }
+        });
+
+        ll_bt_brinquedos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.9", true), false, "", -1);
+            }
+        });
+
+        // linha 3
+
+        ll_bt_acc_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.20", true), false, "", -1);
+            }
+        });
+
+        ll_bt_fones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.11", true), false, "", -1);
+            }
+        });
+
+        ll_bt_oculos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.14", true), false, "", -1);
+            }
+        });
+
+        ll_bt_microfones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.18", true), false, "", -1);
+            }
+        });
+
+        //linha 4
+
+        ll_bt_automotivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.5", true), false, "", -1);
+            }
+        });
+
+        ll_bt_relogios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.10", true), false, "", -1);
+            }
+        });
+
+        ll_bt_mochilas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.35", true), false, "", -1);
+            }
+        });
+
+        ll_bt_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding();
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.13", true), false, "", -1);
             }
         });
 
@@ -940,6 +1173,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             meuQuery = meuQuery.whereEqualTo("disponivel", true);
         }
 
+        lista_principal.scrollTo(0, 0);
+
         meuQuery.limit(200).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -980,18 +1215,15 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                         }
                     }
 
-                    if(isPesquisa) {
-                        AdapterProdutos adapterProdutos = new AdapterProdutos(FragmentMain.this, getActivity(), prodObjs, true);
-                        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-                        mListMercadorias.setLayoutManager(layoutManager);
-                        mListMercadorias.setAdapter(adapterProdutos);
-                        telaInicialSucesso();
-                    } else {
-                        mAdapter = new AdapterInterfaceMain(getActivity(), prodObjs, FragmentMain.this);
-                        mListMercadorias.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        mListMercadorias.setAdapter(mAdapter);
-                        telaInicialSucesso();
-                    }
+                    AdapterProdutos adapterProdutos = new AdapterProdutos(FragmentMain.this, getActivity(), list, true);
+                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                    mListMercadorias.setLayoutManager(layoutManager);
+                    mListMercadorias.setAdapter(adapterProdutos);
+
+                    //mAdapter = new AdapterInterfaceMain(getActivity(), prodObjs, FragmentMain.this);
+                    //mListMercadorias.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    //mListMercadorias.setAdapter(mAdapter);
+                    telaInicialSucesso();
 
                     return;
                 }
@@ -1015,10 +1247,36 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         });
     }
 
+
+
     private void obterListaDeProdutos(int tipo) {
 
         telaInicialLoadding();
-        myQuery(firestore.collection("produtos").whereEqualTo("disponivel", true), false, "", tipo);
+        lista_principal.scrollTo(0, 0);
+        //myQuery(firestore.collection("produtos").whereEqualTo("disponivel", true), false, "", tipo);
+
+        firestore.collection("Feed").document("Main").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                pb.setVisibility(View.GONE);
+                if (documentSnapshot == null) {
+
+                } else {
+                    FeedPrincipalObj feedPrincipalObj = documentSnapshot.toObject(FeedPrincipalObj.class);
+                    AdapterLancamentos adapterLancamentos = new AdapterLancamentos(feedPrincipalObj.getAtualizacoesProds(), getActivity(), FragmentMain.this);
+                    rv_novidades.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+                    rv_novidades.setAdapter(adapterLancamentos);
+
+                    nome_top_vend_1.setText(feedPrincipalObj.getTopRevendedores().get(0).getNomeRevendedor());
+                    nome_top_vend_2.setText(feedPrincipalObj.getTopRevendedores().get(1).getNomeRevendedor());
+                    nome_top_vend_3.setText(feedPrincipalObj.getTopRevendedores().get(2).getNomeRevendedor());
+
+                    AdapterEmAlta adapterEmAlta = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopProdutos());
+                    rv_em_alta.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rv_em_alta.setAdapter(adapterEmAlta);
+                }
+            }
+        });
 
     }
 
@@ -1029,7 +1287,23 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     private void pesquisar(final String st) {
 
-        String busca = "tag." + st.toLowerCase();
+        StringBuilder nick = new StringBuilder();
+
+        for (int i = 0; i < st.length(); i++) {
+
+            String ch = String.valueOf(st.charAt(i));
+
+            if (ch.equals(".")) {
+                ch = "";
+            }
+
+            nick.append(ch);
+
+        }
+
+        Log.d("BuscaFormatada", nick.toString());
+
+        String busca = "tag." + nick.toString().toLowerCase();
         telaInicialLoadding();
         esconderTeclado();
 
@@ -1220,7 +1494,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     @Override
     public void clickProduto(ProdObj obj) {
         ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores());
-        Intent intent = new Intent(getActivity(), ProdutoDetalheActivity.class);
+        Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
         ArrayList<ProdObjParcelable> relacionados = new ArrayList<>();
         String st = obj.getProdName().substring(0, 3);
         for (int x = 0; x < prodObjs.size(); x++) {
@@ -1241,24 +1515,15 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         }
         intent.putExtra("prod", objParcelable);
-        intent.putParcelableArrayListExtra("relacionados" , relacionados);
+        //intent.putParcelableArrayListExtra("relacionados" , relacionados);
         startActivity(intent);
     }
 
-    @Override
-    public void abriPainelRevendedor() {
-        Intent intent = new Intent(getActivity(), PainelRevendedorActivity.class);
-        intent.putExtra("id", user.getUid());
-        intent.putExtra("nome", user.getDisplayName());
-        intent.putExtra("path", user.getPhotoUrl());
-        intent.putExtra("zap", user.getPhoneNumber());
-        startActivity(intent);
-    }
 
     @Override
     public void openDetalhe(ProdObj obj) {
         ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores());
-        Intent intent = new Intent(getActivity(), ProdutoDetalheActivity.class);
+        Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
         ArrayList<ProdObjParcelable> relacionados = new ArrayList<>();
         String st = obj.getProdName().substring(0, 3);
         for (int x = 0; x < prodObjs.size(); x++) {
@@ -1279,7 +1544,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         }
         intent.putExtra("prod", objParcelable);
-        intent.putParcelableArrayListExtra("relacionados" , relacionados);
+        //intent.putParcelableArrayListExtra("relacionados" , relacionados);
         startActivity(intent);
     }
 
@@ -1301,6 +1566,20 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     @Override
     public void openChat() {
 
+    }
+
+    @Override
+    public void abriProduto(ProdutoObj prod) {
+        Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
+        intent.putExtra("id", prod.getIdProduto());
+        startActivity(intent);
+    }
+
+    @Override
+    public void verDetalhesProd(String id) {
+        Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }
 
