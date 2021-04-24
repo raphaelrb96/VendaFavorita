@@ -64,6 +64,10 @@ public class AdapterAfilidos extends RecyclerView.Adapter<AdapterAfilidos.Afilia
 
     @Override
     public int getItemCount() {
+        if (usuarios == null) return 0;
+
+        if (usuarios.size() > 100) return 100;
+
         return usuarios.size();
     }
 

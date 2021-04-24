@@ -2,6 +2,7 @@ package com.rapha.vendafavorita;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,12 +18,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.adapter.AdapterMeuHistoricoDeVendas;
+import com.rapha.vendafavorita.adapter.AdapterTopProdutos;
 import com.rapha.vendafavorita.adapter.ComissoesAfiliadosAdapter;
 import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.objects.ComissaoAfiliados;
+import com.rapha.vendafavorita.objects.ObjProdutoRevenda;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
+import com.rapha.vendafavorita.objects.TopProdutosRevenda;
+import com.rapha.vendafavorita.objects.TopRevendedores;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
 import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
@@ -31,28 +37,32 @@ import static com.rapha.vendafavorita.FragmentMain.user;
 
 public class HistoricoRevendasActivity extends AppCompatActivity {
 
-    private RecyclerView rv_comissoes, rv_comissoes_afiliados;
+    private RecyclerView rv_comissoes, rv_comissoes_afiliados, rv_comissoes_top_produtos;
     private ProgressBar pb_comissoes;
-    private TextView text_erro_comissao, valor_a_receber;
+    private TextView text_erro_comissao;
     private AdapterMeuHistoricoDeVendas adapterMeuHistoricoDeVendas;
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth auth;
 
-    private NestedScrollView scrol_list_minhas_comissoes;
+    private LinearLayout scrol_list_minhas_comissoes;
 
     private String idUsuario, nome, path, zap;
+
     private int total = 0;
     private long time;
     private Query refRevenda, refComissoes;
     private ArrayList<ObjectRevenda> listaDeComissoes;
     private ArrayList<ComissaoAfiliados> listaDeComissaoAfiliados;
 
-    private CardView card_carteira_historico_comissoes;
-    private TextView titulo_comissoes_afiliados, titulo_comissoes_revendas;
+    private TextView titulo_comissoes_afiliados, titulo_comissoes_revendas, titulo_top_produtos;
     private View bt_voltar_historico_revendas;
     private AnalitycsFacebook analitycsFacebook;
     private AnalitycsFacebook analitycsGoogle;
+
+    private AdapterTopProdutos adapterTopProdutos;
+
+    private ArrayList<TopProdutosRevenda> topProdutosRevendas30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +71,16 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
         //activity do cliente
         rv_comissoes = (RecyclerView) findViewById(R.id.rv_comissoes);
         rv_comissoes_afiliados = (RecyclerView) findViewById(R.id.rv_comissoes_afiliados);
-        card_carteira_historico_comissoes = (CardView) findViewById(R.id.card_carteira_historico_comissoes);
+        rv_comissoes_top_produtos = (RecyclerView) findViewById(R.id.rv_comissoes_top_produtos);
+
         text_erro_comissao = (TextView) findViewById(R.id.text_erro_comissao);
         titulo_comissoes_afiliados = (TextView) findViewById(R.id.titulo_comissoes_afiliados);
         titulo_comissoes_revendas = (TextView) findViewById(R.id.titulo_comissoes_revendas);
-        valor_a_receber = (TextView) findViewById(R.id.valor_a_receber);
+        titulo_top_produtos = (TextView) findViewById(R.id.titulo_top_produtos);
+
         bt_voltar_historico_revendas = (View) findViewById(R.id.bt_voltar_historico_revendas);
         pb_comissoes = (ProgressBar) findViewById(R.id.pb_comissoes);
-        scrol_list_minhas_comissoes = (NestedScrollView) findViewById(R.id.scrol_list_minhas_comissoes);
+        scrol_list_minhas_comissoes = (LinearLayout) findViewById(R.id.scrol_list_minhas_comissoes);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -88,22 +100,20 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
             }
         });
 
-        String uid = documentoPrincipalDoUsuario.getUid();
-
-        if (uid == null) {
-            uid = auth.getUid();
-        }
+        String uid = auth.getUid();
 
         refRevenda = firebaseFirestore.collection("MinhasRevendas").document("Usuario").collection(uid);
 
         refComissoes = firebaseFirestore.collection("MinhasComissoesAfiliados").document("Usuario").collection(uid);
 
-        scrol_list_minhas_comissoes.setVisibility(View.GONE);
+        //scrol_list_minhas_comissoes.setVisibility(View.GONE);
         refRevenda.orderBy("hora", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 listaDeComissoes = new ArrayList<>();
+                topProdutosRevendas30 = new ArrayList<>();
                 total = 0;
+
                 if (queryDocumentSnapshots != null) {
 
                     if (queryDocumentSnapshots.getDocuments().size() > 0) {
@@ -121,13 +131,19 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
                                 }
                             }
 
+                            if (obj.getStatusCompra() != 3) {
+                                preencherListaTopProdutos(obj);
+                            }
+
                             listaDeComissoes.add(obj);
 
                         }
 
-                        adapterMeuHistoricoDeVendas = new AdapterMeuHistoricoDeVendas(HistoricoRevendasActivity.this, listaDeComissoes);
-                        rv_comissoes.setLayoutManager(new LinearLayoutManager(HistoricoRevendasActivity.this));
-                        rv_comissoes.setAdapter(adapterMeuHistoricoDeVendas);
+
+
+
+
+                        Collections.sort(topProdutosRevendas30);
 
 
 
@@ -150,8 +166,8 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
         super.onStart();
         if (!ADMINISTRADOR) {
 
-            analitycsFacebook.carteiraView(user.getDisplayName(), user.getUid(), pathFotoUser);
-            analitycsGoogle.carteiraView(user.getDisplayName(), user.getUid(), pathFotoUser);
+            analitycsFacebook.visitaAoPainelRevendedor(nome, idUsuario, path);
+            analitycsGoogle.visitaAoPainelRevendedor(nome, idUsuario, path);
 
         }
     }
@@ -184,8 +200,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
                     }
 
-                    card_carteira_historico_comissoes.setVisibility(View.VISIBLE);
-                    valor_a_receber.setText(total + ",00");
+
 
                     if (listaDeComissoes.size() > 0) {
                         comComissoesAfiliados();
@@ -199,7 +214,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
                 } else {
 
-                    valor_a_receber.setText(total + ",00");
+
 
                     if (listaDeComissoes.size() > 0) {
 
@@ -242,14 +257,30 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
     private void semComissoesRevendas() {
         rv_comissoes.setVisibility(View.GONE);
         titulo_comissoes_revendas.setVisibility(View.GONE);
+        titulo_top_produtos.setVisibility(View.GONE);
     }
 
     private void comComissoesRevendas() {
+
         adapterMeuHistoricoDeVendas = new AdapterMeuHistoricoDeVendas(HistoricoRevendasActivity.this, listaDeComissoes);
         rv_comissoes.setLayoutManager(new LinearLayoutManager(HistoricoRevendasActivity.this));
         rv_comissoes.setAdapter(adapterMeuHistoricoDeVendas);
+
+        if (topProdutosRevendas30.size() > 0) {
+
+            titulo_top_produtos.setVisibility(View.VISIBLE);
+            adapterTopProdutos = new AdapterTopProdutos(topProdutosRevendas30, HistoricoRevendasActivity.this);
+            rv_comissoes_top_produtos.setLayoutManager(new LinearLayoutManager(HistoricoRevendasActivity.this, RecyclerView.HORIZONTAL, false));
+            rv_comissoes_top_produtos.setAdapter(adapterTopProdutos);
+
+        }
+
         rv_comissoes.setVisibility(View.VISIBLE);
+        rv_comissoes_top_produtos.setVisibility(View.VISIBLE);
+
         titulo_comissoes_revendas.setVisibility(View.VISIBLE);
+
+        pb_comissoes.setVisibility(View.GONE);
     }
 
     private void listaCheia() {
@@ -260,8 +291,43 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
     private void listaVazia() {
         rv_comissoes.setVisibility(View.GONE);
+        rv_comissoes_top_produtos.setVisibility(View.GONE);
         text_erro_comissao.setVisibility(View.VISIBLE);
         pb_comissoes.setVisibility(View.GONE);
     }
+
+
+    private void preencherListaTopProdutos(ObjectRevenda rev) {
+
+        for (int j = 0; j < rev.getListaDeProdutos().size(); j++) {
+            ObjProdutoRevenda prodRev = rev.getListaDeProdutos().get(j);
+            TopProdutosRevenda topPrd = new TopProdutosRevenda(prodRev.getProdutoName(), prodRev.getCaminhoImg(), prodRev.getIdProdut(), prodRev.getQuantidade());
+
+            if (topProdutosRevendas30.size() > 0) {
+
+                boolean produtoJaExiste = false;
+
+                for (int k = 0; k < topProdutosRevendas30.size(); k++) {
+
+                    if (topPrd.getIdProduto().equals(topProdutosRevendas30.get(k).getIdProduto())) {
+                        produtoJaExiste = true;
+                        topProdutosRevendas30.get(k).setNumeroDeRevendas(topPrd.getNumeroDeRevendas() + topProdutosRevendas30.get(k).getNumeroDeRevendas());
+                        break;
+                    }
+
+                }
+
+                if (!produtoJaExiste) {
+                    topProdutosRevendas30.add(topPrd);
+                }
+
+            } else {
+                topProdutosRevendas30.add(topPrd);
+            }
+        }
+
+
+    }
+
 
 }

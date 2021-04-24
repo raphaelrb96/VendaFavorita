@@ -42,6 +42,7 @@ import com.rapha.vendafavorita.adapter.AdapterMinhasRevendas;
 import com.rapha.vendafavorita.adapter.AdapterProdutosPainelRevendedor;
 import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
+import com.rapha.vendafavorita.carteira.CarteiraUsuario;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.rankings.ResumeRankingActivity;
 
@@ -71,13 +72,13 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     private ArrayList<ProdObj> listProds;
     private ArrayList<ObjectRevenda> listMinhasRevendas;
     private ArrayList<ObjectRevenda> aReceber;
-    private View voltar, bt_ranking;
+    private View voltar;
     private CardView bt_afiliados_painel_revenda;
     private TextView title_rv_produtos_painel_revenda;
     private ExtendedFloatingActionButton efab_painel_revendedor;
     private NestedScrollView scrolRevend;
 
-    private LinearLayout meu_historico_rendededor, minhas_comissoes_revendedor;
+    private LinearLayout meu_historico_rendededor, minhas_comissoes_revendedor, botao_campeonatos;
 
     private String idUsuario, nome, path, zap;
     private AnalitycsFacebook analitycsFacebook;
@@ -93,20 +94,25 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         rvProdutos = (RecyclerView) findViewById(R.id.rv_produtos_painel_revenda);
         pb = (ProgressBar) findViewById(R.id.pb_painel_revenda);
         voltar = (View) findViewById(R.id.voltar_painel_revendedor);
-        bt_ranking = (View) findViewById(R.id.bt_ranking);
         //totalCarteira = (TextView) findViewById(R.id.total_carteira_painel);
         title_rv_produtos_painel_revenda = (TextView) findViewById(R.id.title_rv_produtos_painel_revenda);
         titulo_painel_revendedor = (TextView) findViewById(R.id.titulo_painel_revendedor);
         minhas_comissoes_revendedor = (LinearLayout) findViewById(R.id.minhas_comissoes_revendedor);
         meu_historico_rendededor = (LinearLayout) findViewById(R.id.meu_historico_rendededor);
+        botao_campeonatos = (LinearLayout) findViewById(R.id.botao_campeonatos);
         bt_afiliados_painel_revenda = (CardView) findViewById(R.id.bt_afiliados_painel_revenda);
         efab_painel_revendedor = (ExtendedFloatingActionButton) findViewById(R.id.efab_painel_revendedor);
         firestore = FirebaseFirestore.getInstance();
+
         idUsuario = getIntent().getStringExtra("id");
         nome = getIntent().getStringExtra("nome");
         path = getIntent().getStringExtra("path");
         zap = getIntent().getStringExtra("zap");
         auth = FirebaseAuth.getInstance();
+
+        if (nome == null) {
+            nome = auth.getCurrentUser().getDisplayName();
+        }
 
         titulo_painel_revendedor.setText("Olá, " + nome);
 
@@ -122,7 +128,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             }
         });
 
-        bt_ranking.setOnClickListener(new View.OnClickListener() {
+        botao_campeonatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PainelRevendedorActivity.this, ResumeRankingActivity.class);
@@ -131,6 +137,14 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         });
 
         minhas_comissoes_revendedor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PainelRevendedorActivity.this, CarteiraUsuario.class);
+                startActivity(intent);
+            }
+        });
+
+        meu_historico_rendededor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PainelRevendedorActivity.this, HistoricoRevendasActivity.class);
@@ -191,8 +205,21 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
         if (!ADMINISTRADOR) {
 
-            analitycsFacebook.visitaAoPainelRevendedor(user.getDisplayName(), user.getUid(), pathFotoUser);
-            analitycsGoogle.visitaAoPainelRevendedor(user.getDisplayName(), user.getUid(), pathFotoUser);
+            if (nome == null) {
+                nome = auth.getCurrentUser().getDisplayName();
+            }
+
+            if (idUsuario == null) {
+                idUsuario = auth.getCurrentUser().getUid();
+            }
+
+            if (path == null) {
+                path = auth.getCurrentUser().getPhotoUrl().getPath();
+            }
+
+
+            analitycsFacebook.visitaAoPainelRevendedor(nome, idUsuario, path);
+            analitycsGoogle.visitaAoPainelRevendedor(nome, idUsuario, path);
 
         }
         
@@ -213,62 +240,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         }
     }
 
-    private void pesquisar(final String st) {
 
-        String busca = "tag." + st.toLowerCase();
-        telaInicialLoadding();
-
-        resultadoPesquisa = new ArrayList<>();
-
-        queryProd.whereEqualTo(busca, true).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (queryDocumentSnapshots != null) {
-
-                    for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                        ProdObj prod = queryDocumentSnapshots.getDocuments().get(i).toObject(ProdObj.class);
-                        if (prod.isDisponivel()) {
-                            resultadoPesquisa.add(prod);
-                        }
-                    }
-
-                    telaSucess();
-
-                    if (listMinhasRevendas == null) {
-
-                        minhas_comissoes_revendedor.setVisibility(View.GONE);
-                        meu_historico_rendededor.setVisibility(View.GONE);
-                        //title_rv_minhas_ultimas_revendas.setVisibility(View.GONE);
-
-                    }
-
-
-                    AdapterProdutosPainelRevendedor adapter = new AdapterProdutosPainelRevendedor(resultadoPesquisa, PainelRevendedorActivity.this, PainelRevendedorActivity.this);
-                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-                    rvProdutos.setLayoutManager(layoutManager);
-                    rvProdutos.setAdapter(adapter);
-
-                    scrolRevend.smoothScrollTo(0,0);
-
-
-                } else {
-                    Toast.makeText(PainelRevendedorActivity.this, "Nenhum resultado para sua pesquisa", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-
-    }
-
-
-    private void telaInicialLoadding() {
-        pb.setVisibility(View.VISIBLE);
-        rvProdutos.setVisibility(View.GONE);
-        title_rv_produtos_painel_revenda.setVisibility(View.GONE);
-        bt_afiliados_painel_revenda.setVisibility(View.GONE);
-        minhas_comissoes_revendedor.setVisibility(View.GONE);
-        meu_historico_rendededor.setVisibility(View.GONE);
-    }
 
     private void telaSucess() {
         pb.setVisibility(View.GONE);
@@ -276,6 +248,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         rvProdutos.setVisibility(View.VISIBLE);
         minhas_comissoes_revendedor.setVisibility(View.VISIBLE);
         meu_historico_rendededor.setVisibility(View.VISIBLE);
+        botao_campeonatos.setVisibility(View.VISIBLE);
         bt_afiliados_painel_revenda.setVisibility(View.VISIBLE);
     }
 
@@ -311,6 +284,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
                     AdapterMinhasRevendas adapterMinhasRevendas = new AdapterMinhasRevendas(listMinhasRevendas, PainelRevendedorActivity.this);
                     minhas_comissoes_revendedor.setVisibility(View.VISIBLE);
                     meu_historico_rendededor.setVisibility(View.VISIBLE);
+                    botao_campeonatos.setVisibility(View.VISIBLE);
                     scrolRevend.smoothScrollTo(0,0);
 
                 }

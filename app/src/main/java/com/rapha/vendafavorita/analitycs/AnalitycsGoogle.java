@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
@@ -77,16 +78,27 @@ public class AnalitycsGoogle {
         params.putString(FirebaseAnalytics.Param.CURRENCY, "BRL");
         params.putString(FirebaseAnalytics.Param.TRANSACTION_ID, novaCompra.getIdCompra());
 
-        ArrayList<ItemAnalise> itens = new ArrayList<>();
-
+        Bundle[] listaItens = new Bundle[novaCompra.getListaDeProdutos().size()];
 
         for (int i = 0; i < novaCompra.getListaDeProdutos().size(); i++) {
 
             ItemAnalise itemAnalise = new ItemAnalise(novaCompra.getListaDeProdutos().get(i).getProdutoName(), novaCompra.getListaDeProdutos().get(i).getIdProdut(), "");
-            itens.add(itemAnalise);
+
+            Bundle itemBundle = new Bundle();
+            itemBundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemAnalise.getItem_id());
+            itemBundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemAnalise.getItem_name());
+            itemBundle.putDouble(FirebaseAnalytics.Param.PRICE, novaCompra.getListaDeProdutos().get(i).getValorUni());
+            itemBundle.putDouble(FirebaseAnalytics.Param.VALUE, novaCompra.getListaDeProdutos().get(i).getValorUni());
+
+            listaItens[i] = itemBundle;
+            Log.d("ANALYTCS", "Lista itens (item id) " + listaItens[i].getString(FirebaseAnalytics.Param.ITEM_ID));
+            Log.d("ANALYTCS", "Lista itens (item nome) " + listaItens[i].getString(FirebaseAnalytics.Param.ITEM_NAME));
+
         }
 
-        params.putParcelableArray(FirebaseAnalytics.Param.ITEMS, (Parcelable[]) itens.toArray());
+        Log.d("ANALYTCS", "Lista itens: " + listaItens.length);
+
+        params.putParcelableArray(FirebaseAnalytics.Param.ITEMS, listaItens);
 
 
         logger.logEvent(FirebaseAnalytics.Event.PURCHASE, params);

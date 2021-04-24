@@ -107,7 +107,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private String ruaMain = "";
     private String bairroMain = "";
     private String nCasaMain = "";
-    private Toast mToast;
+    private Toast mToast = null;
 
     private View voltar;
     private String nomeCliente;
@@ -151,6 +151,13 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         if (user == null) {
             user = auth.getCurrentUser();
+        }
+
+        if (documentoPrincipalDoUsuario == null || documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
+            Intent intent = new Intent(ListaRevendaActivity.this, MeuPerfilActivity.class);
+            intent.putExtra("alert", 2);
+            startActivity(intent);
+            finish();
         }
 
         analitycsFacebook = new AnalitycsFacebook(this);
@@ -426,6 +433,13 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     @Override
     protected void onStart() {
         super.onStart();
+
+        if (documentoPrincipalDoUsuario == null || documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
+            Intent intent = new Intent(ListaRevendaActivity.this, MeuPerfilActivity.class);
+            intent.putExtra("alert", 2);
+            startActivity(intent);
+            finish();
+        }
 
         Log.d("TestePagamento", "onstart");
 
@@ -872,10 +886,12 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
                 if (!ADMINISTRADOR) {
 
-                    analitycsFacebook.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
-                    analitycsGoogle.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
                     analitycsGoogle.logVenda(novaCompra);
                     analitycsFacebook.logVenda(novaCompra);
+
+                    analitycsFacebook.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
+                    analitycsGoogle.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
+
 
                 }
 

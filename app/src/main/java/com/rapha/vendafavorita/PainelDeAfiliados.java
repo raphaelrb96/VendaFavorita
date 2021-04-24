@@ -1,5 +1,6 @@
 package com.rapha.vendafavorita;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -83,30 +84,36 @@ public class PainelDeAfiliados extends AppCompatActivity {
         info_add_revendedor_afiliado = (ImageView) findViewById(R.id.info_add_revendedor_afiliado);
         tv_info_card_afiliados = (TextView) findViewById(R.id.tv_info_card_afiliados);
 
-        if (documentoPrincipalDoUsuario == null) {
-            verificarUsuario(null);
-        } else {
+        pb_meus_afiliados.setVisibility(View.VISIBLE);
+        rv_painel_afiliados.setVisibility(View.GONE);
 
-            if (documentoPrincipalDoUsuario.getUid() == null || documentoPrincipalDoUsuario.getUid().length() == 0) {
-                verificarUsuario(null);
-            }
-        }
+        mFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
+        verificarUser();
 
         analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
 
-        nickUser = documentoPrincipalDoUsuario.getUserName();
 
-        Log.d("TesteCadastroAfiliados", "Document Uid Adm: " + documentoPrincipalDoUsuario.getUidAdm());
 
-        mFirestore = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        tv_toolbar_painel_afiliados.setText("Painel de Afiliados");
 
+        bt_voltar_painel_afiliados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
+    }
+
+    private void verMeusAfiliados() {
         colecaoMeusAfiliados = mFirestore.collection("Usuario").whereEqualTo("uidAdm", mAuth.getCurrentUser().getUid());
 
-        pb_meus_afiliados.setVisibility(View.VISIBLE);
-        rv_painel_afiliados.setVisibility(View.GONE);
+
 
         colecaoMeusAfiliados.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
@@ -153,15 +160,6 @@ public class PainelDeAfiliados extends AppCompatActivity {
         });
 
 
-
-        tv_toolbar_painel_afiliados.setText("@" + nickUser);
-        bt_voltar_painel_afiliados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
         bt_add_revendedor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,6 +199,48 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
     }
 
+    private void verificarUser() {
+
+
+        DocumentReference usuarioRef = mFirestore.collection("Usuario").document(mAuth.getUid());
+        usuarioRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot userDoc) {
+
+
+                if (userDoc.exists()) {
+
+                    documentoPrincipalDoUsuario = userDoc.toObject(Usuario.class);
+
+                    Log.d("TesteCadastroAfiliados", "VerificarUsuario() chamado, Uid Adm: " + documentoPrincipalDoUsuario.getUidAdm());
+
+                    if (documentoPrincipalDoUsuario != null) {
+
+                        if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
+
+                            Intent intent = new Intent(PainelDeAfiliados.this, MeuPerfilActivity.class);
+                            startActivity(intent);
+
+                        } else {
+                            nickUser = documentoPrincipalDoUsuario.getUserName();
+                            tv_toolbar_painel_afiliados.setText("@" + nickUser);
+                            verMeusAfiliados();
+                        }
+
+                    }
+
+                } else {
+
+
+
+                    Intent intent = new Intent(PainelDeAfiliados.this, MeuPerfilActivity.class);
+                    startActivity(intent);
+
+                }
+
+            }
+        });
+    }
 
     @Override
     protected void onStart() {
@@ -249,6 +289,13 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void cadastrar() {
+        Intent intent = new Intent(PainelDeAfiliados.this, MeuPerfilActivity.class);
+        intent.putExtra("alert", 2);
+        startActivity(intent);
+        finish();
     }
 
     private void verificarApelido(String apelido) {

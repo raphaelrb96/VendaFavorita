@@ -145,6 +145,8 @@ public class MeuPerfilActivity extends AppCompatActivity {
                     return;
                 }
 
+
+
                 startActivity(new Intent(MeuPerfilActivity.this, MensagemDetalheActivity.class));
             }
         });

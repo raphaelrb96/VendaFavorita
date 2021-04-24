@@ -22,15 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <View
-                android:visibility="gone"
-                android:id="@+id/bt_chat"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="start|center"
-                android:background="@drawable/ic_baseline_chat_24"
-                android:backgroundTint="@color/colorSecondaryLight"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
 
             <View
                 android:backgroundTint="@color/colorSecondaryLight"
@@ -41,14 +32,6 @@
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/ic_baseline_home_24" />
 
-            <View
-                android:id="@+id/bt_negocios"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="start|center"
-                android:backgroundTint="@color/colorSecondaryLight"
-                android:background="@drawable/ic_baseline_business_center_24"
-                android:layout_width="35dp"
-                android:layout_height="35dp"/>
 
         </LinearLayout>
 
@@ -843,16 +826,16 @@
 
             </FrameLayout>
             <FrameLayout
-                android:id="@+id/bt_comissoes_main"
+                android:id="@+id/bt_mensagem_main"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <View
                     android:layout_gravity="center"
                     android:backgroundTint="@color/colorSecondaryDark"
-                    android:background="@drawable/ic_dinheiro_black_24dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:background="@drawable/ic_baseline_chat_24"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
             </FrameLayout>
             <FrameLayout
                 android:layout_weight="1"
@@ -874,9 +857,9 @@
         android:id="@+id/efab_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:elevation="4dp"
+        app:elevation="10dp"
+        android:src="@drawable/ic_baseline_business_center_24"
         app:backgroundTint="@color/colorPrimaryLight"
-        android:src="@drawable/ic_baseline_chat_24"
         app:fabSize="normal"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

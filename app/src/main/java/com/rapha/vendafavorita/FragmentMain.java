@@ -145,14 +145,14 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     private TextView nome_top_vend_1, nome_top_vend_2, nome_top_vend_3;
 
-    private View whatsappBt, faceBt, instaBt, chatBt, negociosBt, perfilBt;
+    private View whatsappBt, faceBt, instaBt, chatBt, perfilBt;
 
     private int tipoReferencia = 0;
     private Query query;
     public static final boolean ADMINISTRADOR = true;
     private ImageView fundo;
 
-    private FrameLayout bt_carrinho_revenda_main, bt_meu_perfil_main, bt_afiliados_main, bt_comissoes_main;
+    private FrameLayout bt_carrinho_revenda_main, bt_meu_perfil_main, bt_afiliados_main, bt_mensagem_main;
     private NestedScrollView lista_principal;
     private LinearLayout ll_bt_smart_watch;
     private LinearLayout ll_bt_caixa_som;
@@ -182,7 +182,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         //instaBt = (View) view.findViewById(R.id.bt_insta);
 
         chatBt = (View) view.findViewById(R.id.bt_chat);
-        negociosBt = (View) view.findViewById(R.id.bt_negocios);
         perfilBt = (View) view.findViewById(R.id.bt_perfil);
 
         botao_topo = (CardView) view.findViewById(R.id.botao_topo);
@@ -194,7 +193,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
         bt_carrinho_revenda_main = (FrameLayout) view.findViewById(R.id.bt_carrinho_revenda_main);
         bt_afiliados_main = (FrameLayout) view.findViewById(R.id.bt_afiliados_main);
-        bt_comissoes_main = (FrameLayout) view.findViewById(R.id.bt_comissoes_main);
+        bt_mensagem_main = (FrameLayout) view.findViewById(R.id.bt_mensagem_main);
         bt_meu_perfil_main = (FrameLayout) view.findViewById(R.id.bt_meu_perfil_main);
         //mensagem_main = (FrameLayout) view.findViewById(R.id.mensagem_main);
         //bt_painel_revendedor = (FrameLayout) view.findViewById(R.id.bt_painel_revendedor);
@@ -289,7 +288,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
                     if (user.isAnonymous()) {
                         //efabCart.setVisibility(View.GONE);
-                        efabCart.setClickable(false);
                         //toggleBackContainer(false);
                         obterListaDeProdutos(tipoReferencia);
                         return;
@@ -339,9 +337,12 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         });
 
+
+
         bt_carrinho_revenda_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(getActivity(), ListaRevendaActivity.class);
                 startActivity(intent);
             }
@@ -351,19 +352,16 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), PainelDeAfiliados.class);
+                intent.putExtra("id", user.getUid());
+                intent.putExtra("nome", user.getDisplayName());
+                intent.putExtra("path", user.getPhotoUrl());
+                intent.putExtra("zap", user.getPhoneNumber());
                 startActivity(intent);
             }
         });
 
-        bt_comissoes_main.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HistoricoRevendasActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        efabCart.setOnClickListener(new View.OnClickListener() {
+        bt_mensagem_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ADMINISTRADOR) {
@@ -390,10 +388,10 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         });
 
-        negociosBt.setOnClickListener(new View.OnClickListener() {
+
+        efabCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(user == null) return;
 
                 Intent intent = new Intent(getActivity(), PainelRevendedorActivity.class);
@@ -422,11 +420,9 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         bt_meu_perfil_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ADMINISTRADOR) {
-                    startActivity(new Intent(getActivity(), AdmActivity.class));
-                } else {
-                    startActivity(new Intent(getActivity(), MeuPerfilActivity.class));
-                }
+
+                painelAdm();
+
             }
         });
 
@@ -592,6 +588,14 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         });
 
+    }
+
+    private void painelAdm() {
+        if (ADMINISTRADOR) {
+            startActivity(new Intent(getActivity(), AdmActivity.class));
+        } else {
+            startActivity(new Intent(getActivity(), MeuPerfilActivity.class));
+        }
     }
 
     private void categoriaFindView(View view) {
@@ -791,7 +795,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
                         if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
 
-
+                            Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
+                            startActivity(intent);
 
                         }
 
@@ -1457,7 +1462,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private void telaInicialLoadding() {
         mListMercadorias.setVisibility(View.GONE);
         //efabCart.setVisibility(View.GONE);
-        efabCart.setClickable(false);
         tvErro.setVisibility(View.GONE);
         pb.setVisibility(View.VISIBLE);
     }
@@ -1465,7 +1469,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private void telaInicialErro(String erro) {
         mListMercadorias.setVisibility(View.GONE);
         //efabCart.setVisibility(View.GONE);
-        efabCart.setClickable(false);
+
         tvErro.setVisibility(View.VISIBLE);
         pb.setVisibility(View.GONE);
         tvErro.setText(erro);
@@ -1474,7 +1478,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private void telaInicialSucesso() {
         mListMercadorias.setVisibility(View.VISIBLE);
         //efabCart.setVisibility(View.VISIBLE);
-        efabCart.setClickable(true);
         tvErro.setVisibility(View.GONE);
         pb.setVisibility(View.GONE);
         scrol_main.scrollTo(0,0);
