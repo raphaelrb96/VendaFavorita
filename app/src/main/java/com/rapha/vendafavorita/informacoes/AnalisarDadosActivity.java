@@ -2,8 +2,12 @@ package com.rapha.vendafavorita.informacoes;
 
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +15,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,6 +24,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.DateFormatacao;
 import com.rapha.vendafavorita.R;
+import com.rapha.vendafavorita.objectfeed.ProdutoObj;
+import com.rapha.vendafavorita.objectfeed.RevendedorObj;
 import com.rapha.vendafavorita.objects.TopRevendedores;
 import com.rapha.vendafavorita.informacoes.ui.main.SectionsPagerAdapter;
 import com.rapha.vendafavorita.objects.ObjProdutoRevenda;
@@ -40,6 +47,9 @@ public class AnalisarDadosActivity extends AppCompatActivity {
     TabLayout tabs;
     private FirebaseFirestore firestore;
     private ProgressBar pb;
+    private ExtendedFloatingActionButton efab_analytics_atualizar_home;
+
+    private Toast mToats;
 
     private ArrayList<ObjectRevenda> revendas30;
     private ArrayList<ObjectRevenda> revendas7;
@@ -68,6 +78,7 @@ public class AnalisarDadosActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         tabs = (TabLayout) findViewById(R.id.tabs);
         pb = (ProgressBar) findViewById(R.id.pb_analise);
+        efab_analytics_atualizar_home = (ExtendedFloatingActionButton) findViewById(R.id.efab_analytics_atualizar_home);
 
         firestore = FirebaseFirestore.getInstance();
 
@@ -85,9 +96,75 @@ public class AnalisarDadosActivity extends AppCompatActivity {
         viewPager.setVisibility(View.GONE);
         pb.setVisibility(View.VISIBLE);
 
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        efab_analytics_atualizar_home.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+            public void onClick(View v) {
+                if (mToats != null) {
+
+                    mToats.cancel();
+
+                }
+
+                mToats.makeText(AnalisarDadosActivity.this, "Atualizando Feed...", Toast.LENGTH_LONG).show();
+
+                efab_analytics_atualizar_home.setVisibility(View.GONE);
+
+                ArrayList<ProdutoObj> topsProd = new ArrayList<>();
+                ArrayList<ProdutoObj> topsProdMaisVendidos = new ArrayList<>();
+                ArrayList<RevendedorObj> topsRev = new ArrayList<>();
+
+                for (int i = 0; i < topProdutosRevendas1.size(); i++) {
+                    TopProdutosRevenda ob = topProdutosRevendas1.get(i);
+                    ProdutoObj produtoObj = new ProdutoObj(ob.getNomeProduto(), ob.getPathProduto(), ob.getIdProduto());
+                    topsProd.add(produtoObj);
+                    if (i > 19) break;
+                }
+
+                for (int i = 0; i < topProdutosRevendas7.size(); i++) {
+                    TopProdutosRevenda ob = topProdutosRevendas7.get(i);
+                    ProdutoObj produtoObj = new ProdutoObj(ob.getNomeProduto(), ob.getPathProduto(), ob.getIdProduto());
+                    topsProdMaisVendidos.add(produtoObj);
+                    if (i > 19) break;
+                }
+
+                for (int j = 0; j < topRevendedores7.size(); j++) {
+                    TopRevendedores rev = topRevendedores7.get(j);
+                    RevendedorObj rObj = new RevendedorObj(rev.getNomeRevendedor(), rev.getPathFotoRevendedor(), rev.getUidRevendedor(), rev.getNumeroItensReveendas());
+                    topsRev.add(rObj);
+                    if (j > 5) break;
+                }
+
+
+
+                firestore.collection("Feed").document("Main").update("topRevendedores", topsRev, "topProdutos", topsProd, "timeStamp", System.currentTimeMillis(), "topMaisVendidos", topsProdMaisVendidos).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        efab_analytics_atualizar_home.setVisibility(View.VISIBLE);
+                        if (mToats != null) {
+
+                            mToats.cancel();
+
+                        }
+                        mToats.makeText(AnalisarDadosActivity.this, "Feed atualizado", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        efab_analytics_atualizar_home.setVisibility(View.VISIBLE);
+                        if (mToats != null) {
+
+                            mToats.cancel();
+
+                        }
+                        mToats.makeText(AnalisarDadosActivity.this, "Falha ao atualizar Feed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 viewPager.setVisibility(View.VISIBLE);
                 pb.setVisibility(View.GONE);
 
@@ -222,11 +299,17 @@ public class AnalisarDadosActivity extends AppCompatActivity {
                     }
                 });
 
+                efab_analytics_atualizar_home.setVisibility(View.VISIBLE);
+
                 SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(AnalisarDadosActivity.this, getSupportFragmentManager(), topProdutosRevendas30, topRevendedores30, revendas30, topProdutosRevendas7, topRevendedores7, revendas7, topProdutosRevendas1, topRevendedores1, revendas1, topProdutosRevendasHoje, topRevendedoresHoje, revendasHoje);
                 viewPager.setAdapter(sectionsPagerAdapter);
                 tabs.setupWithViewPager(viewPager);
 
-
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                finish();
             }
         });
 

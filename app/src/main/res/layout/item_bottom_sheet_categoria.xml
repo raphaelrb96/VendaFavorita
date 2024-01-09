@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.google.android.material.divider.MaterialDivider
+        app:dividerColor="@color/cinza_medio"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <TextView
+        android:id="@+id/text_item_categ"
+        android:layout_gravity="center|start"
+        android:gravity="center|start"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        android:padding="12dp"
+        android:drawableLeft="@drawable/ic_baseline_point_16"
+        android:drawableRight="@drawable/ic_baseline_arrow_right_24"
+        android:drawablePadding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Item Menu" />
+</LinearLayout>

@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/red_dark"
+
     tools:context=".LoginMainActivity">
 
 
@@ -18,21 +20,22 @@
         <TextView
             android:textAllCaps="false"
             android:textSize="40sp"
-            android:paddingTop="10dp"
+            android:paddingTop="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="26dp"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             android:layout_marginRight="26dp"
             android:textColor="@color/colorPrimaryLight"
             android:text="Venda Favorita"
             android:layout_width="match_parent"
-            android:layout_height="80dp" />
+            android:layout_height="70dp" />
         <TextView
             android:textAllCaps="false"
             android:textSize="16sp"
             android:layout_marginLeft="26dp"
             android:layout_marginRight="26dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/colorPrimary"
             android:text="Encontre clientes ou vendedores para nossos produtos, e ganhe comissões em dinheiro"
             android:layout_width="match_parent"
@@ -70,7 +73,6 @@
         android:orientation="vertical"
         style="@style/CardView.Light"
         android:elevation="12dp"
-        android:background="@color/colorPrimaryLight"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -82,7 +84,7 @@
             <ImageView
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                android:src="@drawable/intro"
+                android:src="@drawable/cashman"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
@@ -90,6 +92,7 @@
             <ProgressBar
                 android:visibility="invisible"
                 android:id="@+id/pb_login_main"
+                style="@style/PbBranco"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center"
                 android:layout_width="20dp"
@@ -101,7 +104,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
-                android:textColor="@color/colorSecondaryDark"
+                android:textColor="@color/colorPrimary"
                 android:text="Entrar com:"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp" />
@@ -113,6 +116,7 @@
                 android:gravity="center"
                 android:id="@+id/face_login_main"
                 app:elevation="12dp"
+                android:visibility="gone"
                 app:icon="@drawable/myface"
                 android:textSize="20sp"
                 app:iconSize="30dp"
@@ -137,7 +141,7 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:padding="10dp"
-                android:textColor="@color/colorSecondaryLight"
+                android:textColor="@color/back_rv"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        app:cardBackgroundColor="@color/back_rv"
+        app:contentPaddingRight="6dp"
+        app:contentPaddingLeft="6dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/colorSecondaryLight"
+        android:layout_margin="6dp"
+        app:cardCornerRadius="6dp"
+        android:layout_width="wrap_content"
+        android:minHeight="36dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:textColor="@color/colorSecondaryLight"
+                android:id="@+id/num_parcelamento_item"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:text="12"
+                android:gravity="bottom"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:textColor="@color/colorSecondaryLight"
+                android:text="X"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/valor_parcelamento_item"
+                android:textColor="@color/colorSecondaryLight"
+                android:drawableTint="@color/colorSecondaryLight"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textAllCaps="true"
+                android:text="R$50"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="6dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

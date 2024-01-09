@@ -52,6 +52,11 @@ public class AdapterResume extends RecyclerView.Adapter<AdapterResume.RankingAti
     @Override
     public void onBindViewHolder(@NonNull AdapterResume.RankingAtivoVh vh, int position) {
 
+
+
+    }
+
+    private void logicaAntiga(RankingAtivoVh vh, int position) {
         RankingObj obj = rankings.get(position);
 
         ArrayList<ObjectRevenda> revendas = obj.getRevendasContabilizadas();
@@ -165,14 +170,11 @@ public class AdapterResume extends RecyclerView.Adapter<AdapterResume.RankingAti
         if (revendedores.size() > 0) {
             vh.setRv(revendedores, context);
         }
-
     }
 
     @Override
     public int getItemCount() {
-        if (rankings == null) return 0;
-
-        return rankings.size();
+        return 1;
     }
 
     class RankingAtivoVh extends RecyclerView.ViewHolder {

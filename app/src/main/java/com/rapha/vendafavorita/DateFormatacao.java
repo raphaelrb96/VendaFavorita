@@ -49,7 +49,7 @@ public class DateFormatacao {
 
     public static String dataCompletaCorrigidaSmall(Date horaMensagem, Date horaAtual) {
 
-        String hm = getDiaStringSmall(horaMensagem);
+        String hm = getDiaString(horaMensagem);
         String ha = getDiaStringSmall(horaAtual);
         String hh = getHoraString(horaMensagem);
 
@@ -63,7 +63,7 @@ public class DateFormatacao {
 
     public static String dataCompletaCorrigidaSmall2(Date horaMensagem, Date horaAtual) {
 
-        String hm = getDiaStringSmall(horaMensagem);
+        String hm = getDiaString(horaMensagem);
         String ha = getDiaStringSmall(horaAtual);
         String hh = getHoraString(horaMensagem);
 

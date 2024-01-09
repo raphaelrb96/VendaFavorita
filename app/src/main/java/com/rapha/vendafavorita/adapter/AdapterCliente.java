@@ -49,6 +49,9 @@ public class AdapterCliente extends RecyclerView.Adapter<AdapterCliente.ClienteV
         Glide.with(context).load(usuario.getPathFoto()).into(holder.imageView);
         holder.time.setText(DateFormatacao.dataCompletaCorrigidaSmall2(new Date(usuario.getUltimoLogin()), new Date()));
         holder.nome.setText(usuario.getNome());
+        if (usuario.getNomeAdm() != null) {
+            holder.adm_nick_cliente.setText(usuario.getNomeAdm().toUpperCase());
+        }
     }
 
     @Override
@@ -59,13 +62,14 @@ public class AdapterCliente extends RecyclerView.Adapter<AdapterCliente.ClienteV
     class ClienteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView imageView;
-        private TextView nome, time;
+        private TextView nome, time, adm_nick_cliente;
 
         public ClienteViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.img_cliente);
             nome = (TextView) itemView.findViewById(R.id.nome_cliente);
             time = (TextView) itemView.findViewById(R.id.time_cliente);
+            adm_nick_cliente = (TextView) itemView.findViewById(R.id.adm_nick_cliente);
             itemView.setOnClickListener(this);
         }
 

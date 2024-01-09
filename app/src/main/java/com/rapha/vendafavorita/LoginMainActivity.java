@@ -12,12 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
+
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,38 +30,38 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 
-public class LoginMainActivity extends AppCompatActivity implements FacebookCallback<LoginResult> {
+public class LoginMainActivity extends AppCompatActivity {
 
     private ExtendedFloatingActionButton efabFace, efabGoogle;
     private FirebaseAuth auth;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private AnalitycsGoogle analitycsGoogle;
-    private AnalitycsFacebook analitycsFacebook;
-    private CallbackManager callbackManager;
 
     private static final int RC_SIGN_IN_ADM = 67;
 
     private ProgressBar pb_login_main;
+    private String intentExtraAdm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login_main);
         efabGoogle = (ExtendedFloatingActionButton) findViewById(R.id.google_login_main);
         efabFace = (ExtendedFloatingActionButton) findViewById(R.id.face_login_main);
         auth = FirebaseAuth.getInstance();
         pb_login_main = (ProgressBar) findViewById(R.id.pb_login_main);
-        callbackManager = CallbackManager.Factory.create();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("978500802251-fho2o9t3kdnpd9kmb8l00bl9bqicliap.apps.googleusercontent.com")
                 .requestProfile()
@@ -74,21 +69,25 @@ public class LoginMainActivity extends AppCompatActivity implements FacebookCall
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        if(LoginManager.getInstance() != null) {
-            LoginManager.getInstance().logOut();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("adm");
+            //The key argument here must match that used in the other activity
+            intentExtraAdm = value;
+            if(value != null) {
+                Log.d("TesteLogin", "Login activity Extras: " + value);
+            }
+
         }
 
-        LoginManager.getInstance().registerCallback(callbackManager, this);
 
 
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
         efabFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pb_login_main.setVisibility(View.VISIBLE);
-                LoginManager.getInstance().logInWithReadPermissions(LoginMainActivity.this, Arrays.asList("public_profile", "email"));
             }
         });
 
@@ -99,8 +98,29 @@ public class LoginMainActivity extends AppCompatActivity implements FacebookCall
                 signIn();
             }
         });
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull @NotNull FirebaseAuth firebaseAuth) {
+                auth = firebaseAuth;
+                FirebaseUser user = auth.getCurrentUser();
+                if(user != null) finish();
+            }
+        };
+
     }
 
+    @Override
+    protected void onResume() {
+        auth.addAuthStateListener(mAuthStateListener);
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        auth.removeAuthStateListener(mAuthStateListener);
+        super.onStop();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -114,10 +134,10 @@ public class LoginMainActivity extends AppCompatActivity implements FacebookCall
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 if (account == null) {
-                    Log.d("TesteLogin", "GoogleErro acount null");
+                    Log.d("TesteLogin", "Google acount null");
                     return;
                 }
-                Log.d("TesteLogin", "GoogleErro acount: " + account.getDisplayName());
+                Log.d("TesteLogin", "Google acount: " + account.getDisplayName());
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 Log.e("TesteLogin", e.getMessage());
@@ -141,22 +161,6 @@ public class LoginMainActivity extends AppCompatActivity implements FacebookCall
         } else {
         }
 
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onSuccess(LoginResult loginResult) {
-        Log.d("TesteLogin", loginResult.getAccessToken().getToken());
-        handleFacebookAccessToken(loginResult.getAccessToken());
-    }
-
-    @Override
-    public void onCancel() {
-    }
-
-    @Override
-    public void onError(FacebookException error) {
-        Log.d("TesteLogin", error.getMessage());
     }
 
     private void loginAdmin() {
@@ -217,18 +221,17 @@ public class LoginMainActivity extends AppCompatActivity implements FacebookCall
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
-        Log.d("TesteLogin", "GoogleErro, firebase auth funcao");
+        Log.d("TesteLogin", "Google, firebase auth funcao");
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         if (authResult != null) {
-                            Log.d("TesteLogin", "GoogleErro, sucesso");
+                            Log.d("TesteLogin", "Google, sucesso");
                             FirebaseUser user = authResult.getUser();
 //                            Log.d("TesteLogin", "Goglle sucess");
                             String foto = getFotoUser(user);
-                            analitycsFacebook.logLoginGoogleEvent(true, user.getDisplayName(), user.getUid());
                             analitycsGoogle.logLoginGoogleEvent(true, user.getDisplayName(), user.getUid(), foto, user.getEmail(), user.getPhoneNumber(), Constantes.CONTROLE_VERSAO_USUARIO);
                             updateUI(user);
                         } else {
@@ -239,35 +242,21 @@ public class LoginMainActivity extends AppCompatActivity implements FacebookCall
                 });
     }
 
-    private void handleFacebookAccessToken(AccessToken token) {
-
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        auth.signInWithCredential(credential)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        if (authResult != null) {
-                            FirebaseUser user = authResult.getUser();
-                            String foto = getFotoUser(user);
-                            analitycsFacebook.logLoginFaceEvent(true, user.getDisplayName(),user.getUid());
-                            analitycsGoogle.logLoginFaceEvent(true, user.getDisplayName(), user.getUid(), foto, user.getEmail(), user.getPhoneNumber(), Constantes.CONTROLE_VERSAO_USUARIO);
-                            updateUI(user);
-//                            Log.d("TesteLogin", "Facesucess");
-                        } else {
-                            updateUI(null);
-//                            Log.d("TesteLogin", "Faceerro");
-                        }
-                    }
-                });
-    }
 
     private void updateUI(FirebaseUser firebaseUser) {
 //        Timber.d("UpdateUI");
         if (firebaseUser != null) {
 //            Log.d("TesteLogin", "UpdateUISucesso");
             //tirar container login e subir a lista de produtos
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            if(intentExtraAdm != null) {
+                startActivity(new Intent(this, MainActivity.class).putExtra("adm", intentExtraAdm));
+                finish();
+            } else {
+
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
+
         } else {
             pb_login_main.setVisibility(View.INVISIBLE);
             Toast.makeText(this, "Erro ao fazer login", Toast.LENGTH_LONG).show();

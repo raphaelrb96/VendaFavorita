@@ -2,7 +2,6 @@ package com.rapha.vendafavorita;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
@@ -26,20 +24,11 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rapha.vendafavorita.adapter.FotosDetalheProdutosAdapter;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 
 import java.util.ArrayList;
-
-import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
-import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
-import static com.rapha.vendafavorita.FragmentMain.user;
-import static com.rapha.vendafavorita.MainActivity.ids;
 
 public class ProdutoDetalheActivity extends AppCompatActivity implements AdapterProdutos.ClickProdutoCliente, FotosDetalheProdutosAdapter.FotoDetalheListener {
 
@@ -58,7 +47,6 @@ public class ProdutoDetalheActivity extends AppCompatActivity implements Adapter
 
     private View bt_voltar_produto_detalhe;
 
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
     private TextView tv_bt_revender;
 
@@ -81,7 +69,6 @@ public class ProdutoDetalheActivity extends AppCompatActivity implements Adapter
         pb = (ProgressBar) findViewById(R.id.pb_prod_detalhe);
         efab = (LinearLayout) findViewById(R.id.efab_prod_detalhe);
         bt_voltar_produto_detalhe = (View) findViewById(R.id.bt_voltar_produto_detalhe);
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
 
@@ -144,11 +131,11 @@ public class ProdutoDetalheActivity extends AppCompatActivity implements Adapter
         }
 
         if (produtosRelacionados.size() > 0) {
-            titulo_produtos_relacionados.setVisibility(View.VISIBLE);
-            StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-            rvRelacionados.setLayoutManager(layoutManager);
-            AdapterProdutos mAdapter = new AdapterProdutos(ProdutoDetalheActivity.this, ProdutoDetalheActivity.this, produtosRelacionados, false);
-            rvRelacionados.setAdapter(mAdapter);
+            //titulo_produtos_relacionados.setVisibility(View.VISIBLE);
+            //StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            //rvRelacionados.setLayoutManager(layoutManager);
+            //AdapterProdutos mAdapter = new AdapterProdutos(ProdutoDetalheActivity.this, ProdutoDetalheActivity.this, produtosRelacionados, false);
+            //rvRelacionados.setAdapter(mAdapter);
 
         }
 
@@ -239,7 +226,6 @@ public class ProdutoDetalheActivity extends AppCompatActivity implements Adapter
     protected void onStart() {
         super.onStart();
         analitycsGoogle.logProdutoVizualizadoEvent(prodObjParcelable.getProdName(), prodObjParcelable.getIdProduto(), prodObjParcelable.getProdValor());
-        analitycsFacebook.logProdutoVizualizadoEvent(prodObjParcelable.getProdName(), prodObjParcelable.getIdProduto(), prodObjParcelable.getProdValor());
     }
 
     @Override

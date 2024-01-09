@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_gravity="center"
                     android:id="@+id/valor_produto_detalhe_revenda"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:text="R$ 0,00"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -122,7 +122,7 @@
                         android:id="@+id/quantidade_prod_lista_revenda"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:text="2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

@@ -13,113 +13,125 @@
         android:largeHeap="false"
         xmlns:tools="http://schemas.android.com/tools"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_venda_favorita"
+        android:icon="@mipmap/ic_favoricon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_venda_favorita"
+        android:roundIcon="@mipmap/ic_favoricon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="true"
+            tools:ignore="ExportedService" >
+
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+
+        </service>
         <activity
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".carteira.CarteiraUsuario"
             />
         <activity
+            android:exported="false"
             android:name=".vendedor.VendedorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".informacoes.AnalisarDadosActivity"
             android:label="@string/title_activity_analisar_dados"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".rankings.ResumeRankingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".rankings.RankingDetalheAdm"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".rankings.RankingCreator"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".rankings.RankingListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".PainelDeAfiliados"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".MeuPerfilActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".HistoricoRevendasActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ComissoesActivity" />
-        <activity android:name=".ListaDeFaltas" />
+        <activity android:exported="false" android:name=".ComissoesActivity" />
+        <activity android:exported="false" android:name=".ListaDeFaltas" />
         <activity
+            android:exported="false"
             android:name=".ListaRevendaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".ProdutoRevendaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".PainelRevendedorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".CadastroRevendedorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".adapter.RevendaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".SolicitacoesRevendedoresActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".LoginMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".CartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"
-            tools:replace="android:value" />
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".MainActivity"
+            android:exported="true"
+            tools:node="merge"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -127,69 +139,94 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="vendafavorita.page.link"
+                    android:scheme="https"/>
+            </intent-filter>
         </activity>
-        <activity android:name=".EncomendasAdmActivity" />
+        <activity android:exported="false" android:name=".EncomendasAdmActivity" />
         <activity
+            android:exported="false"
             android:name=".AnalyticsAdmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".ProdutoDetalheActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".FullscreenReceitaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".ClienteDetalhesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".ClientesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".VendaActivity" />
+        <activity android:exported="false" android:name=".VendaActivity" />
         <activity
+            android:exported="false"
             android:name=".MensagemActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".MensagemDetalheActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".CarrinhoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MapaCar" />
         <activity
+            android:exported="false"
             android:name=".ScrollingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".CadastroDeProdutoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MeuCollapseTolbar" />
         <activity
+            android:exported="false"
             android:name=".AdmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".InventarioActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".ConfirmarCompraActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:exported="false"
             android:name=".ConclusaoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".MinhasComprasActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:exported="false"
             android:name=".CentralComprasActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/red_dark"
+    tools:context=".LoginMainActivity">
+
+    <LinearLayout
+        android:background="@color/red_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textAllCaps="false"
+            android:textSize="40sp"
+            android:paddingTop="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="26dp"
+            android:fontFamily="sans-serif-black"
+            android:textStyle="bold"
+            android:layout_marginRight="26dp"
+            android:textColor="@color/colorPrimaryLight"
+            android:text="Venda Favorita"
+            android:layout_width="match_parent"
+            android:layout_height="70dp" />
+        <TextView
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorPrimary"
+            android:text="Encontre clientes ou vendedores para nossos produtos, e ganhe comissões em dinheiro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="6dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="start|center"
+                android:background="@drawable/local_pick"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:gravity="center|start"
+                android:text="Loja online em MANAUS"
+                android:layout_marginLeft="6dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_gravity="center|start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        style="@style/CardView.Light"
+        android:elevation="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:src="@drawable/cashman"
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:maxHeight="100dp"/>
+
+            <ProgressBar
+                android:outlineAmbientShadowColor="@color/colorPrimary"
+                android:outlineSpotShadowColor="@color/colorPrimary"
+                android:progressTint="@color/colorPrimary"
+                android:visibility="invisible"
+                android:id="@+id/pb_login_main"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="26dp"
+                android:textSize="15sp"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Entrar com:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:layout_gravity="center"
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:id="@+id/face_login_main"
+                app:elevation="12dp"
+                app:icon="@drawable/myface"
+                android:textSize="20sp"
+                app:iconSize="30dp"
+                android:visibility="gone"
+                android:text="Facebook"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                app:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                app:elevation="10dp"
+                android:id="@+id/google_login_main"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                app:icon="@drawable/mygooglw"
+                android:textSize="20sp"
+                app:iconSize="30dp"
+                android:text="Google"
+                android:minWidth="140dp"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:padding="10dp"
+                android:textColor="@color/back_rv"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="italic"
+                android:textSize="16sp"
+                android:text="Faça o Login para começar vender nossos produtos, indicar pessoas, e ganhar dinheiro."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

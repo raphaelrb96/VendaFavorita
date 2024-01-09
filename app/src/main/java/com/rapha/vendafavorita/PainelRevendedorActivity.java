@@ -1,26 +1,16 @@
 package com.rapha.vendafavorita;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -40,7 +30,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.adapter.AdapterInterfaceMain;
 import com.rapha.vendafavorita.adapter.AdapterMinhasRevendas;
 import com.rapha.vendafavorita.adapter.AdapterProdutosPainelRevendedor;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.carteira.CarteiraUsuario;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
@@ -54,8 +43,6 @@ import javax.annotation.Nullable;
 
 import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
 import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
-import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
-import static com.rapha.vendafavorita.FragmentMain.user;
 
 public class PainelRevendedorActivity extends AppCompatActivity implements AdapterProdutosPainelRevendedor.ProdutoPainelListener, AdapterInterfaceMain.ListenerPrincipal {
 
@@ -74,28 +61,25 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     private ArrayList<ObjectRevenda> aReceber;
     private View voltar;
     private CardView bt_afiliados_painel_revenda;
-    private TextView title_rv_produtos_painel_revenda;
     private ExtendedFloatingActionButton efab_painel_revendedor;
     private NestedScrollView scrolRevend;
 
     private LinearLayout meu_historico_rendededor, minhas_comissoes_revendedor, botao_campeonatos;
 
     private String idUsuario, nome, path, zap;
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
     private TextView titulo_painel_revendedor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_painel_revendedor);
         scrolRevend = (NestedScrollView) findViewById(R.id.scrol_revendedor);
         rvProdutos = (RecyclerView) findViewById(R.id.rv_produtos_painel_revenda);
         pb = (ProgressBar) findViewById(R.id.pb_painel_revenda);
         voltar = (View) findViewById(R.id.voltar_painel_revendedor);
         //totalCarteira = (TextView) findViewById(R.id.total_carteira_painel);
-        title_rv_produtos_painel_revenda = (TextView) findViewById(R.id.title_rv_produtos_painel_revenda);
         titulo_painel_revendedor = (TextView) findViewById(R.id.titulo_painel_revendedor);
         minhas_comissoes_revendedor = (LinearLayout) findViewById(R.id.minhas_comissoes_revendedor);
         meu_historico_rendededor = (LinearLayout) findViewById(R.id.meu_historico_rendededor);
@@ -114,7 +98,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             nome = auth.getCurrentUser().getDisplayName();
         }
 
-        titulo_painel_revendedor.setText("Olá, " + nome);
+        //titulo_painel_revendedor.setText("Categorias");
 
         queryProd = firestore.collection("produtos");
         revendedorDocRef = firestore.collection("Revendedores").document("amacompras").collection("ativos").document(auth.getCurrentUser().getUid());
@@ -183,7 +167,6 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
 
 
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
 
@@ -218,7 +201,6 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
             }
 
 
-            analitycsFacebook.visitaAoPainelRevendedor(nome, idUsuario, path);
             analitycsGoogle.visitaAoPainelRevendedor(nome, idUsuario, path);
 
         }
@@ -244,7 +226,6 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
     private void telaSucess() {
         pb.setVisibility(View.GONE);
-        title_rv_produtos_painel_revenda.setVisibility(View.VISIBLE);
         rvProdutos.setVisibility(View.VISIBLE);
         minhas_comissoes_revendedor.setVisibility(View.VISIBLE);
         meu_historico_rendededor.setVisibility(View.VISIBLE);
@@ -305,7 +286,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
 
     private void listarProdutos() {
 
-        queryProd.orderBy("comissao", Query.Direction.DESCENDING).limit(150).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        queryProd.orderBy("timeUpdate", Query.Direction.DESCENDING).limit(300).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
@@ -329,10 +310,11 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
                 Collections.reverse(listProds);
 
 
+                AdapterInterfaceMain mAdapter = new AdapterInterfaceMain(PainelRevendedorActivity.this, listProds, PainelRevendedorActivity.this);
                 AdapterProdutosPainelRevendedor adapter = new AdapterProdutosPainelRevendedor(listProds, PainelRevendedorActivity.this, PainelRevendedorActivity.this);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-                rvProdutos.setLayoutManager(layoutManager);
-                rvProdutos.setAdapter(adapter);
+                rvProdutos.setLayoutManager(new LinearLayoutManager(PainelRevendedorActivity.this));
+                rvProdutos.setAdapter(mAdapter);
 
 
                 telaSucess();

@@ -7,78 +7,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_main"
         android:orientation="horizontal"
+        android:paddingEnd="4dp"
+        android:paddingStart="-12dp"
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="60dp"
         android:clickable="true"
         android:background="@color/colorPrimaryLight"
-        android:elevation="6dp">
+        android:elevation="16dp"
+        tools:targetApi="lollipop">
 
         <LinearLayout
             android:layout_gravity="end"
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-            <View
-                android:backgroundTint="@color/colorSecondaryLight"
-                android:id="@+id/bt_perfil"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="start|center"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/ic_baseline_home_24" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_gravity="center"
-            android:id="@+id/top_bar"
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:imeOptions="actionSearch"
-                android:inputType="text"
-                android:focusable="false"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:id="@+id/et_pesquisar"
-                android:lines="1"
-                android:hint="Pesquisar"
-                android:textColorHint="@color/colorSecondaryLight"
-                android:textColor="@color/colorSecondary"
-                android:background="@drawable/background_et_pesquisar_dark"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                app:cardCornerRadius="17dp"
+                android:layout_width="34dp"
+                android:layout_height="34dp">
+                <ImageView
+                    android:adjustViewBounds="true"
+                    android:elevation="8dp"
+                    android:background="@drawable/fav"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
                 android:layout_gravity="center"
+                android:id="@+id/top_bar"
+                android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="40dp"/>
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/bt_pesquisar"
-                android:background="@drawable/background_botao_pesquisar"
-                android:src="@drawable/ic_search_branco_24dp"
-                android:layout_gravity="end|center"
-                android:backgroundTint="@color/colorSecondaryLight"
-                android:layout_marginRight="10dp"
-                android:layout_width="35dp"
-                android:layout_height="35dp" />
+                <EditText
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:id="@+id/et_pesquisar"
+                    android:lines="1"
+                    android:hint="Pesquisar"
+                    android:textColorHint="@color/colorSecondaryLight"
+                    android:textColor="@color/colorSecondary"
+                    android:background="@drawable/background_et_pesquisar_dark"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="36dp"/>
+
+                <ImageButton
+                    android:id="@+id/bt_pesquisar"
+                    android:background="@drawable/background_botao_pesquisar"
+                    android:src="@drawable/ic_search_branco_24dp"
+                    android:layout_gravity="end|center"
+                    android:backgroundTint="@color/colorSecondaryLight"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:layout_marginTop="56dp"
         android:id="@+id/scrol_main"
+        android:background="@color/colorLightGray"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -86,6 +95,7 @@
             android:id="@+id/lista_principal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -94,663 +104,1538 @@
                 <ProgressBar
                     android:theme="@style/Pb"
                     android:id="@+id/pb_main"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="32dp"
                     android:layout_gravity="center|top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:nestedScrollingEnabled="false"
+                <TextView
                     android:visibility="gone"
-                    android:id="@+id/rv_fragment_main"
+                    android:textSize="13sp"
+                    android:textAllCaps="true"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/vazio"
+                    android:drawableTint="@color/cinza_medio"
+                    android:layout_gravity="center|top"
+                    android:id="@+id/tv_error_main"
+                    android:textStyle="italic|bold"
+                    android:textColor="@color/cinza_medio"
+                    android:maxWidth="300dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
+                        android:clipToPadding="false"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        android:id="@+id/rv_fragment_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                <TextView
+                    android:text="Atalhos Rápidos"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <HorizontalScrollView
+                    android:scrollbars="none"
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/comissoes_home"
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="58dp"
+                                    android:layout_height="58dp">
+                                    <ImageView
+                                        android:background="@drawable/carteira"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Minhas Comissões"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:gravity="center" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/bonus_home"
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="58dp"
+                                    android:layout_height="58dp">
+                                    <ImageView
+                                        android:background="@drawable/trofeu"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Bônus e Prêmios"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:gravity="center" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/historico_home"
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="58dp"
+                                    android:layout_height="58dp">
+                                    <ImageView
+                                        android:background="@drawable/historico"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Histórico\n de vendas"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp"
+                                    android:gravity="center" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/categorias_home"
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="58dp"
+                                    android:layout_height="58dp">
+                                    <ImageView
+                                        android:background="@drawable/mais_categorias"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Todas categorias"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="36dp" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+                <TextView
+                    android:text="Principais Categorias"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <HorizontalScrollView
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_11_fones"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/headphone"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Fones de ouvido"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_8_ferramentas"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/ferramt"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Ferramentas e acessórios"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_13_cameras"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/camera"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Cameras e acessórios"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_1_smartwatch"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/smartwatch"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Relógios inteligentes"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_14_salao"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/salao"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Salão e Barbearia"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_18_microfones"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/microfone"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Microfones e acessorios"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/bt_categ_2_caixa"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/caixasom"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Caixas de Som e Rádios"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_9_brinquedos"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/toys"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Brinquedos \ne Jogos"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_5_automotivos"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/automot"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Acessórios Automotivos"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_6_games"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/videogam"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Videogames e Controles"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_7_informatica"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="6dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/computer"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Computador e informatica"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/bt_categ_50_cozinha"
+                                app:cardCornerRadius="10dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginStart="6dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:padding="4dp"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="vertical"
+                                    android:layout_width="110dp"
+                                    android:layout_height="wrap_content" >
+
+                                    <FrameLayout
+                                        android:layout_gravity="center_horizontal"
+                                        android:layout_width="70dp"
+                                        android:layout_height="70dp">
+                                        <ImageView
+                                            android:background="@drawable/icons_cozinha"
+                                            android:adjustViewBounds="true"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent" />
+                                    </FrameLayout>
+
+                                    <TextView
+                                        android:gravity="center|top"
+                                        android:layout_marginTop="14dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:textSize="12sp"
+                                        android:textColor="@color/cinza_text"
+                                        android:textAllCaps="true"
+                                        android:textStyle="bold"
+                                        android:lines="2"
+                                        android:text="Panelas e Cozinha"
+                                        android:layout_width="match_parent"
+                                        android:minHeight="32dp"
+                                        android:layout_height="wrap_content" />
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <LinearLayout
+                    android:id="@+id/container_resumo_principal"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Em alta nas ultimas 48 horas"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="visible"
+                        tools:listitem="@layout/item_prod_atalho"
+                        android:id="@+id/rv_em_alta"
+                        android:clipToPadding="false"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:orientation="horizontal"
+                        tools:itemCount="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <TextView
+                        android:text="Melhores Recrutadores"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/top_adm"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:id="@+id/img_perfil_top_adm_1"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="1º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_adm_1"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp"
+                                    />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/top_adm"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:id="@+id/img_perfil_top_adm_2"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="2º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_adm_2"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/top_adm"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="3º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_adm_3"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:text="Mais Vendidos nos ultimos 30 dias"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="visible"
+                        tools:listitem="@layout/item_prod_atalho"
+                        tools:itemCount="1"
+                        android:clipToPadding="false"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:id="@+id/rv_mais_vendidos"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <TextView
+                        android:text="Melhores Vendedores"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/topvendedor"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="1º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_vend_1"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/topvendedor"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="2º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_vend_2"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/topvendedor"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="3º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_vend_3"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/topvendedor"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="4º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_vend_4"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/topvendedor"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="5º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_vend_5"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" >
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp">
+                                    <ImageView
+                                        android:background="@drawable/topvendedor"
+                                        android:backgroundTint="@color/cinza_text"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/cinza_text"
+                                    android:textStyle="bold"
+                                    android:lines="1"
+                                    android:text="6º Lugar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp" />
+
+                                <TextView
+                                    android:id="@+id/nome_top_vend_6"
+                                    android:gravity="center|top"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_marginRight="5dp"
+                                    android:textSize="14sp"
+                                    android:text="Revendedor"
+                                    android:textColor="@color/cinza_text"
+                                    android:lines="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:text="Atualizações e Novidades"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="visible"
+                        tools:listitem="@layout/item_produto_principal"
+                        android:paddingStart="6dp"
+                        android:paddingEnd="6dp"
+                        tools:itemCount="1"
+                        android:id="@+id/rv_novidades"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </LinearLayout>
+
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/botao_topo"
                     android:layout_width="match_parent"
+                    android:visibility="visible"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="26dp"
-                    app:cardElevation="5dp"
-                    android:layout_marginRight="30dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginLeft="16dp"
+                    app:cardElevation="2dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="52dp"
                     android:layout_marginBottom="18dp">
 
                     <ImageView
-                        android:scaleType="centerCrop"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/capa_venda_fav"
+                        android:src="@drawable/baner5"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
 
 
                 </androidx.cardview.widget.CardView>
 
-
-                <LinearLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:id="@+id/ll_bt_smart_watch"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/smartwatch"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="SmartWatch"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_caixa_som"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/caixasom"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Caixas de Som"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_eletronicos"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/eletricidade"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Eletronicos"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_salao"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/salao"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Salão e beleza"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:id="@+id/ll_bt_video_game"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/videogam"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="VideoGame"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_comp"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/computer"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Computador"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_ferramentas"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/ferramt"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Ferramentas"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_brinquedos"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/toys"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Brinquedos"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:id="@+id/ll_bt_acc_tv"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/tv"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Tv e Video"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_fones"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/headphone"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Fones"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_oculos"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/oculos"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Oculos"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_bt_microfones"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/microfone"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Microfones"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:id="@+id/ll_bt_automotivos"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/automot"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Automotivos"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/ll_bt_relogios"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/relogi"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Relogios"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/ll_bt_camera"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/camera"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Cameras"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/ll_bt_mochilas"
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="80dp">
-                        <View
-                            android:layout_marginTop="10dp"
-                            android:backgroundTint="@color/colorSecondary"
-                            android:layout_gravity="center"
-                            android:background="@drawable/mochila"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"/>
-                        <TextView
-                            android:layout_marginTop="6dp"
-                            android:gravity="center"
-                            android:text="Mochilas"
-                            android:textColor="@color/colorSecondary"
-                            android:textSize="13sp"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <TextView
-                    android:text="Novidades"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="22sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="visible"
-                    android:id="@+id/rv_novidades"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-                <TextView
-                    android:text="Top Vendedores"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="22sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="150dp">
-
-                        <androidx.cardview.widget.CardView
-                            app:cardElevation="0dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="90dp"
-                            android:layout_height="100dp"
-                            app:cardCornerRadius="5dp">
-                            <ImageView
-                                android:background="@drawable/topvendedor"
-                                android:id="@+id/img_perfil_top_vend_1"
-                                android:adjustViewBounds="true"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-                        </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="15sp"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:textStyle="bold"
-                            android:lines="1"
-                            android:text="1º Lugar"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp" />
-
-                        <TextView
-                            android:id="@+id/nome_top_vend_1"
-                            android:gravity="center|top"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="14sp"
-                            android:text="Revendedor"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:lines="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="150dp">
-                        <androidx.cardview.widget.CardView
-                            app:cardElevation="0dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="90dp"
-                            android:layout_height="100dp"
-                            app:cardCornerRadius="5dp">
-                            <ImageView
-                                android:background="@drawable/topvendedor"
-                                android:id="@+id/img_perfil_top_vend_2"
-                                android:adjustViewBounds="true"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-                        </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="15sp"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:textStyle="bold"
-                            android:lines="1"
-                            android:text="2º Lugar"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp" />
-
-                        <TextView
-                            android:id="@+id/nome_top_vend_2"
-                            android:gravity="center|top"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="14sp"
-                            android:text="Revendedor"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:lines="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="150dp">
-                        <androidx.cardview.widget.CardView
-                            app:cardElevation="0dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="90dp"
-                            android:layout_height="100dp"
-                            app:cardCornerRadius="5dp">
-                            <ImageView
-                                android:background="@drawable/topvendedor"
-                                android:id="@+id/img_perfil_top_vend_3"
-                                android:adjustViewBounds="true"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-                        </androidx.cardview.widget.CardView>
-
-                        <TextView
-                            android:gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="15sp"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:textStyle="bold"
-                            android:lines="1"
-                            android:text="3º Lugar"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp" />
-
-                        <TextView
-                            android:id="@+id/nome_top_vend_3"
-                            android:gravity="center|top"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="14sp"
-                            android:text="Revendedor"
-                            android:textColor="@color/colorSecondaryDark"
-                            android:lines="1"
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <TextView
-                    android:text="Produtos em Alta"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="22sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:nestedScrollingEnabled="false"
-                    android:visibility="visible"
-                    android:id="@+id/rv_em_alta"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -761,21 +1646,11 @@
 
 
 
-        <TextView
-            android:visibility="gone"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_gravity="center|top"
-            android:id="@+id/tv_error_main"
-            android:textColor="#fff"
-            android:maxWidth="300dp"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <FrameLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="120dp"/>
+            android:layout_height="40dp"/>
 
     </FrameLayout>
 
@@ -792,6 +1667,7 @@
         app:fabCradleVerticalOffset="5dp"
         app:hideOnScroll="false">
         <LinearLayout
+            android:layout_marginRight="16dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -803,9 +1679,9 @@
                 <View
                     android:layout_gravity="center"
                     android:backgroundTint="@color/colorSecondaryDark"
-                    android:background="@drawable/ic_shopping_cart_branco2_35dp"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:background="@drawable/ic_baseline_home_24"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp" />
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/bt_afiliados_main"
@@ -816,8 +1692,8 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/colorSecondaryDark"
                     android:background="@drawable/ic_baseline_group_add_24"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:layout_width="36dp"
+                    android:layout_height="36dp" />
             </FrameLayout>
             <FrameLayout
                 android:layout_weight="2"
@@ -834,8 +1710,8 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/colorSecondaryDark"
                     android:background="@drawable/ic_baseline_chat_24"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
             </FrameLayout>
             <FrameLayout
                 android:layout_weight="1"
@@ -846,8 +1722,8 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/colorSecondaryDark"
                     android:background="@drawable/ic_account_circle_black_24dp"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
             </FrameLayout>
         </LinearLayout>
     </com.google.android.material.bottomappbar.BottomAppBar>

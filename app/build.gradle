@@ -1,11 +1,8 @@
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
+        google()
     }
-
-
 }
-
 apply plugin: 'com.android.application'
 
 repositories {
@@ -13,15 +10,14 @@ repositories {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.rapha.vendafavorita"
         minSdkVersion 19
-        targetSdkVersion 30
-        versionCode 5
-        versionName "5.0"
+        targetSdkVersion 31
+        versionCode 8
+        versionName "7.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,57 +32,66 @@ android {
         }
 
         debug {
-            debuggable false
+            debuggable true
         }
 
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+configurations {
+    all {
+        exclude group: 'androidx.lifecycle', module: 'lifecycle-viewmodel-ktx'
     }
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
-    implementation 'androidx.fragment:fragment:1.1.0-alpha06'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.fragment:fragment:1.5.0-rc01'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'com.google.android.material:material:1.7.0-alpha01'
     implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'androidx.preference:preference:1.1.0-alpha04'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0-alpha02'
     implementation 'androidx.palette:palette:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'androidx.exifinterface:exifinterface:1.0.0'
-    implementation 'com.google.guava:guava:27.0.1-android'
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.exifinterface:exifinterface:1.3.3'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'androidx.multidex:multidex:2.0.1'
     //ULTILIDADES BASICAS
     implementation 'com.github.bijoysingh:android-basics:5.0.0'
-    implementation 'net.danlew:android.joda:2.8.1'
+    implementation 'net.danlew:android.joda:2.10.14'
     //GRAFICOS
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //GLIDE
-    implementation('com.github.bumptech.glide:glide:4.9.0') {
+    implementation('com.github.bumptech.glide:glide:4.13.2') {
         exclude group: "com.android.support"
     }
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    implementation 'com.robinhood.ticker:ticker:1.2.0'
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-messaging:17.5.0'
-    implementation 'com.google.firebase:firebase-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-firestore:19.0.0'
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.google.firebase:firebase-storage:19.2.0'
-    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-dynamic-links:19.0.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation 'com.robinhood.ticker:ticker:2.0.4'
+    implementation 'com.google.firebase:firebase-core:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.5'
+    implementation 'com.google.firebase:firebase-auth:21.0.4'
+    implementation 'com.google.firebase:firebase-firestore:24.1.2'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.10'
+    implementation 'com.google.firebase:firebase-analytics:21.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

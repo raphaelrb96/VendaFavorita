@@ -49,7 +49,6 @@ import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask.TaskSnapshot;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.UserStreamView;
 
@@ -114,7 +113,6 @@ public class MensagemDetalheActivityFragment extends Fragment implements View.On
 
     private String idGetIntent, path, nome;
 
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
 
     public MensagemDetalheActivityFragment() {
@@ -156,7 +154,6 @@ public class MensagemDetalheActivityFragment extends Fragment implements View.On
         this.storage = FirebaseStorage.getInstance();
         this.storageReference = this.storage.getReference();
         this.firebaseFirestore = FirebaseFirestore.getInstance();
-        analitycsFacebook = new AnalitycsFacebook(getActivity());
         analitycsGoogle = new AnalitycsGoogle(getActivity());
         String saudacoes = "Olá " + auth.getCurrentUser().getDisplayName();
         tv_tolbar.setText(saudacoes);
@@ -414,7 +411,6 @@ public class MensagemDetalheActivityFragment extends Fragment implements View.On
         this.editText.clearFocus();
         this.editText.setText("");
         analitycsGoogle.logUserEnviaMensagemEvent(user.getDisplayName(), user.getUid());
-        analitycsFacebook.logUserEnviaMensagemEvent(user.getDisplayName(), user.getUid());
     }
 
     private void salvarFotoEmStorage() {

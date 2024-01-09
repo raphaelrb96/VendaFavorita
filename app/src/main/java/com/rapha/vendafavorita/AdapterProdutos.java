@@ -2,6 +2,7 @@ package com.rapha.vendafavorita;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,6 +30,7 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
     private Context context;
     private ArrayList<ProdObj> produtos;
     private boolean revenda;
+    private int coluns;
 
     public interface ClickProdutoCliente {
         void openDetalhe(ProdObj prodObj);
@@ -37,11 +40,21 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
         void openChat();
     }
 
-    public AdapterProdutos(ClickProdutoCliente clickProdutoCliente, Context context, ArrayList<ProdObj> produtos, boolean revenda) {
+    public AdapterProdutos(ClickProdutoCliente clickProdutoCliente, Context context, ArrayList<ProdObj> produtos, boolean revenda, int colun) {
         this.clickProdutoCliente = clickProdutoCliente;
         this.context = context;
         this.produtos = produtos;
         this.revenda = revenda;
+        this.coluns = colun;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(coluns > 2) {
+            return 2;
+        }
+
+        return 1;
     }
 
     @NonNull
@@ -50,6 +63,11 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
 
         if (context == null) {
             context = parent.getContext();
+        }
+
+        if(viewType == 2) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_produto_principal_mini, parent, false);
+            return new ProdutoPrincipalViewHolder(view, context, produtos);
         }
 
         View view = LayoutInflater.from(context).inflate(R.layout.item_produto_principal, parent, false);
@@ -77,6 +95,12 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
             if (ids.contains(obj.getIdProduto())) {
                 vh.fab.setBackgroundTintList(ColorStateList.valueOf(this.context.getResources().getColor(R.color.colorPrimaryDark)));
             }
+        }
+
+        if(coluns >= 3) {
+            vh.miniCard(true);
+        } else {
+            vh.miniCard(false);
         }
     }
 
@@ -179,6 +203,7 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
         private ImageView imageView;
         private TextView nome, preco;
         private FloatingActionButton fab;
+        private MaterialButton bt_item_novidades;
 
         private Context context;
         private ArrayList<ProdObj> produtos;
@@ -191,8 +216,10 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
             nome = (TextView) itemView.findViewById(R.id.nome_produto_principal);
             preco = (TextView) itemView.findViewById(R.id.preco_item_produto_principal);
             fab = (FloatingActionButton) itemView.findViewById(R.id.fab_produto_item);
+            bt_item_novidades = (MaterialButton) itemView.findViewById(R.id.bt_item_novidades);
             itemView.setOnClickListener(this);
             fab.setOnClickListener(this);
+            bt_item_novidades.setOnClickListener(this);
         }
 
         @Override
@@ -216,6 +243,18 @@ public class AdapterProdutos extends RecyclerView.Adapter<AdapterProdutos.Produt
 
         public void setNome(String s) {
             nome.setText(s);
+        }
+
+        public void miniCard(boolean mini) {
+            if(!mini) {
+                bt_item_novidades.setVisibility(View.VISIBLE);
+                preco.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                nome.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+            } else {
+                bt_item_novidades.setVisibility(View.GONE);
+                preco.setTextSize(TypedValue.COMPLEX_UNIT_SP,13);
+                nome.setTextSize(TypedValue.COMPLEX_UNIT_SP,10);
+            }
         }
 
     }

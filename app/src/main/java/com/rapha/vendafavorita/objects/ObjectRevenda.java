@@ -31,11 +31,14 @@ public class ObjectRevenda {
 
     private String uidAdm;
 
+    private int idCancelamento;
+    private String detalheCancelamento;
+
     public ObjectRevenda () {
 
     }
 
-    public ObjectRevenda(String adress, int comissaoTotal, String complemento, int compraValor, String detalhePag, int formaDePagar, int frete, long hora, String idCompra, double lat, ArrayList<ObjProdutoRevenda> listaDeProdutos, double lng, String nomeCliente, boolean pagamentoRecebido, String pathFotoUserRevenda, String phoneCliente, int statusCompra, int tipoDeEntrega, String uidUserRevendedor, String userNomeRevendedor, int valorTotal, boolean vendaConcluida, boolean existeComissaoAfiliados, String uidAdm) {
+    public ObjectRevenda(String adress, int comissaoTotal, String complemento, int compraValor, String detalhePag, int formaDePagar, int frete, long hora, String idCompra, double lat, ArrayList<ObjProdutoRevenda> listaDeProdutos, double lng, String nomeCliente, boolean pagamentoRecebido, String pathFotoUserRevenda, String phoneCliente, int statusCompra, int tipoDeEntrega, String uidUserRevendedor, String userNomeRevendedor, int valorTotal, boolean vendaConcluida, boolean existeComissaoAfiliados, String uidAdm, int idCancelamento, String detalheCancelamento) {
         this.adress = adress;
         this.comissaoTotal = comissaoTotal;
         this.complemento = complemento;
@@ -60,6 +63,8 @@ public class ObjectRevenda {
         this.vendaConcluida = vendaConcluida;
         this.existeComissaoAfiliados = existeComissaoAfiliados;
         this.uidAdm = uidAdm;
+        this.idCancelamento = idCancelamento;
+        this.detalheCancelamento = detalheCancelamento;
     }
 
     public String getAdress() {
@@ -156,5 +161,13 @@ public class ObjectRevenda {
 
     public boolean isExisteComissaoAfiliados() {
         return existeComissaoAfiliados;
+    }
+
+    public int getIdCancelamento() {
+        return idCancelamento;
+    }
+
+    public String getDetalheCancelamento() {
+        return detalheCancelamento;
     }
 }

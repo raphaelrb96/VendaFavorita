@@ -92,6 +92,7 @@
                     android:onClick="verMensagens"
                     android:background="@color/colorPrimary"
                     android:clickable="true"
+                    android:id="@+id/bt_mensagem_menu_adm"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_width="0dp"
@@ -122,6 +123,7 @@
 
 
             <LinearLayout
+                android:id="@+id/container_2_menu_adm"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -193,6 +195,7 @@
 
 
             <LinearLayout
+                android:id="@+id/container_3_menu_adm"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -272,6 +275,7 @@
                     android:onClick="verFaltas"
                     android:background="@color/colorPrimary"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_width="0dp"
@@ -304,6 +308,7 @@
                     android:onClick="solicitacoesRevendedores"
                     android:background="@color/colorPrimary"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_width="0dp"

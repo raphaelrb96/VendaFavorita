@@ -15,253 +15,723 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"/>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/conteudo_produto_revenda"
-        android:layout_marginBottom="60dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/conteudo_produto_revenda"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/img_capa_prod_revenda_detalhe"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:layout_width="match_parent"
-                android:layout_height="450dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_fotos_detalhes"
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
-
-            <TextView
-                android:id="@+id/tv_detalhe_prod_revenda_nome"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:text="Multimetro digital"
-                android:layout_gravity="start"
-                android:textAllCaps="true"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="16dp"
-                android:textColor="@color/colorSecondary"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="Comissão"
-                android:textSize="12sp"
-                android:layout_marginTop="24dp"
-                android:textColor="@color/colorSecondary"
-                android:layout_gravity="start"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/comissao_produto_detalhe_revenda"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:text="R$ xx,xx"
-                android:layout_gravity="start"
-                android:layout_marginEnd="20dp"
-                android:textColor="@color/colorSecondary"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_weight="1"
+            android:layout_height="0dp">
 
             <LinearLayout
+                android:background="@color/colorLightGray"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="65dp"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginBottom="16dp"
+                    app:contentPaddingBottom="0dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <FrameLayout
+                        android:layout_marginRight="26dp"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginTop="26dp"
+                        android:layout_marginBottom="26dp"
+                        android:layout_gravity="center"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp">
+                        <ImageView
+                            android:background="@drawable/produto_empty"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerInside"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                    </FrameLayout>
+                    <ImageView
+                        android:id="@+id/img_capa_prod_revenda_detalhe"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:minHeight="300dp"
+                        android:maxHeight="550dp"
+                        android:layout_height="400dp" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <TextView
-                        android:text="Valor à vista"
-                        android:textSize="12sp"
-                        android:layout_marginTop="24dp"
-                        android:textColor="@color/colorSecondary"
+                        android:id="@+id/tv_detalhe_prod_revenda_nome"
+                        android:textStyle="bold"
+                        android:textSize="36sp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Multimetro digital"
                         android:layout_gravity="start"
-                        android:layout_marginBottom="2dp"
+                        android:textAllCaps="true"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/colorSecondary"
                         android:layout_marginStart="20dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+
+                    <RatingBar
+                        style="@style/Widget.AppCompat.RatingBar.Indicator"
+                        android:layout_marginLeft="16dp"
+                        android:progressTint="@color/amarelo"
+                        android:isIndicator="true"
+                        android:rating="4.5"
+                        android:stepSize=".5"
+                        android:numStars="5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <TextView
                         android:id="@+id/valor_dinheiro_produto_detalhe_revenda"
                         android:textStyle="bold"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:text="R$ xx,xx"
-                        android:layout_gravity="start"
+                        android:gravity="top"
+                        android:layout_gravity="start|top"
                         android:layout_marginEnd="20dp"
-                        android:textColor="@color/colorSecondary"
+                        android:textColor="@color/colorSecondaryDark"
                         android:layout_marginStart="20dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:text="Valor no cartão"
-                        android:textSize="12sp"
-                        android:layout_marginTop="24dp"
-                        android:textColor="@color/colorSecondary"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/valor_cartao_produto_detalhe_revenda"
-                        android:textStyle="bold"
-                        android:textSize="24sp"
-                        android:text="R$ xx,xx"
-                        android:layout_marginEnd="20dp"
-                        android:textColor="@color/colorSecondary"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <TextView
-                android:text="Descrição"
-                android:textSize="12sp"
-                android:visibility="gone"
-                android:layout_marginTop="24dp"
-                android:textColor="@color/colorSecondary"
-                android:layout_gravity="start"
-                android:layout_marginBottom="2dp"
-                android:layout_marginStart="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tv_detalhe_prod_revenda_descricao"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:layout_gravity="center|start"
-                android:gravity="start"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="140dp"
-                android:textColor="@color/colorSecondaryLight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <FrameLayout
-                android:id="@+id/container_variantes_produto_revenda"
-                android:background="@color/red"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="70dp">
-                <HorizontalScrollView
-                    android:scrollbars="none"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
                     <LinearLayout
-                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:layout_marginTop="16dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:text="Valor à vista"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="6dp"
+                                    android:textColor="@color/cinza_text"
+                                    android:layout_gravity="start"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:text="Valor no cartão"
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="6dp"
+                                    android:textColor="@color/cinza_text"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:id="@+id/valor_cartao_produto_detalhe_revenda"
+                                    android:textStyle="bold"
+                                    android:textSize="24sp"
+                                    android:text="R$ xx,xx"
+                                    android:layout_marginEnd="20dp"
+                                    android:textColor="@color/colorSecondary"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/titulo_cores_produto_revenda"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_marginBottom="6dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/colorPrimaryLight"
-                            android:textSize="18sp"
-                            android:text="Cores:"
+                            android:text="Comissão"
+                            android:textSize="12sp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/cinza_text"
+                            android:layout_gravity="start"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginStart="20dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:paddingStart="4dp"
-                            android:layout_marginBottom="6dp"
-                            android:layout_marginTop="6dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/rv_cores_produto_revenda"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                        <FrameLayout
-                            android:layout_width="20dp"
-                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:id="@+id/comissao_produto_detalhe_revenda"
+                            android:textStyle="bold"
+                            android:textSize="26sp"
+                            android:text="R$ xx,xx"
+                            android:layout_gravity="start"
+                            android:layout_marginEnd="20dp"
+                            android:textColor="@color/colorSecondary"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_variantes_produto_revenda"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Variantes do Produto"
+                        android:id="@+id/titulo_cores_produto_revenda"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:clipToPadding="false"
+                        android:layout_gravity="center"
+                        android:id="@+id/rv_cores_produto_revenda"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_cores_produto_revenda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:text="Imagens do Produto"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    tools:listitem="@layout/item_foto_detalhes"
+                    tools:itemCount="1"
+                    android:clipToPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:id="@+id/rv_fotos_detalhes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+
+                <TextView
+                    android:text="Descrição do Produto"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tv_detalhe_prod_revenda_descricao"
+                    android:textStyle="bold"
+                    android:textSize="10sp"
+                    android:layout_gravity="center|start"
+                    android:gravity="start"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/cinza_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="Descrição"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginTop="24dp"
+                    android:textColor="@color/colorSecondary"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="Simulação do parcelamento"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    tools:listitem="@layout/item_parcelamento"
+                    tools:itemCount="1"
+                    android:clipToPadding="false"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:id="@+id/rv_parcelamento_detalhes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:text="Mais opções para continuar"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <HorizontalScrollView
+                    android:scrollbars="none"
+                    android:clipToPadding="false"
+                    android:paddingHorizontal="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_marginBottom="4dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="38dp"
+                                    android:layout_height="38dp">
+                                    <ImageView
+                                        android:background="@drawable/ic_baseline_web_24"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center|bottom"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Enviar Link do site"
+                                    android:layout_width="match_parent"
+                                    android:minHeight="32dp"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="38dp"
+                                    android:layout_height="38dp">
+                                    <ImageView
+                                        android:background="@drawable/ic_baseline_mobile_screen_share_24"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center|bottom"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Enviar Link do App"
+                                    android:layout_width="match_parent"
+                                    android:minHeight="32dp"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="38dp"
+                                    android:layout_height="38dp">
+                                    <ImageView
+                                        android:background="@drawable/ic_baseline_chat_24"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center|bottom"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Iniciar uma conversa"
+                                    android:layout_width="match_parent"
+                                    android:minHeight="32dp"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="10dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:padding="4dp"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginBottom="4dp"
+                                android:orientation="vertical"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content" >
+
+                                <FrameLayout
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_width="38dp"
+                                    android:layout_height="38dp">
+                                    <ImageView
+                                        android:background="@drawable/ic_star_black_24dp"
+                                        android:backgroundTint="@color/colorSecondaryLight"
+                                        android:adjustViewBounds="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </FrameLayout>
+
+                                <TextView
+                                    android:gravity="center|bottom"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginRight="4dp"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/colorSecondaryLight"
+                                    android:textAllCaps="true"
+                                    android:lines="2"
+                                    android:text="Avaliar o produto"
+                                    android:layout_width="match_parent"
+                                    android:minHeight="32dp"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
 
                     </LinearLayout>
                 </HorizontalScrollView>
 
 
-            </FrameLayout>
+                <TextView
+                    android:text="Compartilhe com outros Vendedores"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bt_link_site"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        app:cornerRadius="10dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorSecondary"
+                        android:layout_width="0dp"
+                        app:backgroundTint="@color/colorPrimaryLight"
+                        android:text="Link Site"
+                        android:textSize="14sp"
+                        android:drawableTop="@drawable/ic_baseline_web_24"
+                        app:iconTint="@color/colorSecondary"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:id="@+id/bt_link_app"
+                        android:layout_marginTop="8dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginRight="12dp"
+                        android:textColor="@color/colorSecondary"
+                        android:layout_marginLeft="12dp"
+                        android:layout_weight="1"
+                        app:backgroundTint="@color/colorPrimaryLight"
+                        android:layout_width="0dp"
+                        android:text="Link APP"
+                        android:drawableTop="@drawable/ic_baseline_mobile_screen_share_24"
+                        app:iconTint="@color/colorSecondary"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp" />
+
+            </LinearLayout>
 
 
-        </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
 
 
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/efab_prod_detalhe_revenda"
-        android:background="@color/red"
-        android:elevation="16dp"
-        android:layout_gravity="bottom"
+    <com.google.android.material.appbar.AppBarLayout
+        android:backgroundTint="@color/colorPrimaryLight"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_gravity="bottom"
+        app:elevation="16dp"
+        android:layout_height="wrap_content">
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal|bottom"
-                android:gravity="center"
-                android:elevation="16dp"
-                android:background="@color/red"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <FrameLayout
-                    android:backgroundTint="#fff"
-                    android:background="@drawable/ic_dinheiro_black_24dp"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"/>
-                <FrameLayout
-                    android:layout_width="8dp"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:textColor="#fff"
-                    android:textAllCaps="true"
-                    android:text="Revender esse produto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_width="wrap_content"
+                android:paddingStart="6dp"
+                android:paddingEnd="16dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    app:strokeColor="@color/azul_dark"
+                    app:strokeWidth="1dp"
+                    app:contentPaddingLeft="8dp"
+                    app:contentPaddingRight="8dp"
+                    app:contentPaddingTop="8dp"
+                    app:contentPaddingBottom="8dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_remove_circle_outline_black_30dp"
+                        android:backgroundTint="@color/azul_dark" />
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    app:strokeColor="@color/azul_dark"
+                    app:strokeWidth="1dp"
+                    app:contentPaddingLeft="8dp"
+                    app:contentPaddingRight="8dp"
+                    app:contentPaddingTop="8dp"
+                    app:contentPaddingBottom="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content">
+                    <com.robinhood.ticker.TickerView
+                        app:ticker_animationDuration="1500"
+                        app:ticker_defaultCharacterList="number"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:textSize="24sp"
+                        android:text="10"
+                        android:textColor="@color/azul_dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    app:strokeColor="@color/azul_dark"
+                    app:strokeWidth="1dp"
+                    app:contentPaddingLeft="8dp"
+                    app:contentPaddingRight="8dp"
+                    app:contentPaddingTop="8dp"
+                    app:contentPaddingBottom="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    app:cardCornerRadius="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/ic_add_circle_outline_black_30dp"
+                        android:backgroundTint="@color/azul_dark" />
+                </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingRight="16dp"
+                android:paddingLeft="6dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/efab_prod_detalhe_revenda"
+                    app:backgroundTint="@color/azul_dark"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    app:elevation="12dp"
+                    android:layout_gravity="center|end"
+                    android:text="fazer pedido"
+                    app:icon="@drawable/ic_action_ir_right"
+                    app:iconGravity="end"
+                    android:layout_width="match_parent"
+                    app:cornerRadius="12dp"
+                    android:layout_height="60dp" />
+            </FrameLayout>
+
+
+
+
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
 
     <TextView
         android:id="@+id/indisponivel_produto_detalhe_revenda"
@@ -279,14 +749,145 @@
         android:layout_width="match_parent"
         android:layout_height="60dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:onClick="fecha"
-        android:alpha="0.5"
-        android:src="@drawable/ic_close_black_24dp"
-        android:layout_margin="12dp"
-        app:backgroundTint="#fff"
-        app:fabSize="mini"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:onClick="fecha"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                app:elevation="6dp"
+                app:backgroundTint="#fff"
+                app:fabCustomSize="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    app:contentPaddingLeft="3dp"
+                    app:contentPaddingRight="3dp"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="19dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:minWidth="70dp"
+                    android:layout_height="38dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4dp"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/azul_dark"
+                            android:src="@drawable/ic_baseline_payments_24" />
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent">
+                            <com.robinhood.ticker.TickerView
+                                app:ticker_animationDuration="2000"
+                                app:ticker_defaultCharacterList="alphabet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-black"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:text="R$15"
+                                android:id="@+id/text_comissao"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:textColor="@color/azul_dark"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="16dp"
+                    app:contentPaddingLeft="3dp"
+                    app:contentPaddingRight="3dp"
+                    android:id="@+id/bt_modelo_precificacao"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="19dp"
+                    android:layout_gravity="center"
+                    android:layout_width="180dp"
+                    android:layout_height="38dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4dp"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/azul_dark"
+                            android:src="@drawable/ic_baseline_verified_24" />
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent">
+                            <com.robinhood.ticker.TickerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:fontFamily="sans-serif-black"
+                                android:textAllCaps="true"
+                                android:id="@+id/text_bt_modelo_precificacao"
+                                android:gravity="start"
+                                app:ticker_animationDuration="1000"
+                                app:ticker_defaultCharacterList="number"
+                                android:textAlignment="textStart"
+                                android:text="VAREJO"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="4dp"
+                                android:textColor="@color/azul_dark"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+                        <ImageView
+                            android:layout_gravity="center|end"
+                            android:padding="3dp"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:tint="@color/azul_dark"
+                            android:src="@drawable/ic_action_ir_right" />
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
 
 </FrameLayout>

@@ -20,7 +20,7 @@
 
 
             <LinearLayout
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -29,7 +29,6 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:visibility="gone"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:orientation="vertical"
@@ -77,7 +76,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="gone"
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:orientation="vertical"
@@ -129,7 +127,6 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:visibility="gone"
                     android:id="@+id/botao_campeonatos"
                     android:layout_width="0dp"
                     android:layout_height="110dp">
@@ -174,16 +171,15 @@
             </LinearLayout>
 
             <androidx.cardview.widget.CardView
-                android:visibility="gone"
                 android:id="@+id/bt_afiliados_painel_revenda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
+                android:layout_marginBottom="22dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="5dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="26dp">
 
                 <ImageView
                     android:scaleType="centerCrop"
@@ -195,30 +191,106 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/title_rv_produtos_painel_revenda"
-                android:gravity="center"
-                android:layout_gravity="center"
+            <LinearLayout
                 android:visibility="gone"
-                android:layout_marginTop="26dp"
-                android:layout_marginBottom="22dp"
-                android:textStyle="bold"
-                android:textColor="@color/colorSecondaryLight"
-                android:textSize="26sp"
-                android:text="Mais lucrativos"
+                android:layout_marginBottom="-30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginLeft="12dp"
+                    android:textStyle="bold"
+                    android:text="Cursos e Treinamentos"
+                    android:textColor="@color/colorSecondaryLight"
+                    android:textSize="22sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <HorizontalScrollView
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/bt_curso_1"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
+                            android:layout_marginTop="6dp">
+
+                            <ImageView
+                                android:scaleType="centerCrop"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/modolo1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/bt_curso_2"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
+                            android:layout_marginTop="6dp">
+
+                            <ImageView
+                                android:scaleType="centerCrop"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/modulo3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/bt_curso_3"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="5dp"
+                            android:layout_marginTop="6dp">
+
+                            <ImageView
+                                android:scaleType="centerCrop"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/modulo2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:nestedScrollingEnabled="false"
-                android:visibility="gone"
+                android:visibility="visible"
+                tools:listitem="@layout/item_list_main_catg_atalho"
                 android:id="@+id/rv_produtos_painel_revenda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
             <ProgressBar
                 android:id="@+id/pb_painel_revenda"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="42dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -280,9 +352,8 @@
         android:id="@+id/efab_painel_revendedor"
         android:textSize="14sp"
         app:backgroundTint="@color/red"
-        android:text="Lista de revenda"
-        app:icon="@drawable/ic_playlist_add_minhas_compras_50dp"
-        app:iconSize="24dp"
+        android:text="Meu Carrinho"
+        app:icon="@drawable/ic_shopping_cart_branco2_35dp"
         app:iconTint="#fff"
         android:textColor="#fff"
         android:layout_gravity="bottom|center"

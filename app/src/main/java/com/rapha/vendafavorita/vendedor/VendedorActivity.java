@@ -27,6 +27,8 @@ import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.objects.Usuario;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class VendedorActivity extends AppCompatActivity implements AdapterAfiliadosVendedor.AfiliadosVendedorListaner {
@@ -222,6 +224,13 @@ public class VendedorActivity extends AppCompatActivity implements AdapterAfilia
                             Usuario user = queryDocumentSnapshots.getDocuments().get(i).toObject(Usuario.class);
                             afiliados.add(user);
                         }
+
+                        Collections.sort(afiliados, new Comparator<Usuario>() {
+                            @Override
+                            public int compare(Usuario usuario, Usuario t1) {
+                                return Long.compare(t1.getPrimeiroLogin(), usuario.getPrimeiroLogin());
+                            }
+                        });
 
                         rv_afiliados_vendedor.setLayoutManager(new LinearLayoutManager(VendedorActivity.this));
                         AdapterAfiliadosVendedor adpter = new AdapterAfiliadosVendedor(VendedorActivity.this, afiliados, VendedorActivity.this);

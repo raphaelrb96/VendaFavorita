@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#fff</color>
     <color name="colorSecondary">#212121</color>
+    <color name="colorLightGray">#EAEAEA</color>
     <color name="colorPrimaryDark">#fff</color>
     <color name="colorSecondaryDark">#000000</color>
     <color name="colorPrimaryLight">#ffffff</color>
@@ -11,8 +12,24 @@
     <color name="back_rv">#dcdcdc</color>
     <color name="red">#1A237E</color>
     <color name="red_dark">#060D51</color>
-    <color name="verde">#3dbea7</color>
+    <color name="verde">#179833</color>
     <color name="verdeDark">#B71C1C</color>
+
+    <color name="cinza_claro">#80DDDDDD</color>
+    <color name="cinza_medio">#CD9C9C9C</color>
+    <color name="cinza_text">#6e6e6e</color>
+
+    <color name="amarelo">#fccb00</color>
+
+
+    <color name="azul_clean">#79a0d2</color>
+    <color name="azul_light">#4077bf</color>
+    <color name="azul">#004dcf</color>
+    <color name="azul_medium">#1A237E</color>
+    <color name="azul_dark">#060D51</color>
+    <color name="azul_text">#2F4B6F</color>
+
+
 
     <color name="black_overlay">#66000000</color>
 </resources>

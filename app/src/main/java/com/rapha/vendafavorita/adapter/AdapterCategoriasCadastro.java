@@ -82,7 +82,7 @@ public class AdapterCategoriasCadastro extends RecyclerView.Adapter<AdapterCateg
 
         @Override
         public void onClick(View v) {
-            mudancaDeCategoria.mudanca(arrayList.get(getAdapterPosition()), getAdapterPosition(), checkBox.isChecked());
+            mudancaDeCategoria.mudanca(arrayList.get(getLayoutPosition()), getLayoutPosition(), checkBox.isChecked());
         }
     }
 

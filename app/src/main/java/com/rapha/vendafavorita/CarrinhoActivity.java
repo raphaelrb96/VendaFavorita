@@ -36,7 +36,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.CompraFinalParcelable;
 import com.rapha.vendafavorita.objects.UserStreamView;
@@ -100,7 +99,6 @@ public class CarrinhoActivity extends FragmentActivity implements AdapterCart.An
 
     private FloatingActionButton fab;
     private FrameLayout containerHelp;
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
     private DocumentReference usuarioRef;
     private CollectionReference enderecosColecao;
@@ -159,7 +157,6 @@ public class CarrinhoActivity extends FragmentActivity implements AdapterCart.An
         });
 
         if (!ADMINISTRADOR) {
-            analitycsFacebook.logUserVisitaCarrinhoEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
             analitycsGoogle.logUserVisitaCarrinhoEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
             UserStreamView userStreamView = new UserStreamView(user.getDisplayName(), user.getUid(), pathFotoUser, System.currentTimeMillis());
             firestore.collection("Eventos").document("stream").collection("cart").document(user.getUid()).set(userStreamView);
@@ -204,13 +201,12 @@ public class CarrinhoActivity extends FragmentActivity implements AdapterCart.An
         pb = (ProgressBar) findViewById(R.id.pb_cart);
         et_numero_casa = (TextInputEditText) findViewById(R.id.et_numero_casa);
         et_complemento = (TextInputEditText) findViewById(R.id.et_complemento);
-        taxaEntregaTV.setCharacterList(TickerUtils.getDefaultNumberList());
-        totalTV.setCharacterList(TickerUtils.getDefaultNumberList());
-        ttcomprasTV.setCharacterList(TickerUtils.getDefaultNumberList());
+        taxaEntregaTV.setCharacterLists(TickerUtils.provideNumberList());
+        totalTV.setCharacterLists(TickerUtils.provideNumberList());
+        ttcomprasTV.setCharacterLists(TickerUtils.provideNumberList());
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout_cart);
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
         usuarioRef = firestore.collection("Usuario").document(user.getUid());
         enderecosColecao = firestore.collection("Enderecos").document("Clientes").collection(user.getUid());

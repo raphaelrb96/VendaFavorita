@@ -228,7 +228,7 @@ public class PlaceholderFragment extends Fragment implements AdapterTopRevendedo
                     TopRevendedores rev = topRevendedores.get(j);
                     RevendedorObj rObj = new RevendedorObj(rev.getNomeRevendedor(), rev.getPathFotoRevendedor(), rev.getUidRevendedor(), rev.getNumeroItensReveendas());
                     topsRev.add(rObj);
-                    if (j > 2) break;
+                    if (j > 5) break;
                 }
 
 

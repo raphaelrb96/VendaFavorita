@@ -1,9 +1,11 @@
 package com.rapha.vendafavorita;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,10 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -25,7 +32,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.adapter.AdapterAfilidos;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.Usuario;
 
@@ -46,8 +52,9 @@ public class PainelDeAfiliados extends AppCompatActivity {
     private ProgressBar pb_add_revendedor_afiliado, pb_meus_afiliados;
     private ImageView info_add_revendedor_afiliado;
 
+    private Button bt_link_site_recrutamento, bt_link_app_recrutamento;
 
-    private String nickUser;
+    private String nickUser = null;
 
     private TextInputEditText et_username_add_afiliado;
 
@@ -59,7 +66,6 @@ public class PainelDeAfiliados extends AppCompatActivity {
     private RecyclerView rv_painel_afiliados;
 
     private boolean cadastroIniciado = false;
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
 
     @Override
@@ -69,6 +75,9 @@ public class PainelDeAfiliados extends AppCompatActivity {
         tv_toolbar_painel_afiliados = (TextView) findViewById(R.id.tv_toolbar_painel_afiliados);
         numero_de_analize = (TextView) findViewById(R.id.numero_de_analize);
         titulo_meus_revendedores = (TextView) findViewById(R.id.titulo_meus_revendedores);
+
+        bt_link_site_recrutamento = (Button) findViewById(R.id.bt_link_site_recrutamento);
+        bt_link_app_recrutamento = (Button) findViewById(R.id.bt_link_app_recrutamento);
 
         bt_voltar_painel_afiliados = (View) findViewById(R.id.bt_voltar_painel_afiliados);
 
@@ -92,13 +101,22 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
         verificarUser();
 
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
 
+        bt_link_app_recrutamento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                compartilharLinkApp();
+            }
+        });
 
-
-        tv_toolbar_painel_afiliados.setText("Painel de Afiliados");
+        bt_link_site_recrutamento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                compartilharLinkSite();
+            }
+        });
 
         bt_voltar_painel_afiliados.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +128,53 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
     }
 
+    private void compartilharLinkApp() {
+        if(nickUser == null) return;
+        String prefixoUrl = "https://vendafavorita.web.app/cadastro/?adm="+nickUser;
+
+        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse(prefixoUrl))
+                .setDomainUriPrefix("https://vendafavorita.page.link")
+                // Open links with this app on Android
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
+                .buildDynamicLink();
+
+        FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLongLink(Uri.parse(dynamicLink.getUri().toString()))
+                .buildShortDynamicLink()
+                .addOnCompleteListener(this, new OnCompleteListener<ShortDynamicLink>() {
+                    @Override
+                    public void onComplete(@NonNull Task<ShortDynamicLink> task) {
+                        if (task.isSuccessful()) {
+                            // Short link created
+                            Uri shortLink = task.getResult().getShortLink();
+                            Uri flowchartLink = task.getResult().getPreviewLink();
+
+                            Intent i = new Intent(Intent.ACTION_SEND);
+                            i.setType("text/plain");
+                            i.putExtra(Intent.EXTRA_SUBJECT, "Link de Recrutamento");
+                            i.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+                            startActivity(Intent.createChooser(i, "Compartilhar Link"));
+                        } else {
+
+                        }
+                    }
+                });
+    }
+
+    private void compartilharLinkSite() {
+        if(nickUser == null) return;
+        String prefixoUrl = "https://vendafavorita.web.app/cadastro/?adm="+nickUser;
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Link de Recrutamento");
+        i.putExtra(Intent.EXTRA_TEXT, prefixoUrl);
+        startActivity(Intent.createChooser(i, "Compartilhar Link"));
+    }
+
     private void verMeusAfiliados() {
-        colecaoMeusAfiliados = mFirestore.collection("Usuario").whereEqualTo("uidAdm", mAuth.getCurrentUser().getUid());
+        colecaoMeusAfiliados = mFirestore.collection("Usuario").whereEqualTo("uidAdm", mAuth.getCurrentUser().getUid()).limit(400);
 
 
 
@@ -223,7 +286,7 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
                         } else {
                             nickUser = documentoPrincipalDoUsuario.getUserName();
-                            tv_toolbar_painel_afiliados.setText("@" + nickUser);
+                            //tv_toolbar_painel_afiliados.setText("@" + nickUser);
                             verMeusAfiliados();
                         }
 
@@ -235,6 +298,7 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
                     Intent intent = new Intent(PainelDeAfiliados.this, MeuPerfilActivity.class);
                     startActivity(intent);
+                    finish();
 
                 }
 
@@ -248,7 +312,6 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
         if (!ADMINISTRADOR) {
 
-            analitycsFacebook.visitaAoPainelAfiliados(user.getDisplayName(), user.getUid(), pathFotoUser);
             analitycsGoogle.visitaAoPainelAfiliados(user.getDisplayName(), user.getUid(), pathFotoUser);
 
         }

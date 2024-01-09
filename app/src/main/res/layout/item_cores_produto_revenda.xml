@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_margin="6dp"
+<com.google.android.material.card.MaterialCardView
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
+    app:contentPaddingRight="6dp"
+    app:contentPaddingLeft="6dp"
+    app:cardCornerRadius="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    app:strokeColor="@color/colorSecondaryLight"
+    app:cardBackgroundColor="@color/colorPrimaryLight"
+    app:cardElevation="2dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <CheckBox
-        android:textColor="#fff"
-        android:shadowColor="#fff"
-        android:buttonTint="#fff"
-        android:drawableTint="#fff"
+        android:textColor="@color/colorSecondaryLight"
+        android:drawableTint="@color/colorSecondaryLight"
+        android:textAllCaps="true"
+        android:drawableTintMode="multiply"
+        android:layout_marginStart="6dp"
+        android:text="Texto"
+        android:layout_marginEnd="12dp"
         android:id="@+id/cb_cores_prod_revenda"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+        android:layout_height="42dp" />
+</com.google.android.material.card.MaterialCardView>

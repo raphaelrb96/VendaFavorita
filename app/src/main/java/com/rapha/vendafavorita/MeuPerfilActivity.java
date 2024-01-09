@@ -23,8 +23,10 @@ import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,17 +35,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.SolicitacaoRevendedor;
 import com.rapha.vendafavorita.objects.Usuario;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
 import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
 import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
+import static com.rapha.vendafavorita.MainActivity.getUidShareLink;
 
 public class MeuPerfilActivity extends AppCompatActivity {
 
@@ -75,8 +80,9 @@ public class MeuPerfilActivity extends AppCompatActivity {
     private View bt_voltar_meu_perfil;
 
     private LinearLayout ll_bt_sair, ll_bt_mensagem_menu;
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
+    private String intentExtraAdm;
+    private Usuario usuarioAdm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +117,31 @@ public class MeuPerfilActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("adm");
+            //The key argument here must match that used in the other activity
+            if(value != null) {
+                intentExtraAdm = value;
+                Log.d("TesteLogin", "Perfil activity Extras: " + value);
+            } else {
+                //intent null
+                intentExtraAdm = getUidShareLink();
+                if(intentExtraAdm != null) {
+                    Log.d("TesteLogin", "Perfil activity Extras: getUidShareLink()");
+                } else {
+
+                }
+            }
+
+        }
+
+
         user = auth.getCurrentUser();
 
         usuarioRef = firestore.collection("Usuario").document(user.getUid());
 
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
         bt_voltar_meu_perfil.setOnClickListener(new View.OnClickListener() {
@@ -209,49 +235,16 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
                 Log.d("ApelidoFormatado", nick.toString());
 
-                WriteBatch batch = firestore.batch();
-
-                SolicitacaoRevendedor obj = new SolicitacaoRevendedor(user.getEmail(), pathFotoUser, nick.toString(), numero, "", user.getDisplayName(), System.currentTimeMillis(), user.getUid(), 0);
-
-                DocumentReference doc = firestore.collection("Revendedores").document("amacompras").collection("ativos").document(user.getUid());
-
-                batch.update(usuarioRef, "userName", nick.toString());
-                batch.update(usuarioRef, "celular", numero);
-
-                batch.set(doc, obj);
-
-                if (!ADMINISTRADOR) {
-
-                    analitycsFacebook.cadastroDeUsuario(nick.toString(), user.getUid(), pathFotoUser);
-                    analitycsGoogle.cadastroDeUsuario(nick.toString(), user.getUid(), pathFotoUser);
-
-                }
-
-                batch.commit().addOnSuccessListener(MeuPerfilActivity.this, new OnSuccessListener<Void>() {
+                firestore.collection("Usuario").whereEqualTo("userName", nick.toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
-
-                        documentoPrincipalDoUsuario = usuario;
-
-
-                        usuarioInterface(true, true, mModoEdicao);
-                        Toast.makeText(MeuPerfilActivity.this, "Dados atualizados com sucesso", Toast.LENGTH_LONG).show();
-                        if (getIntent().getIntExtra("alert", 1) == 2) {
-                            Intent intent = new Intent(MeuPerfilActivity.this, PainelRevendedorActivity.class);
-                            intent.putExtra("alert", 2);
-                            startActivity(intent);
-                            finish();
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                        QuerySnapshot result = task.getResult();
+                        if(result.isEmpty()) {
+                            salvarDadosFirebase(nick.toString(), numero);
                         } else {
-                            finish();
+                            Toast.makeText(MeuPerfilActivity.this, "Esse apelido que você escolheu ja está sendo usado por outro vendedor !", Toast.LENGTH_LONG).show();
+
                         }
-                    }
-                }).addOnFailureListener(MeuPerfilActivity.this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pb_meu_perfil.setVisibility(View.GONE);
-                        scrol_meu_perfil.setVisibility(View.VISIBLE);
-                        bt_salvar_dados_meu_perfil.setVisibility(View.VISIBLE);
-                        Toast.makeText(MeuPerfilActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -278,6 +271,67 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
     }
 
+    private void salvarDadosFirebase(String nick, String numero) {
+
+        WriteBatch batch = firestore.batch();
+
+
+
+        SolicitacaoRevendedor obj = new SolicitacaoRevendedor(user.getEmail(), pathFotoUser, nick, numero, "", user.getDisplayName(), System.currentTimeMillis(), user.getUid(), 0);
+
+        DocumentReference doc = firestore.collection("Revendedores").document("amacompras").collection("ativos").document(user.getUid());
+
+        batch.update(usuarioRef, "userName", nick);
+        batch.update(usuarioRef, "celular", numero);
+
+
+        batch.set(doc, obj);
+
+        if (!ADMINISTRADOR) {
+
+            analitycsGoogle.cadastroDeUsuario(nick, user.getUid(), pathFotoUser);
+
+        }
+
+        if(usuarioAdm != null) {
+            batch.update(usuarioRef,
+                    "admConfirmado", true,
+                    "uidAdm", usuarioAdm.getUid(),
+                    "pathFotoAdm", usuarioAdm.getPathFoto(),
+                    "nomeAdm", usuarioAdm.getNome(),
+                    "usernameAdm", usuarioAdm.getUserName()
+            );
+        }
+
+        batch.commit().addOnSuccessListener(MeuPerfilActivity.this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                documentoPrincipalDoUsuario = usuario;
+
+
+                usuarioInterface(true, true, mModoEdicao);
+                Toast.makeText(MeuPerfilActivity.this, "Dados atualizados com sucesso", Toast.LENGTH_LONG).show();
+                if (getIntent().getIntExtra("alert", 1) == 2) {
+                    Intent intent = new Intent(MeuPerfilActivity.this, PainelRevendedorActivity.class);
+                    intent.putExtra("alert", 2);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    finish();
+                }
+            }
+        }).addOnFailureListener(MeuPerfilActivity.this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pb_meu_perfil.setVisibility(View.GONE);
+                scrol_meu_perfil.setVisibility(View.VISIBLE);
+                bt_salvar_dados_meu_perfil.setVisibility(View.VISIBLE);
+                Toast.makeText(MeuPerfilActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private void esconderTeclado(TextInputEditText et) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
@@ -294,7 +348,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
         pb_meu_perfil.setVisibility(View.VISIBLE);
         scrol_meu_perfil.setVisibility(View.GONE);
 
-        usuarioRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        usuarioRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
@@ -377,43 +431,26 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
         } else if (possuiAdm && !admVerificado) {
             //falta confirmar adm
-            card_solicitacao_adm_meu_perfil.setVisibility(View.VISIBLE);
-            container_adm_meu_perfil.setVisibility(View.VISIBLE);
-            container_dados_adm_meu_perfil.setVisibility(View.GONE);
-            status_solicitacao_meu_perfil.setText(usuario.getNomeAdm() + " deseja se tornar seu adm. Você aceita entrar para o grupo de vendas de @" + usuario.getUsernameAdm() + " ?");
-
-            bt_solicitacao_adm_meu_perfil.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    usuarioRef.update("admConfirmado", true).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            usuarioInterface(true, true, false);
-
-
-                            documentoPrincipalDoUsuario = new Usuario(documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), usuario.getUidAdm(), usuario.getUsernameAdm(), usuario.getNomeAdm(), usuario.getPathFotoAdm(), true);
-
-                            if (!ADMINISTRADOR) {
-
-                                analitycsFacebook.afiliacao(documentoPrincipalDoUsuario.getUsernameAdm(), documentoPrincipalDoUsuario.getUidAdm(), documentoPrincipalDoUsuario.getPathFotoAdm());
-                                analitycsGoogle.afiliacao(documentoPrincipalDoUsuario.getUsernameAdm(), documentoPrincipalDoUsuario.getUidAdm(), documentoPrincipalDoUsuario.getPathFotoAdm());
-
-                            }
-
-
-                            if (getIntent().getIntExtra("alert", 1) == 2) {
-                                finish();
-                            }
-                        }
-                    });
-
-                }
-            });
+            showCardConfirmacao(usuario.getNomeAdm(), usuario.getUsernameAdm(), null, null, true);
 
         } else {
             //nem tem adm
-            card_solicitacao_adm_meu_perfil.setVisibility(View.GONE);
-            container_adm_meu_perfil.setVisibility(View.GONE);
+            if(intentExtraAdm != null && intentExtraAdm != "") {
+                firestore.collection("Usuario").whereEqualTo("userName", intentExtraAdm).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                        QuerySnapshot result = task.getResult();
+                        if(!result.isEmpty() && result.size() > 0) {
+                            usuarioAdm = result.getDocuments().get(0).toObject(Usuario.class);
+                            showCardConfirmacao(usuarioAdm.getNome(), usuarioAdm.getUserName(), usuarioAdm.getPathFoto(), usuarioAdm.getUid(), false);
+                        }
+                    }
+                });
+            } else {
+                card_solicitacao_adm_meu_perfil.setVisibility(View.GONE);
+                container_adm_meu_perfil.setVisibility(View.GONE);
+            }
+
         }
 
 
@@ -461,6 +498,67 @@ public class MeuPerfilActivity extends AppCompatActivity {
                 bt_salvar_dados_meu_perfil.setVisibility(View.GONE);
             }
         }
+
+    }
+
+    private void showCardConfirmacao(String nomeAdm, String apelido, String photo, String uidAdm, boolean admCadastrado) {
+        card_solicitacao_adm_meu_perfil.setVisibility(View.VISIBLE);
+        container_adm_meu_perfil.setVisibility(View.VISIBLE);
+        container_dados_adm_meu_perfil.setVisibility(View.GONE);
+        status_solicitacao_meu_perfil.setText(nomeAdm + " deseja se tornar seu adm. Você aceita entrar para a equipe junto com @" + apelido + " ?");
+
+        bt_solicitacao_adm_meu_perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!admCadastrado) {
+                    clickConfirmarAdm(
+                            usuarioRef.update(
+                                    "admConfirmado", true,
+                                    "uidAdm", uidAdm,
+                                    "pathFotoAdm", photo,
+                                    "nomeAdm", nomeAdm,
+                                    "usernameAdm", apelido
+                            ), admCadastrado, nomeAdm, apelido, photo, uidAdm);
+                } else {
+                    clickConfirmarAdm(usuarioRef.update("admConfirmado", true), admCadastrado, nomeAdm, apelido, photo, uidAdm);
+                }
+            }
+        });
+    }
+
+    private void clickConfirmarAdm(Task<Void> query, boolean admCadastrado, String nomeAdm, String apelido, String photo, String uidAdm) {
+        query.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                usuarioInterface(true, true, false);
+
+                if(admCadastrado) {
+                    usuario = new Usuario(documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), usuario.getUidAdm(), usuario.getUsernameAdm(), usuario.getNomeAdm(), usuario.getPathFotoAdm(), true);
+                    documentoPrincipalDoUsuario = usuario;
+                } else {
+                    usuario = new Usuario(documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), uidAdm, apelido, nomeAdm, photo, true);
+                    documentoPrincipalDoUsuario = usuario;
+                }
+
+
+                if (!ADMINISTRADOR) {
+
+                    analitycsGoogle.afiliacao(documentoPrincipalDoUsuario.getUsernameAdm(), documentoPrincipalDoUsuario.getUidAdm(), documentoPrincipalDoUsuario.getPathFotoAdm());
+
+                }
+
+
+                if (getIntent().getIntExtra("alert", 1) == 2) {
+                    finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Log.d("TesteCadastroAfiliados", "Erro ao salvar");
+
+            }
+        });
 
     }
 }

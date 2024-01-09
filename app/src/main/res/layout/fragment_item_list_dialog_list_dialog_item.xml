@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_item_modelo_precificacao"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/cinza_medio"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        app:contentPaddingBottom="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                app:elevation="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_item_modelo_preco"
+                    android:textAllCaps="true"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingLeft="@dimen/list_item_spacing"
+                    android:paddingTop="@dimen/list_item_spacing_half"
+                    android:textStyle="bold"
+                    android:gravity="center|start"
+                    android:paddingRight="@dimen/list_item_spacing"
+                    android:drawablePadding="12dp"
+                    android:paddingBottom="@dimen/list_item_spacing_half"
+                    android:drawableRight="@drawable/ic_baseline_chevron_right_24_dark_blue"
+                    android:drawableLeft="@drawable/ic_baseline_check_box_24_blue_dark"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/azul_dark"
+                    tools:text="Item da Lista" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:paddingTop="6dp"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="Valor por unidade"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        android:lines="2"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:id="@+id/valor_item_modelo_preco"
+                        android:textStyle="bold"
+                        android:text="R$350"
+                        android:layout_marginEnd="2dp"
+                        android:textColor="@color/cinza_text"
+                        android:textSize="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="Quantidade Minima"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        android:lines="2"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:id="@+id/quantidade_item_modelo_preco"
+                        android:textStyle="bold"
+                        android:text="01"
+                        android:textSize="18sp"
+                        android:layout_marginEnd="2dp"
+                        android:textColor="@color/cinza_text"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="Lucro por unidade"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        android:lines="2"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:id="@+id/comissao_item_modelo_preco"
+                        android:textStyle="bold"
+                        android:text="R$10"
+                        android:layout_marginEnd="2dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/cinza_text"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:visibility="invisible"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:text="Valor por unidade"
+                        android:textAllCaps="true"
+                        android:textSize="12sp"
+                        android:lines="2"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_marginBottom="2dp"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content" />
+
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:text="R$10.350"
+                        android:layout_marginEnd="2dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/cinza_text"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/aviso_item_modelo_preco"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="12dp"
+                android:layout_width="wrap_content"
+                android:drawablePadding="6dp"
+                android:gravity="top"
+                android:textStyle="italic"
+                android:textAllCaps="true"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:textSize="10sp"
+                android:textColor="@color/cinza_text"
+                android:drawableLeft="@drawable/ic_baseline_info_18_blue_dark"
+                android:text="Em caso de Cobrança errada no valor da venda, a Comissão será cancelada " />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</FrameLayout>

@@ -1,13 +1,13 @@
 package com.rapha.vendafavorita;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,27 +20,26 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.adapter.AdapterMeuHistoricoDeVendas;
 import com.rapha.vendafavorita.adapter.AdapterTopProdutos;
 import com.rapha.vendafavorita.adapter.ComissoesAfiliadosAdapter;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
+import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.ComissaoAfiliados;
 import com.rapha.vendafavorita.objects.ObjProdutoRevenda;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.objects.TopProdutosRevenda;
-import com.rapha.vendafavorita.objects.TopRevendedores;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 
 import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
-import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
-import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
-import static com.rapha.vendafavorita.FragmentMain.user;
 
-public class HistoricoRevendasActivity extends AppCompatActivity {
+public class HistoricoRevendasActivity extends AppCompatActivity implements AdapterMeuHistoricoDeVendas.OnChangeListVendasListener {
 
     private RecyclerView rv_comissoes, rv_comissoes_afiliados, rv_comissoes_top_produtos;
     private ProgressBar pb_comissoes;
     private TextView text_erro_comissao;
     private AdapterMeuHistoricoDeVendas adapterMeuHistoricoDeVendas;
+    private NestedScrollView nestedscroll_historico_vendas;
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth auth;
@@ -57,12 +56,13 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
     private TextView titulo_comissoes_afiliados, titulo_comissoes_revendas, titulo_top_produtos;
     private View bt_voltar_historico_revendas;
-    private AnalitycsFacebook analitycsFacebook;
-    private AnalitycsFacebook analitycsGoogle;
+    private AnalitycsGoogle analitycsGoogle;
 
     private AdapterTopProdutos adapterTopProdutos;
 
     private ArrayList<TopProdutosRevenda> topProdutosRevendas30;
+    private GregorianCalendar c30;
+    private LinearLayoutManager vendasLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
         rv_comissoes = (RecyclerView) findViewById(R.id.rv_comissoes);
         rv_comissoes_afiliados = (RecyclerView) findViewById(R.id.rv_comissoes_afiliados);
         rv_comissoes_top_produtos = (RecyclerView) findViewById(R.id.rv_comissoes_top_produtos);
+        nestedscroll_historico_vendas = (NestedScrollView) findViewById(R.id.nestedscroll_historico_vendas);
 
         text_erro_comissao = (TextView) findViewById(R.id.text_erro_comissao);
         titulo_comissoes_afiliados = (TextView) findViewById(R.id.titulo_comissoes_afiliados);
@@ -84,8 +85,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        analitycsFacebook = new AnalitycsFacebook(this);
-        analitycsGoogle = new AnalitycsFacebook(this);
+        analitycsGoogle = new AnalitycsGoogle(this);
         auth = FirebaseAuth.getInstance();
 
         idUsuario = getIntent().getStringExtra("id");
@@ -102,12 +102,16 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
         String uid = auth.getUid();
 
+        c30 = new GregorianCalendar();
+        c30.add(Calendar.DAY_OF_MONTH, -30);
+        long milisg = c30.getTimeInMillis();
+
         refRevenda = firebaseFirestore.collection("MinhasRevendas").document("Usuario").collection(uid);
 
         refComissoes = firebaseFirestore.collection("MinhasComissoesAfiliados").document("Usuario").collection(uid);
 
         //scrol_list_minhas_comissoes.setVisibility(View.GONE);
-        refRevenda.orderBy("hora", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        refRevenda.orderBy("hora", Query.Direction.DESCENDING).limit(150).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 listaDeComissoes = new ArrayList<>();
@@ -166,7 +170,6 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
         super.onStart();
         if (!ADMINISTRADOR) {
 
-            analitycsFacebook.visitaAoPainelRevendedor(nome, idUsuario, path);
             analitycsGoogle.visitaAoPainelRevendedor(nome, idUsuario, path);
 
         }
@@ -174,7 +177,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
     private void getListComissoes() {
 
-        refComissoes.orderBy("hora", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        refComissoes.orderBy("hora", Query.Direction.DESCENDING).limit(150).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
@@ -262,8 +265,9 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
 
     private void comComissoesRevendas() {
 
-        adapterMeuHistoricoDeVendas = new AdapterMeuHistoricoDeVendas(HistoricoRevendasActivity.this, listaDeComissoes);
-        rv_comissoes.setLayoutManager(new LinearLayoutManager(HistoricoRevendasActivity.this));
+        adapterMeuHistoricoDeVendas = new AdapterMeuHistoricoDeVendas(HistoricoRevendasActivity.this, listaDeComissoes, HistoricoRevendasActivity.this);
+        vendasLayoutManager = new LinearLayoutManager(HistoricoRevendasActivity.this);
+        rv_comissoes.setLayoutManager(vendasLayoutManager);
         rv_comissoes.setAdapter(adapterMeuHistoricoDeVendas);
 
         if (topProdutosRevendas30.size() > 0) {
@@ -281,6 +285,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
         titulo_comissoes_revendas.setVisibility(View.VISIBLE);
 
         pb_comissoes.setVisibility(View.GONE);
+
     }
 
     private void listaCheia() {
@@ -330,4 +335,8 @@ public class HistoricoRevendasActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onChangeList() {
+        nestedscroll_historico_vendas.smoothScrollTo(0, (int)rv_comissoes.getY(), 3000);
+    }
 }

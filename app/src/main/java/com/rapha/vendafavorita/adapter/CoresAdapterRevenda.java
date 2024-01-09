@@ -56,9 +56,10 @@ public class CoresAdapterRevenda extends RecyclerView.Adapter<CoresAdapterRevend
 
     public void trocarCor(int posNova) {
 
+        int antigaPosicao = posicaoChecada;
         posicaoChecada = posNova;
+        notifyItemChanged(antigaPosicao);
 
-        notifyDataSetChanged();
     }
 
     @Override
@@ -82,7 +83,7 @@ public class CoresAdapterRevenda extends RecyclerView.Adapter<CoresAdapterRevend
 
             if (!b) return;
 
-            listener.escolherCor(cores.get(getAdapterPosition()), getAdapterPosition());
+            listener.escolherCor(cores.get(getLayoutPosition()), getLayoutPosition());
         }
     }
 

@@ -28,7 +28,7 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/colorSecondaryLight"
             android:text="Total: "
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:gravity="center"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 app:ticker_animationDuration="1500"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:layout_gravity="center|end"
                 android:layout_marginRight="20dp"
                 android:layout_marginEnd="20dp"
@@ -167,46 +167,10 @@
                         android:layout_gravity="center|start"
                         android:background="@drawable/ic_dinheiro_black_24dp" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/container_pagamento_dinheiro"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.textfield.TextInputLayout
-                        app:hintEnabled="true"
-                        app:boxCornerRadiusBottomEnd="5dp"
-                        app:boxCornerRadiusBottomStart="5dp"
-                        app:helperText="Vai precisar de troco ?"
-                        app:boxCornerRadiusTopEnd="5dp"
-                        app:boxCornerRadiusTopStart="5dp"
-                        style="@style/MeuEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Troco">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:imeOptions="actionDone"
-                            android:id="@+id/text_input_troco_conf_revenda"
-                            android:textCursorDrawable="@drawable/curso_text_input"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <CheckBox
-                        android:layout_marginTop="4dp"
-                        android:id="@+id/cb_nao_precisa_troco"
-                        android:text="Não vou precisar de troco"
-                        android:textSize="12sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
 
                 <!--debitto-->
                 <LinearLayout
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -226,20 +190,6 @@
                         android:background="@drawable/ic_cartao_black_24dp"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="35dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_debito"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <!--credito-->
@@ -265,19 +215,29 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
                 </LinearLayout>
+
+                <!--credito-->
                 <LinearLayout
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="35dp"
-                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_credito"
-                        android:textAllCaps="true"
+                    <CheckBox
+                        android:id="@+id/cb_credito_parcelado"
                         android:textStyle="bold"
-                        android:textSize="14sp"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textSize="20sp"
+                        android:buttonTint="@color/colorSecondaryDark"
+                        android:text="Crédito Parcelado"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center|start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <View
+                        android:layout_gravity="center|start"
+                        android:background="@drawable/ic_cartao_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
                 </LinearLayout>
 
                 <!--alimentacao-->
@@ -287,35 +247,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <CheckBox
-                        android:id="@+id/cb_alimentacao"
+                        android:id="@+id/cb_pix"
                         android:textStyle="bold"
                         android:textColor="@color/colorSecondaryDark"
                         android:textSize="20sp"
                         android:buttonTint="@color/colorSecondaryDark"
-                        android:text="Alimentação"
+                        android:text="Pix"
                         android:layout_marginRight="10dp"
                         android:layout_gravity="center|start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <View
                         android:layout_gravity="center|start"
-                        android:background="@drawable/ic_vale_alimentacao_black_24dp"
+                        android:background="@drawable/ic_dinheiro_black_24dp"
                         android:layout_width="30dp"
                         android:layout_height="30dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="35dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_alimentacao"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:textSize="14sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -32,7 +32,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.CompraFinalParcelable;
 import com.rapha.vendafavorita.objects.CompraFinalizada;
@@ -58,7 +57,6 @@ public class ConfirmarCompraActivityFragment extends Fragment {
 
     private ProgressBar pb;
 
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
 
     private TextInputEditText etTroco, etCelular, etBairro, etRua, etNcasa;
@@ -156,7 +154,6 @@ public class ConfirmarCompraActivityFragment extends Fragment {
 
         firestore = FirebaseFirestore.getInstance();
 
-        analitycsFacebook = new AnalitycsFacebook(getActivity());
         analitycsGoogle = new AnalitycsGoogle(getActivity());
 
         cfp = getActivity().getIntent().getParcelableExtra("cfp");
@@ -167,9 +164,9 @@ public class ConfirmarCompraActivityFragment extends Fragment {
         taxa = taxaGratis;
         taxarapida = taxafacil * 2;
 
-        tvtotal.setCharacterList(TickerUtils.getDefaultNumberList());
-        tvtaxa.setCharacterList(TickerUtils.getDefaultNumberList());
-        tvsoma.setCharacterList(TickerUtils.getDefaultNumberList());
+        tvtotal.setCharacterLists(TickerUtils.provideNumberList());
+        tvtaxa.setCharacterLists(TickerUtils.provideNumberList());
+        tvsoma.setCharacterLists(TickerUtils.provideNumberList());
 
         total = taxa + soma;
 
@@ -431,7 +428,6 @@ public class ConfirmarCompraActivityFragment extends Fragment {
             }
             int itens = cfp.getItens();
             if (!ADMINISTRADOR) {
-                analitycsFacebook.logUserVisitaCheckoutEvent(user.getDisplayName(), user.getUid(), pathFotoUser, soma, tipoEntrega, taxa, total, etCelular.getText().toString(), rua, itens);
                 analitycsGoogle.logUserVisitaCheckoutEvent(user.getDisplayName(), user.getUid(), pathFotoUser, soma, tipoEntrega, taxa, total, etCelular.getText().toString(), rua);
                 UserStreamView userStreamView = new UserStreamView(user.getDisplayName(), user.getUid(), pathFotoUser, System.currentTimeMillis());
                 firestore.collection("Eventos").document("stream").collection("checkout").document(user.getUid()).set(userStreamView);
@@ -701,7 +697,6 @@ public class ConfirmarCompraActivityFragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 ids.clear();
-                analitycsFacebook.logUserCompraSolicitadaEvent(novaCompra.getUserNome(), novaCompra.getUidUserCompra(), novaCompra.getPathFotoUser(), novaCompra.getCompraValor(), String.valueOf(novaCompra.getTipoDeEntrega()), novaCompra.getFrete(), novaCompra.getValorTotal(), novaCompra.getPhoneUser(), novaCompra.getAdress()+ " " + novaCompra.getComplemento(), novaCompra.getDetalhePag());
                 analitycsGoogle.logUserCompraSolicitadaEvent(novaCompra.getUserNome(), novaCompra.getUidUserCompra(), novaCompra.getPathFotoUser(), novaCompra.getCompraValor(), String.valueOf(novaCompra.getTipoDeEntrega()), novaCompra.getFrete(), novaCompra.getValorTotal(), novaCompra.getPhoneUser(), novaCompra.getAdress()+ " " + novaCompra.getComplemento(), novaCompra.getDetalhePag());
                 startActivity(new Intent(getActivity(), ConclusaoActivity.class).putExtra("uid", novaCompra.getUidUserCompra()));
                 getActivity().finish();

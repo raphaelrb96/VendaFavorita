@@ -1,5 +1,6 @@
 package com.rapha.vendafavorita;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -11,22 +12,34 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import static com.rapha.vendafavorita.FragmentMain.user;
 
 
 public class MainActivity extends AppCompatActivity {
 
     public static ArrayList<String> ids = new ArrayList();
     public static String MEU_CANAL = "Ocapop";
+    public static String uidShareLink = null;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -58,6 +71,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public static String getUidShareLink() {
+        return uidShareLink;
+    }
+
+    public static void setUidShareLink(String uidShareLink) {
+        MainActivity.uidShareLink = uidShareLink;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        outState.putString("ADM", uidShareLink);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +113,24 @@ public class MainActivity extends AppCompatActivity {
 
         //fab = (FloatingActionButton) findViewById(R.id.fab_main);
 
+        //uidShareLink = getIntent().getStringExtra("adm");
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String value = extras.getString("adm");
+            //The key argument here must match that used in the other activity
+            if(value != null) {
+                uidShareLink = value;
+                Log.d("TesteLogin", "Main activity Extras: " + value);
+            }
+
+        }
+
         criarCanal();
+
+
+
+
 
     }
 

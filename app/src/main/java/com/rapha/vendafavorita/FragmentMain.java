@@ -1,16 +1,12 @@
 package com.rapha.vendafavorita;
 
-import android.app.Fragment;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,20 +29,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
+
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -58,15 +50,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -74,30 +65,32 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.rapha.vendafavorita.adapter.AdapterEmAlta;
 import com.rapha.vendafavorita.adapter.AdapterInterfaceMain;
 import com.rapha.vendafavorita.adapter.AdapterLancamentos;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
+import com.rapha.vendafavorita.carteira.CarteiraUsuario;
 import com.rapha.vendafavorita.objectfeed.ProdutoObj;
 import com.rapha.vendafavorita.objects.FeedPrincipalObj;
 import com.rapha.vendafavorita.objects.TokenFcm;
 import com.rapha.vendafavorita.objects.UserStreamView;
 import com.rapha.vendafavorita.objects.Usuario;
+import com.rapha.vendafavorita.rankings.ResumeRankingActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.rapha.vendafavorita.MainActivity.getUidShareLink;
 import static com.rapha.vendafavorita.MainActivity.ids;
+import static com.rapha.vendafavorita.MainActivity.setUidShareLink;
 
-public class FragmentMain extends Fragment implements FacebookCallback<LoginResult>, AdapterInterfaceMain.ListenerPrincipal, AdapterProdutos.ClickProdutoCliente, AdapterLancamentos.HandlerProdAtalho, AdapterEmAlta.EmaltaListener {
+public class FragmentMain extends Fragment implements AdapterInterfaceMain.ListenerPrincipal, AdapterProdutos.ClickProdutoCliente, AdapterLancamentos.HandlerProdAtalho, AdapterEmAlta.EmaltaListener {
 
     private AnalitycsGoogle analitycsGoogle;
-    private AnalitycsFacebook analitycsFacebook;
 
     private static final int RC_SIGN_IN = 124;
     private static final int RC_SIGN_IN_ADM = 567;
@@ -121,7 +114,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private int referencia = 0;
     private ArrayList<ProdObj> prodObjs;
     private ArrayList<ProdObj> resultadoPesquisa;
-    private CallbackManager callbackManager;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     public static FirebaseUser user = null;
@@ -129,42 +121,49 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     private ProgressBar pb;
     private ImageButton btPesquisar;
     private TextView tvErro;
-    private LinearLayout toolbar;
+    private Toolbar toolbar;
 
     private CardView botao_topo;
 
     private FrameLayout scrol_main;
 
-    private RecyclerView rv_novidades, rv_em_alta;
+    private RecyclerView rv_novidades, rv_em_alta, rv_mais_vendidos;
 
-    private LinearLayout btZap, btSair, btMensagem, btMinhasCompras;
+    private LinearLayout btZap, btSair, btMensagem, btMinhasCompras, container_resumo_principal;
     //private ExtendedFloatingActionButton btMeuCarrinho;
     private EditText etpesquisar;
 
     private FloatingActionButton efabCart;
 
-    private TextView nome_top_vend_1, nome_top_vend_2, nome_top_vend_3;
+    private TextView nome_top_vend_1, nome_top_vend_2, nome_top_vend_3, nome_top_vend_4, nome_top_vend_5, nome_top_vend_6;
+    private TextView nome_top_adm_1, nome_top_adm_2, nome_top_adm_3;
 
-    private View whatsappBt, faceBt, instaBt, chatBt, perfilBt;
+
+    private View whatsappBt, faceBt, instaBt, chatBt, botaoCartToolbar;
 
     private int tipoReferencia = 0;
     private Query query;
     public static final boolean ADMINISTRADOR = true;
     private ImageView fundo;
 
-    private FrameLayout bt_carrinho_revenda_main, bt_meu_perfil_main, bt_afiliados_main, bt_mensagem_main;
+    private FrameLayout bt_homeBottombar, bt_meu_perfil_main, bt_afiliados_main, bt_mensagem_main;
     private NestedScrollView lista_principal;
-    private LinearLayout ll_bt_smart_watch;
-    private LinearLayout ll_bt_caixa_som;
-    private LinearLayout ll_bt_eletronicos;
-    private LinearLayout ll_bt_salao;
-    private LinearLayout ll_bt_video_game;
-    private LinearLayout ll_bt_comp;
-    private LinearLayout ll_bt_ferramentas;
-    private LinearLayout ll_bt_brinquedos;
-    private LinearLayout ll_bt_acc_tv, ll_bt_fones, ll_bt_oculos, ll_bt_microfones;
-    private LinearLayout ll_bt_camera, ll_bt_mochilas, ll_bt_relogios;
-    private LinearLayout ll_bt_automotivos;
+
+    private CardView bt_categ_11_fones;
+    private CardView bt_categ_2_caixa;
+
+    private FeedPrincipalObj feedPrincipalObj;
+    private CardView historico_home, bonus_home, categorias_home, comissoes_home;
+    private CardView bt_categ_1_smartwatch;
+    private CardView bt_categ_5_automotivos;
+    private CardView bt_categ_6_games;
+    private CardView bt_categ_7_informatica;
+    private CardView bt_categ_8_ferramentas;
+    private CardView bt_categ_9_brinquedos;
+    private CardView bt_categ_13_cameras;
+    private CardView bt_categ_14_salao;
+    private CardView bt_categ_18_microfones;
+    private CardView bt_categ_50_cozinha;
 
     //private FrameLayout  bt_painel_revendedor;
 
@@ -174,7 +173,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
         View view = inflater.inflate(R.layout.fragment_main_v2, container, false);
 
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+        //FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
 
         //whatsappBt = (View) view.findViewById(R.id.bt_whats);
@@ -182,16 +181,35 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         //instaBt = (View) view.findViewById(R.id.bt_insta);
 
         chatBt = (View) view.findViewById(R.id.bt_chat);
-        perfilBt = (View) view.findViewById(R.id.bt_perfil);
+        botaoCartToolbar = (View) view.findViewById(R.id.bt_perfil);
 
         botao_topo = (CardView) view.findViewById(R.id.botao_topo);
+
+        bt_categ_11_fones = (CardView) view.findViewById(R.id.bt_categ_11_fones);
+        bt_categ_1_smartwatch = (CardView) view.findViewById(R.id.bt_categ_1_smartwatch);
+        bt_categ_2_caixa = (CardView) view.findViewById(R.id.bt_categ_2_caixa);
+        bt_categ_5_automotivos = (CardView) view.findViewById(R.id.bt_categ_5_automotivos);
+        bt_categ_6_games = (CardView) view.findViewById(R.id.bt_categ_6_games);
+        bt_categ_7_informatica = (CardView) view.findViewById(R.id.bt_categ_7_informatica);
+        bt_categ_8_ferramentas = (CardView) view.findViewById(R.id.bt_categ_8_ferramentas);
+        bt_categ_9_brinquedos = (CardView) view.findViewById(R.id.bt_categ_9_brinquedos);
+        bt_categ_13_cameras = (CardView) view.findViewById(R.id.bt_categ_13_cameras);
+        bt_categ_14_salao = (CardView) view.findViewById(R.id.bt_categ_14_salao);
+        bt_categ_18_microfones = (CardView) view.findViewById(R.id.bt_categ_18_microfones);
+        bt_categ_50_cozinha = (CardView) view.findViewById(R.id.bt_categ_50_cozinha);
+
+        historico_home = (CardView) view.findViewById(R.id.historico_home);
+        bonus_home = (CardView) view.findViewById(R.id.bonus_home);
+        categorias_home = (CardView) view.findViewById(R.id.categorias_home);
+        comissoes_home = (CardView) view.findViewById(R.id.comissoes_home);
 
         scrol_main = (FrameLayout) view.findViewById(R.id.scrol_main);
 
         rv_novidades = (RecyclerView) view.findViewById(R.id.rv_novidades);
         rv_em_alta = (RecyclerView) view.findViewById(R.id.rv_em_alta);
+        rv_mais_vendidos = (RecyclerView) view.findViewById(R.id.rv_mais_vendidos);
 
-        bt_carrinho_revenda_main = (FrameLayout) view.findViewById(R.id.bt_carrinho_revenda_main);
+        bt_homeBottombar = (FrameLayout) view.findViewById(R.id.bt_carrinho_revenda_main);
         bt_afiliados_main = (FrameLayout) view.findViewById(R.id.bt_afiliados_main);
         bt_mensagem_main = (FrameLayout) view.findViewById(R.id.bt_mensagem_main);
         bt_meu_perfil_main = (FrameLayout) view.findViewById(R.id.bt_meu_perfil_main);
@@ -203,12 +221,13 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         categoriaFindView(view);
 
         mListMercadorias = (RecyclerView) view.findViewById(R.id.rv_fragment_main);
-        toolbar = (LinearLayout) view.findViewById(R.id.toolbar_main);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar_main);
         etpesquisar= (EditText) view.findViewById(R.id.et_pesquisar);
         btZap = (LinearLayout) view.findViewById(R.id.ll_bt_zap_menu);
         btSair = (LinearLayout) view.findViewById(R.id.ll_bt_sair);
         btMensagem = (LinearLayout) view.findViewById(R.id.ll_bt_mensagem_menu);
         btMinhasCompras = (LinearLayout) view.findViewById(R.id.ll_bt_minhas_compras_menu);
+        container_resumo_principal = (LinearLayout) view.findViewById(R.id.container_resumo_principal);
 
         lista_principal = (NestedScrollView) view.findViewById(R.id.lista_principal);
 
@@ -224,6 +243,13 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         nome_top_vend_1 = (TextView) view.findViewById(R.id.nome_top_vend_1);
         nome_top_vend_2 = (TextView) view.findViewById(R.id.nome_top_vend_2);
         nome_top_vend_3 = (TextView) view.findViewById(R.id.nome_top_vend_3);
+        nome_top_vend_4 = (TextView) view.findViewById(R.id.nome_top_vend_4);
+        nome_top_vend_5 = (TextView) view.findViewById(R.id.nome_top_vend_5);
+        nome_top_vend_6 = (TextView) view.findViewById(R.id.nome_top_vend_6);
+
+        nome_top_adm_1 = (TextView) view.findViewById(R.id.nome_top_adm_1);
+        nome_top_adm_2 = (TextView) view.findViewById(R.id.nome_top_adm_2);
+        nome_top_adm_3 = (TextView) view.findViewById(R.id.nome_top_adm_3);
 
 
         //View btChat = (View) view.findViewById(R.id.bt_abrir_chat);
@@ -243,7 +269,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         prodObjs = new ArrayList<>();
 
 
-        callbackManager = CallbackManager.Factory.create();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("237281954777-45kb6q3j06k2mejnef0cbfn3jpf46f43.apps.googleusercontent.com")
                 .requestProfile()
@@ -251,21 +276,20 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
-        LoginManager.getInstance().registerCallback(callbackManager, FragmentMain.this);
+        //LoginManager.getInstance().registerCallback(callbackManager, FragmentMain.this);
 
         ligarOuvintes();
 
-        analitycsFacebook = new AnalitycsFacebook(getActivity());
         analitycsGoogle = new AnalitycsGoogle(getActivity());
 
 //        telaInicialLoadding();
 //        auth.addAuthStateListener(mAuthStateListener);
 
 
+        Log.d("TestFragmentMain", "OnCreateView");
 
 
-        telaInicialLoadding();
-        auth.addAuthStateListener(mAuthStateListener);
+
 
         return view;
     }
@@ -276,53 +300,76 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 auth = firebaseAuth;
                 user = firebaseAuth.getCurrentUser();
-                if (user != null) {
 
-                    if (ADMINISTRADOR) {
-                        //startActivity(new Intent(getActivity(), AdmActivity.class));
-                        //getActivity().finish();
-                        //return;
-                    }
+                Log.d("TesteLogin", "onAuthStateChanged( )");
 
-                    onSignedInInitialize();
 
-                    if (user.isAnonymous()) {
-                        //efabCart.setVisibility(View.GONE);
-                        //toggleBackContainer(false);
-                        obterListaDeProdutos(tipoReferencia);
-                        return;
-                    } else {
-                        //toggleBackContainer(true);
-                        carregarFotoPerfil();
-                        if (!ADMINISTRADOR) {
-                            analitycsGoogle.logUserStreamViewEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
-                            UserStreamView userStreamView = new UserStreamView(user.getDisplayName(), user.getUid(), pathFotoUser, System.currentTimeMillis());
-                            firestore.collection("Eventos").document("stream").collection("app").document(user.getUid()).set(userStreamView);
-                        }
-                        obterListaDeProdutos(tipoReferencia);
-                        //getListCart();
-                        verificarUsuario();
-                        getTokenNoificacoes();
-                    }
 
-                } else {
+                FirebaseDynamicLinks.getInstance()
+                        .getDynamicLink(getActivity().getIntent())
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<PendingDynamicLinkData>() {
+                            @Override
+                            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                                // Get deep link from result (may be null if no link is found)
+                                Uri deepLink = null;
+                                if (pendingDynamicLinkData != null) {
+                                    deepLink = pendingDynamicLinkData.getLink();
+                                }
 
-                    //toggleBackContainer(false);
-                    ids.clear();
-                    ids = new ArrayList();
-                    if (isDeviceOnline()) {
-                        //TODO 001: TROCAR NA COMPILACAO DE ADM
-                        //loginAdmin();
-                        //ou
-                        //loginUsuarioAnonimo();
-                        getActivity().finish();
-                        startActivity(new Intent(getActivity(), LoginMainActivity.class));
-                        return;
-                    } else {
-                        //exibir interface vazia
-                        telaInicialErro("Baixa conexão com a internet");
-                    }
-                }
+                                if(deepLink != null) {
+
+                                    String parameterId = deepLink.getQueryParameter("id");
+                                    String parameterAdm = deepLink.getQueryParameter("adm");
+                                    String pathLink = deepLink.getLastPathSegment();
+
+                                    if(pathLink != null) {
+
+                                        if(pathLink.length() > 0 && pathLink.equals("produto")) {
+                                            if (parameterId != null && user != null) {
+                                                Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
+                                                intent.putExtra("id", parameterId);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+                                        if(pathLink.length() > 0 && pathLink.equals("cadastro")) {
+                                            if(parameterAdm != null) {
+                                                setUidShareLink(parameterAdm);
+                                                if(user == null) {
+                                                    Log.d("TesteLogin", "User null: Ir para login");
+
+                                                    Intent intent = new Intent(getActivity(), LoginMainActivity.class);
+                                                    intent.putExtra("adm", parameterAdm);
+                                                    startActivity(intent);
+                                                    getActivity().finish();
+                                                } else {
+                                                    //Intent intent = new Intent(getActivity(), MainActivity.class);
+                                                    //intent.putExtra("adm", parameterAdm);
+                                                    //startActivity(intent);
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+
+                                }
+
+                                logicaPrincipal();
+
+                            }
+                        })
+                        .addOnFailureListener(getActivity(), new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("DynamicLink", "getDynamicLink:onFailure", e);
+                                logicaPrincipal();
+                            }
+                        });
+
+
+
+
             }
         };
 
@@ -337,16 +384,163 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         });
 
+        //atalhos
 
-
-        bt_carrinho_revenda_main.setOnClickListener(new View.OnClickListener() {
+        categorias_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                BottomSheetCateg bottomSheetCateg = BottomSheetCateg.newInstance();
+                bottomSheetCateg.setContext(getActivity());
+                bottomSheetCateg.setListener(new BottomSheetCateg.ListenerBottomSheetCategoria() {
+                    @Override
+                    public void clickBottomSheetCategoria(String s, int pos) {
+                        bottomSheetCateg.dismiss();
+                        lista_principal.scrollTo(0, 0);
+                        telaInicialLoadding(null);
+                        myQuery(firestore.collection("produtos").whereEqualTo("categorias."+pos, true), false, s, -1);
+                    }
+                });
+                bottomSheetCateg.show(getParentFragmentManager(), "Categoria");
+            }
+        });
 
-                Intent intent = new Intent(getActivity(), ListaRevendaActivity.class);
+        bonus_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ResumeRankingActivity.class);
                 startActivity(intent);
             }
         });
+
+        comissoes_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CarteiraUsuario.class);
+                startActivity(intent);
+            }
+        });
+
+        historico_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), HistoricoRevendasActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        //categorias
+
+        bt_categ_1_smartwatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.1", true), false, "", -1);
+            }
+        });
+
+        bt_categ_2_caixa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.2", true), false, "", -1);
+            }
+        });
+
+        bt_categ_5_automotivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.5", true), false, "", -1);
+            }
+        });
+
+        bt_categ_6_games.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.6", true), false, "", -1);
+            }
+        });
+
+        bt_categ_7_informatica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.7", true), false, "", -1);
+            }
+        });
+
+        bt_categ_8_ferramentas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.8", true), false, "", -1);
+            }
+        });
+
+        bt_categ_9_brinquedos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.9", true), false, "", -1);
+            }
+        });
+
+        bt_categ_11_fones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.11", true), false, "", -1);
+            }
+        });
+
+        bt_categ_13_cameras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.13", true), false, "", -1);
+            }
+        });
+
+        bt_categ_14_salao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.14", true), false, "", -1);
+            }
+        });
+
+        bt_categ_18_microfones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.18", true), false, "", -1);
+            }
+        });
+
+        bt_categ_50_cozinha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lista_principal.scrollTo(0, 0);
+                telaInicialLoadding(null);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.50", true), false, "", -1);
+            }
+        });
+
+
+        //navegacao
 
         bt_afiliados_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,19 +566,18 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
             }
         });
 
-        perfilBt.setOnClickListener(new View.OnClickListener() {
+        bt_homeBottombar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(prodObjs.size() < 50) {
 
-                    obterListaDeProdutos(tipoReferencia);
+                    obterListaDeProdutos(null);
                     return;
 
                 }
-                mAdapter = new AdapterInterfaceMain(getActivity(), prodObjs, FragmentMain.this);
-                mListMercadorias.setLayoutManager(new LinearLayoutManager(getActivity()));
-                mListMercadorias.setAdapter(mAdapter);
-                mListMercadorias.scrollTo(0,0);
+
+                obterListaDeProdutos(null);
+
             }
         });
 
@@ -423,6 +616,14 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
                 painelAdm();
 
+            }
+        });
+
+        bt_meu_perfil_main.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startActivity(new Intent(getActivity(), MeuPerfilActivity.class));
+                return true;
             }
         });
 
@@ -590,8 +791,65 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     }
 
+    private void logicaPrincipal() {
+        if (user != null) {
+
+
+            onSignedInInitialize();
+
+            if (user.isAnonymous()) {
+                //efabCart.setVisibility(View.GONE);
+                //toggleBackContainer(false);
+                obterListaDeProdutos(feedPrincipalObj);
+                return;
+            } else {
+                //toggleBackContainer(true);
+                carregarFotoPerfil();
+                if (!ADMINISTRADOR) {
+                    analitycsGoogle.logUserStreamViewEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
+                    UserStreamView userStreamView = new UserStreamView(user.getDisplayName(), user.getUid(), pathFotoUser, System.currentTimeMillis());
+                    firestore.collection("Eventos").document("stream").collection("app").document(user.getUid()).set(userStreamView);
+                }
+
+                obterListaDeProdutos(feedPrincipalObj);
+                //getListCart();
+                //verificarUsuario();
+                //getTokenNoificacoes();
+                checkDadosUsuario();
+            }
+
+        } else {
+
+            //toggleBackContainer(false);
+            ids.clear();
+            ids = new ArrayList();
+            if (isDeviceOnline()) {
+                //TODO 001: TROCAR NA COMPILACAO DE ADM
+                //loginAdmin();
+                //ou
+                //loginUsuarioAnonimo();
+                String adm = getUidShareLink();
+
+                if(adm != null) {
+                    startActivity(new Intent(getActivity(), LoginMainActivity.class).putExtra("adm", adm));
+                    getActivity().finish();
+                    return;
+                } else {
+                    startActivity(new Intent(getActivity(), LoginMainActivity.class));
+                    getActivity().finish();
+                    return;
+                }
+
+            } else {
+                //exibir interface vazia
+                telaInicialErro("Baixa conexão com a internet");
+            }
+        }
+    }
+
     private void painelAdm() {
         if (ADMINISTRADOR) {
+            //TODO DESCOMENTAR NA VERSAO ADM
             startActivity(new Intent(getActivity(), AdmActivity.class));
         } else {
             startActivity(new Intent(getActivity(), MeuPerfilActivity.class));
@@ -600,179 +858,13 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     private void categoriaFindView(View view) {
 
-        ll_bt_smart_watch = (LinearLayout) view.findViewById(R.id.ll_bt_smart_watch);
-        ll_bt_caixa_som = (LinearLayout) view.findViewById(R.id.ll_bt_caixa_som);
-        ll_bt_eletronicos = (LinearLayout) view.findViewById(R.id.ll_bt_eletronicos);
-        ll_bt_salao = (LinearLayout) view.findViewById(R.id.ll_bt_salao);
 
-        ll_bt_video_game = (LinearLayout) view.findViewById(R.id.ll_bt_video_game);
-        ll_bt_comp = (LinearLayout) view.findViewById(R.id.ll_bt_comp);
-        ll_bt_ferramentas = (LinearLayout) view.findViewById(R.id.ll_bt_ferramentas);
-        ll_bt_brinquedos = (LinearLayout) view.findViewById(R.id.ll_bt_brinquedos);
-
-        ll_bt_acc_tv = (LinearLayout) view.findViewById(R.id.ll_bt_acc_tv);
-        ll_bt_fones = (LinearLayout) view.findViewById(R.id.ll_bt_fones);
-        ll_bt_oculos = (LinearLayout) view.findViewById(R.id.ll_bt_oculos);
-        ll_bt_microfones = (LinearLayout) view.findViewById(R.id.ll_bt_microfones);
-
-        ll_bt_automotivos = (LinearLayout) view.findViewById(R.id.ll_bt_automotivos);
-        ll_bt_relogios = (LinearLayout) view.findViewById(R.id.ll_bt_relogios);
-        ll_bt_mochilas = (LinearLayout) view.findViewById(R.id.ll_bt_mochilas);
-        ll_bt_camera = (LinearLayout) view.findViewById(R.id.ll_bt_camera);
 
     }
 
     private void categoriaListeners() {
 
-        ll_bt_smart_watch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.1", true), false, "", -1);
-            }
-        });
 
-        ll_bt_caixa_som.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.2", true), false, "", -1);
-            }
-        });
-
-        ll_bt_eletronicos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.3", true), false, "", -1);
-            }
-        });
-
-        ll_bt_salao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.4", true), false, "", -1);
-            }
-        });
-
-        //linha 2
-
-        ll_bt_video_game.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.6", true), false, "", -1);
-            }
-        });
-
-        ll_bt_comp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.7", true), false, "", -1);
-            }
-        });
-
-        ll_bt_ferramentas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.8", true), false, "", -1);
-            }
-        });
-
-        ll_bt_brinquedos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.9", true), false, "", -1);
-            }
-        });
-
-        // linha 3
-
-        ll_bt_acc_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.20", true), false, "", -1);
-            }
-        });
-
-        ll_bt_fones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.11", true), false, "", -1);
-            }
-        });
-
-        ll_bt_oculos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.14", true), false, "", -1);
-            }
-        });
-
-        ll_bt_microfones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.18", true), false, "", -1);
-            }
-        });
-
-        //linha 4
-
-        ll_bt_automotivos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.5", true), false, "", -1);
-            }
-        });
-
-        ll_bt_relogios.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.10", true), false, "", -1);
-            }
-        });
-
-        ll_bt_mochilas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.35", true), false, "", -1);
-            }
-        });
-
-        ll_bt_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                lista_principal.scrollTo(0, 0);
-                telaInicialLoadding();
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.13", true), false, "", -1);
-            }
-        });
 
     }
 
@@ -804,7 +896,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
                 } else {
 
-                    getTokenNoificacoes();
+                    //getTokenNoificacoes();
 
                     Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
                     startActivity(intent);
@@ -815,7 +907,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         });
     }
 
-    private void checkDadosUsuario(final String tokenAtual) {
+    private void checkDadosUsuario() {
 
         final DocumentReference usuarioRef = firestore.collection("Usuario").document(user.getUid());
         final DocumentReference admRef = firestore.collection("Adm").document(user.getUid());
@@ -828,8 +920,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                 boolean usuarioExiste = false;
 
                 if (ADMINISTRADOR) {
-                    TokenFcm tokenFcmAdmin = new TokenFcm(tokenAtual, user.getDisplayName());
-                    batch.set(admRef, tokenFcmAdmin);
+                    //TokenFcm tokenFcmAdmin = new TokenFcm(tokenAtual, user.getDisplayName());
+                    //batch.set(admRef, tokenFcmAdmin);
                 }
 
                 if (pathFotoUser.equals("")) {
@@ -840,29 +932,11 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
                     usuarioExiste = true;
 
-                    boolean mudarFoto = false;
-                    boolean mudarToken = false;
-
                     Usuario usuarioObj = userDoc.toObject(Usuario.class);
 
                     documentoPrincipalDoUsuario = usuarioObj;
 
-                    if(!pathFotoUser.equals(usuarioObj.getPathFoto())) {
-                        mudarFoto = true;
-                    }
 
-                    if (!tokenAtual.equals(usuarioObj.getTokenFcm())) {
-                        mudarToken = true;
-                    }
-
-                    if (mudarFoto && mudarToken) {
-                        batch.update(usuarioRef, "tokenFcm", tokenAtual);
-                        batch.update(usuarioRef, "pathFoto", pathFotoUser);
-                    } else if (!mudarFoto && mudarToken){
-                        batch.update(usuarioRef, "tokenFcm", tokenAtual);
-                    } else if (!mudarToken && mudarFoto) {
-                        batch.update(usuarioRef, "pathFoto", pathFotoUser);
-                    }
                 } else {
 
                     usuarioExiste = false;
@@ -875,61 +949,66 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                     }
 
 
-
-                    if (user.getProviderId().equals("facebook.com")) {
-                        provedor = "Facebook";
-                    }
                     long time = System.currentTimeMillis();
-                    Usuario noovoUsuario = new Usuario(user.getDisplayName(), user.getEmail(), num, Constantes.CONTROLE_VERSAO_USUARIO, user.getUid(), pathFotoUser, Constantes.USUARIO_TIPO_CLIENTE, provedor, time, time, tokenAtual, null, "", "", "", "", "", false);
+                    Usuario noovoUsuario = new Usuario(user.getDisplayName(), user.getEmail(), num, Constantes.CONTROLE_VERSAO_USUARIO, user.getUid(), pathFotoUser, Constantes.USUARIO_TIPO_CLIENTE, provedor, time, time, "", null, "", "", "", "", "", false);
                     batch.set(usuarioRef, noovoUsuario);
 
 
                 }
 
-                final boolean finalUsuarioExiste = usuarioExiste;
-                batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //Toast.makeText(getActivity(), user.getDisplayName() + ", Ok", Toast.LENGTH_LONG).show();
+                if(!usuarioExiste) {
+                    Log.d("TesteLogin", "Doc usuario não existe: Criando um agora");
 
-                        if (!finalUsuarioExiste) {
+                    batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //Toast.makeText(getActivity(), user.getDisplayName() + ", Ok", Toast.LENGTH_LONG).show();
+
                             Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
+                            String adm = getUidShareLink();
+
+
+                            if(adm != null) {
+                                intent.putExtra("adm", adm);
+                            }
+
                             startActivity(intent);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(getActivity(), "Erro ao Salvar", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+
+                    if (documentoPrincipalDoUsuario != null) {
+
+                        if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
+
+                            Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
+                            String adm = getUidShareLink();
+                            if(adm != null) {
+                                intent.putExtra("adm", adm);
+                            }
+                            startActivity(intent);
+
                         }
 
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(Exception e) {
-                        //Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+
+                }
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Erro ao Salvar", Toast.LENGTH_LONG).show();
             }
         });
 
-    }
-
-    private void getTokenNoificacoes() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            //Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        String token = task.getResult().getToken();
-                        checkDadosUsuario(token);
-
-                    }
-                });
     }
 
     private void onSignedInInitialize() {
@@ -945,7 +1024,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -976,12 +1054,19 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     @Override
     public void onResume() {
+        Log.d("TestFragmentMain", "OnResume");
         super.onResume();
+
+
     }
 
     @Override
     public void onStart() {
+        Log.d("TestFragmentMain", "OnStart");
+        //telaInicialLoadding();
+        auth.addAuthStateListener(mAuthStateListener);
         super.onStart();
+
 
     }
 
@@ -992,14 +1077,16 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     @Override
     public void onStop() {
+        Log.d("TestFragmentMain", "OnStop");
         super.onStop();
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (this.mAuthStateListener != null) {
-            auth.removeAuthStateListener(this.mAuthStateListener);
+            //auth.removeAuthStateListener(this.mAuthStateListener);
         }
     }
 
@@ -1021,34 +1108,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                 alertDialogAnonimus.show();
                 alertDialogAnonimus.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getActivity().getResources().getColor(R.color.colorSecondaryDark));
                 break;
-            case 2:
-                AlertDialog.Builder dialogOffline = new AlertDialog.Builder(getActivity())
-                        .setTitle("Atenção")
-                        .setMessage(msg)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alertDialogOff = dialogOffline.create();
-                alertDialogOff.show();
-                alertDialogOff.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getActivity().getResources().getColor(R.color.colorSecondaryDark));
-                break;
-            case 3:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity())
-                        .setTitle("Atenção")
-                        .setMessage(msg)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alertDialog = dialog.create();
-                alertDialog.show();
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(getActivity().getResources().getColor(R.color.colorSecondaryDark));
-                break;
+
             default:
                 break;
         }
@@ -1121,21 +1181,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     }
 
-
-    @Override
-    public void onSuccess(LoginResult loginResult) {
-        handleFacebookAccessToken(loginResult.getAccessToken());
-    }
-
-    @Override
-    public void onCancel() {
-    }
-
-    @Override
-    public void onError(FacebookException error) {
-
-    }
-
     private void loginAdmin() {
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.PhoneBuilder().build(),
@@ -1197,7 +1242,6 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
 
                     if (isPesquisa) {
-                        analitycsFacebook.logPesquisaProdutoEvent(sPesquisa, user.getDisplayName(), user.getUid(), true, sizeDoc + " resultado(s)");
                         analitycsGoogle.logPesquisaProdutoEvent(sPesquisa, user.getDisplayName(), user.getUid(), true);
                     }
 
@@ -1207,6 +1251,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                             if (prodObjs.get(y).isPromocional()) {
                                 list.add(prodObjs.get(y));
                             }
+
                         }
                     } else if(tipo == -1) {
                         for (int y = 0; y < prodObjs.size(); y++) {
@@ -1220,8 +1265,26 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                         }
                     }
 
-                    AdapterProdutos adapterProdutos = new AdapterProdutos(FragmentMain.this, getActivity(), list, true);
-                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                    Log.d("ListSize", String.valueOf(list.size()));
+
+                    int colunas = 2;
+
+                    if(list.size() > 140) {
+                        colunas = 3;
+                        list = new ArrayList<>(list.subList(0, 120));
+                    }
+
+
+                    Collections.sort(list, new Comparator<ProdObj>() {
+                        @Override
+                        public int compare(ProdObj o1, ProdObj o2) {
+
+                            return Long.compare(o2.getTimeUpdate(), o1.getTimeUpdate());
+                        }
+                    });
+
+                    AdapterProdutos adapterProdutos = new AdapterProdutos(FragmentMain.this, getActivity(), list, true, colunas);
+                    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(colunas, StaggeredGridLayoutManager.VERTICAL);
                     mListMercadorias.setLayoutManager(layoutManager);
                     mListMercadorias.setAdapter(adapterProdutos);
 
@@ -1235,13 +1298,17 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
 
 
-                if (isPesquisa && sizeDoc == 0){
-                    Toast.makeText(getActivity(), "Nenhum resultado para sua pesquisa", Toast.LENGTH_LONG).show();
+                if (isPesquisa && sizeDoc == 0) {
+                    Toast.makeText(getActivity(), "Nenhum resultado para sua busca", Toast.LENGTH_LONG).show();
                     if (!ADMINISTRADOR) {
-                        analitycsFacebook.logPesquisaProdutoEvent(sPesquisa, user.getDisplayName(), user.getUid(), false, sizeDoc + " resultado(s)");
                         analitycsGoogle.logPesquisaProdutoEvent(sPesquisa, user.getDisplayName(), user.getUid(), false);
                     }
-                    obterListaDeProdutos(4);
+                    obterListaDeProdutos(feedPrincipalObj);
+                    telaInicialErro("Nenhum resultado encontrado para sua busca por: " + sPesquisa);
+                } else if (sizeDoc == 0) {
+                    Toast.makeText(getActivity(), "Nenhum produto encontrado", Toast.LENGTH_LONG).show();
+                    obterListaDeProdutos(feedPrincipalObj);
+                    telaInicialErro("Nenhum produto encontrado na categoria:" + sPesquisa);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -1254,9 +1321,19 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
 
 
-    private void obterListaDeProdutos(int tipo) {
+    private void obterListaDeProdutos(FeedPrincipalObj feedObj) {
 
-        telaInicialLoadding();
+
+        if(feedObj != null) {
+            showScreenMain(feedObj);
+            return;
+        }
+
+        telaInicialLoadding(feedObj);
+
+
+
+
         lista_principal.scrollTo(0, 0);
         //myQuery(firestore.collection("produtos").whereEqualTo("disponivel", true), false, "", tipo);
 
@@ -1267,18 +1344,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                 if (documentSnapshot == null) {
 
                 } else {
-                    FeedPrincipalObj feedPrincipalObj = documentSnapshot.toObject(FeedPrincipalObj.class);
-                    AdapterLancamentos adapterLancamentos = new AdapterLancamentos(feedPrincipalObj.getAtualizacoesProds(), getActivity(), FragmentMain.this);
-                    rv_novidades.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-                    rv_novidades.setAdapter(adapterLancamentos);
-
-                    nome_top_vend_1.setText(feedPrincipalObj.getTopRevendedores().get(0).getNomeRevendedor());
-                    nome_top_vend_2.setText(feedPrincipalObj.getTopRevendedores().get(1).getNomeRevendedor());
-                    nome_top_vend_3.setText(feedPrincipalObj.getTopRevendedores().get(2).getNomeRevendedor());
-
-                    AdapterEmAlta adapterEmAlta = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopProdutos());
-                    rv_em_alta.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    rv_em_alta.setAdapter(adapterEmAlta);
+                    FeedPrincipalObj feedData = documentSnapshot.toObject(FeedPrincipalObj.class);
+                    showScreenMain(feedData);
                 }
             }
         });
@@ -1309,7 +1376,7 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         Log.d("BuscaFormatada", nick.toString());
 
         String busca = "tag." + nick.toString().toLowerCase();
-        telaInicialLoadding();
+        telaInicialLoadding(null);
         esconderTeclado();
 
         resultadoPesquisa = new ArrayList<>();
@@ -1406,34 +1473,11 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
                             FirebaseUser user = authResult.getUser();
 //                            Log.d("TesteLogin", "Goglle sucess");
                             String foto = getFotoUser(user);
-                            analitycsFacebook.logLoginGoogleEvent(true, user.getDisplayName(), user.getUid());
                             analitycsGoogle.logLoginGoogleEvent(true, user.getDisplayName(), user.getUid(), foto, user.getEmail(), user.getPhoneNumber(), Constantes.CONTROLE_VERSAO_USUARIO);
                             updateUI(user);
                         } else {
                             Log.d("TesteLogin", "GoogleErro");
                             updateUI(null);
-                        }
-                    }
-                });
-    }
-
-    private void handleFacebookAccessToken(AccessToken token) {
-
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        auth.signInWithCredential(credential)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        if (authResult != null) {
-                            FirebaseUser user = authResult.getUser();
-                            String foto = getFotoUser(user);
-                            analitycsFacebook.logLoginFaceEvent(true, user.getDisplayName(),user.getUid());
-                            analitycsGoogle.logLoginFaceEvent(true, user.getDisplayName(), user.getUid(), foto, user.getEmail(), user.getPhoneNumber(), Constantes.CONTROLE_VERSAO_USUARIO);
-                            updateUI(user);
-//                            Log.d("TesteLogin", "Facesucess");
-                        } else {
-                            updateUI(null);
-//                            Log.d("TesteLogin", "Faceerro");
                         }
                     }
                 });
@@ -1459,7 +1503,8 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void telaInicialLoadding() {
+    private void telaInicialLoadding(FeedPrincipalObj feedObj) {
+        if(feedObj != null) return;
         mListMercadorias.setVisibility(View.GONE);
         //efabCart.setVisibility(View.GONE);
         tvErro.setVisibility(View.GONE);
@@ -1475,8 +1520,41 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
         tvErro.setText(erro);
     }
 
+    private void showScreenMain(FeedPrincipalObj feedObj) {
+        feedPrincipalObj = feedObj;
+
+        AdapterLancamentos adapterLancamentos = new AdapterLancamentos(feedPrincipalObj.getAtualizacoesProds(), getActivity(), FragmentMain.this);
+        rv_novidades.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        rv_novidades.setAdapter(adapterLancamentos);
+
+        nome_top_vend_1.setText(feedPrincipalObj.getTopRevendedores().get(0).getNomeRevendedor());
+        nome_top_vend_2.setText(feedPrincipalObj.getTopRevendedores().get(1).getNomeRevendedor());
+        nome_top_vend_3.setText(feedPrincipalObj.getTopRevendedores().get(2).getNomeRevendedor());
+        nome_top_vend_4.setText(feedPrincipalObj.getTopRevendedores().get(3).getNomeRevendedor());
+        nome_top_vend_5.setText(feedPrincipalObj.getTopRevendedores().get(4).getNomeRevendedor());
+        nome_top_vend_6.setText(feedPrincipalObj.getTopRevendedores().get(5).getNomeRevendedor());
+
+        if(feedPrincipalObj.getTopAdms() != null) {
+            nome_top_adm_1.setText(feedPrincipalObj.getTopAdms().get(0).getNomeRevendedor());
+            nome_top_adm_2.setText(feedPrincipalObj.getTopAdms().get(1).getNomeRevendedor());
+            nome_top_adm_3.setText(feedPrincipalObj.getTopAdms().get(2).getNomeRevendedor());
+        }
+
+
+        AdapterEmAlta adapterEmAlta = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopProdutos());
+        rv_em_alta.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        rv_em_alta.setAdapter(adapterEmAlta);
+
+        AdapterEmAlta adapterMaisVendidos = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopMaisVendidos());
+        rv_mais_vendidos.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        rv_mais_vendidos.setAdapter(adapterMaisVendidos);
+
+        container_resumo_principal.setVisibility(View.VISIBLE);
+    }
+
     private void telaInicialSucesso() {
         mListMercadorias.setVisibility(View.VISIBLE);
+
         //efabCart.setVisibility(View.VISIBLE);
         tvErro.setVisibility(View.GONE);
         pb.setVisibility(View.GONE);
@@ -1486,8 +1564,12 @@ public class FragmentMain extends Fragment implements FacebookCallback<LoginResu
 
     @Override
     public void clickCategoria(ArrayList<ProdObj> produtos) {
-        AdapterProdutos adapterProdutos = new AdapterProdutos(this, getActivity(), produtos, true);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        int colunas = 2;
+
+        if(produtos.size() > 100) colunas = 3;
+        if(produtos.size() > 180) colunas = 4;
+        AdapterProdutos adapterProdutos = new AdapterProdutos(this, getActivity(), produtos, true, colunas);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(colunas, StaggeredGridLayoutManager.VERTICAL);
         mListMercadorias.scrollTo(0,0);
         mListMercadorias.setLayoutManager(layoutManager);
         mListMercadorias.setAdapter(adapterProdutos);

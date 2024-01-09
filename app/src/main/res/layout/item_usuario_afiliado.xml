@@ -6,7 +6,8 @@
     android:layout_marginLeft="6dp"
     android:layout_marginTop="6dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <FrameLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_marginBottom="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,11 +28,12 @@
         <LinearLayout
             android:layout_marginTop="6dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginLeft="70dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_marginLeft="14dp"
@@ -53,35 +55,46 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+        <TextView
+            android:layout_marginRight="20dp"
+            android:id="@+id/tv_hora_cadastro"
+            android:minWidth="60dp"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:textColor="@color/colorSecondaryLight"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
         <LinearLayout
             android:layout_gravity="end"
             android:orientation="vertical"
-            android:layout_width="80dp"
+            android:layout_marginRight="12dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
             <FrameLayout
                 android:layout_gravity="center"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <ImageView
                     android:visibility="gone"
                     android:id="@+id/icon_afiliado_em_autenticado"
                     android:layout_gravity="center"
                     android:background="@drawable/autenticado"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
                 <ImageView
                     android:visibility="gone"
                     android:id="@+id/icon_afiliado_em_analise"
                     android:layout_gravity="center"
                     android:background="@drawable/analize"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp" />
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
             </FrameLayout>
 
 
         </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
     <View
         android:layout_gravity="bottom"
         android:layout_marginLeft="84dp"

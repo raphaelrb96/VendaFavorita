@@ -1,7 +1,6 @@
 package com.rapha.vendafavorita.carteira;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,10 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.DateFormatacao;
-import com.rapha.vendafavorita.HistoricoRevendasActivity;
 import com.rapha.vendafavorita.R;
-import com.rapha.vendafavorita.adapter.AdapterMeuHistoricoDeVendas;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
+import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.ComissaoAfiliados;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 
@@ -29,16 +26,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
-
 public class CarteiraUsuario extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth auth;
     private Query refRevenda, refComissoes;
 
-    private AnalitycsFacebook analitycsFacebook;
-    private AnalitycsFacebook analitycsGoogle;
+    private AnalitycsGoogle analitycsGoogle;
 
     private ArrayList<ObjectRevenda> listaDeComissoes;
     private ArrayList<ComissaoAfiliados> listaDeComissaoAfiliados;
@@ -85,8 +79,7 @@ public class CarteiraUsuario extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        analitycsFacebook = new AnalitycsFacebook(this);
-        analitycsGoogle = new AnalitycsFacebook(this);
+        analitycsGoogle = new AnalitycsGoogle(this);
         auth = FirebaseAuth.getInstance();
 
         c30 = new GregorianCalendar();

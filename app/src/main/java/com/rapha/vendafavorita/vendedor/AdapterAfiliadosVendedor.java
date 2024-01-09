@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.rapha.vendafavorita.DateFormatacao;
 import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.objects.Usuario;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AdapterAfiliadosVendedor extends RecyclerView.Adapter<AdapterAfiliadosVendedor.AfiliadosVendedorViewHolder> {
 
@@ -66,6 +68,9 @@ public class AdapterAfiliadosVendedor extends RecyclerView.Adapter<AdapterAfilia
         } else {
             holder.tv_nome_afiliado.setText("Usuario sem nome");
         }
+
+        holder.tv_hora_cadastro.setText(DateFormatacao.dataCompletaCorrigidaSmall(new Date(usuario.getUltimoLogin()), new Date()));
+
     }
 
     @Override
@@ -78,7 +83,7 @@ public class AdapterAfiliadosVendedor extends RecyclerView.Adapter<AdapterAfilia
     class AfiliadosVendedorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView img_perfil_usuario_afiliado, icon_afiliado_em_autenticado, icon_afiliado_em_analise;
-        private TextView tv_nome_afiliado, tv_apelido_afiliado;
+        private TextView tv_nome_afiliado, tv_apelido_afiliado, tv_hora_cadastro;
 
         public AfiliadosVendedorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -87,6 +92,7 @@ public class AdapterAfiliadosVendedor extends RecyclerView.Adapter<AdapterAfilia
             icon_afiliado_em_analise = (ImageView) itemView.findViewById(R.id.icon_afiliado_em_analise);
             tv_nome_afiliado = (TextView) itemView.findViewById(R.id.tv_nome_afiliado);
             tv_apelido_afiliado = (TextView) itemView.findViewById(R.id.tv_apelido_afiliado);
+            tv_hora_cadastro = (TextView) itemView.findViewById(R.id.tv_hora_cadastro);
             itemView.setOnClickListener(this);
         }
 

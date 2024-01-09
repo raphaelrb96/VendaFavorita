@@ -8,12 +8,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -21,14 +26,17 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.adapter.AdapterCliente;
 import com.rapha.vendafavorita.adapter.AdapterTopAdm;
+import com.rapha.vendafavorita.informacoes.AnalisarDadosActivity;
 import com.rapha.vendafavorita.objects.TopAdms;
 import com.rapha.vendafavorita.objects.Usuario;
 import com.rapha.vendafavorita.objects.UsuarioParcelable;
 import com.rapha.vendafavorita.vendedor.VendedorActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 
 import javax.annotation.Nullable;
 
@@ -43,9 +51,15 @@ public class ClientesActivity extends AppCompatActivity implements AdapterClient
     private EditText et_pesquisar_cliente;
     private ImageButton bt_pesquisar_cliente;
 
+    private ExtendedFloatingActionButton efab_top_recrutadores;
+
     private boolean pesquisa = false;
     private TextView tv_titulo_top_adms, tv_titulo_vendedores;
     private ProgressBar pb_vendedor;
+
+    private ArrayList<TopAdms> adms;
+
+    private Toast mToats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +67,7 @@ public class ClientesActivity extends AppCompatActivity implements AdapterClient
         setContentView(R.layout.activity_clientes);
 
         rv = (RecyclerView) findViewById(R.id.rv_clientes);
+        efab_top_recrutadores = (ExtendedFloatingActionButton) findViewById(R.id.efab_top_recrutadores);
         rv_top_adms = (RecyclerView) findViewById(R.id.rv_top_adms);
         voltar_clientes = (View) findViewById(R.id.voltar_clientes);
         pb_vendedor = (ProgressBar) findViewById(R.id.pb_vendedor);
@@ -63,20 +78,65 @@ public class ClientesActivity extends AppCompatActivity implements AdapterClient
         et_pesquisar_cliente = (EditText) findViewById(R.id.et_pesquisar_cliente);
         bt_pesquisar_cliente = (ImageButton) findViewById(R.id.bt_pesquisar_cliente);
 
-        rv.setLayoutManager(new GridLayoutManager(this, 2));
+        rv.setLayoutManager(new GridLayoutManager(this, 3));
 
         firestore = FirebaseFirestore.getInstance();
+        Calendar c = new GregorianCalendar();
+        c.add(Calendar.DAY_OF_MONTH, -7);
+        long milisg = c.getTimeInMillis();
 
         //colocar um pb
 
+        efab_top_recrutadores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        firestore.collection("Usuario").orderBy("ultimoLogin", Query.Direction.DESCENDING).addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+                if(adms == null) return;
+                if(adms.size() == 0) return;
+
+                if (mToats != null) {
+
+                    mToats.cancel();
+
+                }
+
+                mToats.makeText(ClientesActivity.this, "Atualizando Feed...", Toast.LENGTH_LONG).show();
+
+                efab_top_recrutadores.setVisibility(View.GONE);
+
+                firestore.collection("Feed").document("Main").update("topAdms", adms, "timeStamp", System.currentTimeMillis()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        efab_top_recrutadores.setVisibility(View.VISIBLE);
+                        if (mToats != null) {
+
+                            mToats.cancel();
+
+                        }
+                        mToats.makeText(ClientesActivity.this, "Feed atualizado", Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        efab_top_recrutadores.setVisibility(View.VISIBLE);
+                        if (mToats != null) {
+
+                            mToats.cancel();
+
+                        }
+                        mToats.makeText(ClientesActivity.this, "Falha ao atualizar Feed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+        firestore.collection("Usuario").whereGreaterThan("ultimoLogin", milisg).orderBy("ultimoLogin", Query.Direction.DESCENDING).addSnapshotListener(this, new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (queryDocumentSnapshots == null) return;
 
                 ArrayList<Usuario> usuarioArrayList = new ArrayList<>();
-                ArrayList<TopAdms> adms = new ArrayList<>();
+                adms = new ArrayList<>();
 
 
                 for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
@@ -135,10 +195,13 @@ public class ClientesActivity extends AppCompatActivity implements AdapterClient
                     AdapterTopAdm adapterTopAdm = new AdapterTopAdm(ClientesActivity.this, adms, ClientesActivity.this);
                     rv_top_adms.setLayoutManager(new LinearLayoutManager(ClientesActivity.this, RecyclerView.HORIZONTAL, false));
                     rv_top_adms.setAdapter(adapterTopAdm);
+                    efab_top_recrutadores.setVisibility(View.VISIBLE);
 
                 } else {
                     rv_top_adms.setVisibility(View.GONE);
                     tv_titulo_top_adms.setVisibility(View.GONE);
+                    efab_top_recrutadores.setVisibility(View.GONE);
+
                 }
 
                 adapterCliente = new AdapterCliente(usuarioArrayList,ClientesActivity.this, ClientesActivity.this);

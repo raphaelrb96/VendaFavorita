@@ -18,15 +18,14 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
                 <View
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_access_time_black_24dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
 
                 <TextView
                     android:id="@+id/hora_revenda"
@@ -37,7 +36,35 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/colorSecondaryDark"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    app:cardCornerRadius="13dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/card_comissao_revendedor_revenda"
+                    app:cardBackgroundColor="@color/verdeDark"
+                    app:cardElevation="4dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/comissao_revendedor_revenda"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_gravity="center"
+                        android:text="R$ 10,00"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
             <View
                 android:background="@color/back_rv"
@@ -48,68 +75,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_marginRight="12dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="top"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/nome_cliente_revenda"
-                        android:textColor="@color/colorSecondary"
-                        android:text="Nome cliente"
-                        android:textSize="18sp"
-                        android:lines="1"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/numero_cliente_revenda"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="2dp"
-                        android:lines="1"
-                        android:text="Numero cliente"
-                        android:textColor="@color/colorSecondary"
-                        android:textSize="16sp" />
-                    <TextView
-                        android:id="@+id/endereco_cliente_revenda"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/colorSecondary"
-                        android:text="Endereço cliente"
-                        android:textSize="16sp"
-                        android:lines="2"
-                        android:layout_width="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="14dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
                 <TextView
                     android:textColor="@color/colorSecondaryLight"
-                    android:text="Comissão"
-                    android:textSize="16sp"
+                    android:text="Nome do Cliente"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="top"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/comissao_revendedor_revenda"
+                    android:id="@+id/nome_cliente_revenda"
                     android:textColor="@color/colorSecondaryDark"
-                    android:layout_gravity="end|center_vertical"
-                    android:text="R$ 10,00"
-                    android:textSize="18sp"
-                    android:gravity="end"
+                    android:layout_gravity="end|top"
+                    android:textSize="15sp"
+                    android:gravity="end|top"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -117,27 +105,127 @@
             <LinearLayout
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="Número do Cliente"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/numero_cliente_revenda"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="end|top"
+                    android:textSize="15sp"
+                    android:gravity="end|top"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:minHeight="40dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="Endereço"
+                    android:textSize="14sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/endereco_cliente_revenda"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="end|top"
+                    android:textSize="15sp"
+                    android:gravity="end|top"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="Bairro"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/bairro_cliente_revenda"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="end|top"
+                    android:textSize="15sp"
+                    android:gravity="end|top"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <TextView
+                    android:textColor="@color/colorSecondaryLight"
+                    android:text="Forma de Pagamento"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/forma_pag_revenda"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:layout_gravity="end|top"
+                    android:textSize="15sp"
+                    android:gravity="end|top"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
                 <TextView
                     android:textColor="@color/colorSecondaryLight"
                     android:text="Total da venda"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="top"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/total_revenda"
                     android:textColor="@color/colorSecondaryDark"
-                    android:layout_gravity="end|center_vertical"
-                    android:text="R$ 110,00"
-                    android:textSize="18sp"
-                    android:gravity="end"
+                    android:layout_gravity="end|top"
+                    android:textSize="15sp"
+                    android:gravity="end|top"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_produtos_revenda"
@@ -148,13 +236,27 @@
             <TextView
                 android:id="@+id/status_revender"
                 android:textStyle="italic"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Solicitada"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/status_revender_motivo_cancelamento"
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:layout_marginBottom="14dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="Motivo do cancelamento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

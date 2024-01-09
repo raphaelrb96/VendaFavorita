@@ -3,9 +3,11 @@ package com.rapha.vendafavorita;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,14 +28,25 @@ public class AdmActivity extends AppCompatActivity implements View.OnClickListen
     private TextView status;
     private ExtendedFloatingActionButton abrir_fechar;
     private boolean aberto = false;
+    private boolean acessoRestrito = false;
+    private LinearLayout container_3_menu_adm, container_2_menu_adm;
+    private CardView bt_mensagem_menu_adm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adm);
         status = (TextView) findViewById(R.id.tv_drogaria_aberta_fechada);
+        bt_mensagem_menu_adm = (CardView) findViewById(R.id.bt_mensagem_menu_adm);
+        container_3_menu_adm = (LinearLayout) findViewById(R.id.container_3_menu_adm);
+        container_2_menu_adm = (LinearLayout) findViewById(R.id.container_2_menu_adm);
         abrir_fechar = (ExtendedFloatingActionButton) findViewById(R.id.efab_abrir_fechar);
         firestore = FirebaseFirestore.getInstance();
+        if (acessoRestrito) {
+            container_3_menu_adm.setVisibility(View.GONE);
+            container_2_menu_adm.setVisibility(View.GONE);
+            bt_mensagem_menu_adm.setVisibility(View.GONE);
+        }
         statusRef = firestore.collection("statusDrogaria").document("chave");
         statusRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override

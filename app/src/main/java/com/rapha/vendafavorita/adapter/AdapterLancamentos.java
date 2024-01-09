@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class AdapterLancamentos extends RecyclerView.Adapter<AdapterLancamentos.
     @NonNull
     @Override
     public ProdLancamento onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_prod_atalho, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_produto_principal, parent, false);
         return new ProdLancamento(view, context, produtos);
     }
 
@@ -59,6 +60,7 @@ public class AdapterLancamentos extends RecyclerView.Adapter<AdapterLancamentos.
         private ImageView imageView;
         private TextView nome, preco;
         private FloatingActionButton fab;
+        private Button bt_item_novidades;
 
         private Context context;
         private ArrayList<ProdutoObj> produtos;
@@ -70,9 +72,10 @@ public class AdapterLancamentos extends RecyclerView.Adapter<AdapterLancamentos.
             imageView = (ImageView) itemView.findViewById(R.id.img_item_produto_principal);
             nome = (TextView) itemView.findViewById(R.id.nome_produto_principal);
             preco = (TextView) itemView.findViewById(R.id.preco_item_produto_principal);
-            fab = (FloatingActionButton) itemView.findViewById(R.id.fab_produto_item);
+            bt_item_novidades = (Button) itemView.findViewById(R.id.bt_item_novidades);
             preco.setVisibility(View.GONE);
             itemView.setOnClickListener(this);
+            bt_item_novidades.setOnClickListener(this);
 
         }
 

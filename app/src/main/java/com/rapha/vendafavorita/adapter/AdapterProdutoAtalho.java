@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rapha.vendafavorita.AdapterProdutos;
 import com.rapha.vendafavorita.ProdObj;
@@ -62,6 +63,7 @@ public class AdapterProdutoAtalho extends RecyclerView.Adapter<AdapterProdutoAta
         private ImageView imageView;
         private TextView nome, preco;
         private FloatingActionButton fab;
+        private MaterialButton bt_item_atalho;
 
         private Context context;
         private ArrayList<ProdObj> produtos;
@@ -74,8 +76,9 @@ public class AdapterProdutoAtalho extends RecyclerView.Adapter<AdapterProdutoAta
             nome = (TextView) itemView.findViewById(R.id.nome_produto_principal);
             preco = (TextView) itemView.findViewById(R.id.preco_item_produto_principal);
             fab = (FloatingActionButton) itemView.findViewById(R.id.fab_produto_item);
+            bt_item_atalho = (MaterialButton) itemView.findViewById(R.id.bt_item_atalho);
             itemView.setOnClickListener(this);
-
+            bt_item_atalho.setOnClickListener(this);
         }
 
         public void setPreco(String p) {

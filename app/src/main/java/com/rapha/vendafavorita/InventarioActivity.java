@@ -197,7 +197,7 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
                 obj.getTag().forEach(new BiConsumer<String, Boolean>() {
                     @Override
                     public void accept(String s, Boolean aBoolean) {
-                        if (s.equals(pesq) || pesq.contains(s) || s.contains(pesq)) {
+                        if (s.equals(pesq)) {
                             if (!searchProd.contains(obj)) {
                                 searchProd.add(obj);
                             }
@@ -207,7 +207,7 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
 
             }
 
-            if (obj.getProdName().contains(pesq) || obj.getProdName().equals(pesq) || pesq.contains(obj.getProdName())) {
+            if (obj.getProdName().equals(pesq)) {
                 if (!searchProd.contains(obj)) {
                     searchProd.add(obj);
                 }
@@ -255,7 +255,7 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
                     if (ob.isDisponivel()) {
                         notificarAtualiz.add(tpr);
                     }
-                    if(notificarAtualiz.size() > 19) break;
+                    if(notificarAtualiz.size() > 39) break;
                 }
 
                 rv.setLayoutManager(new LinearLayoutManager(InventarioActivity.this));

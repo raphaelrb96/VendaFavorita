@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.TwoStatePreference;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -36,7 +37,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.rapha.vendafavorita.adapter.AdapterListaRevenda;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.ComissaoAfiliados;
 import com.rapha.vendafavorita.objects.CompraFinalParcelable;
@@ -69,39 +69,13 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private CheckBox cbDinheiro;
     private CheckBox cbDebito;
     private CheckBox cbCredito;
-    private CheckBox cbAlimentacao;
-    private CheckBox cbSemTroco;
-    private TextView tvDebito;
-    private TextView tvCredito;
-    private TextView tvAlimentacao;
-    private TextInputEditText etTroco;
+    private CheckBox cbPix;
     private String detalhePagamento = "";
     private int tipoDePagamento = 0, tipoEntrega = 1;
 
     private LinearLayout efab_concluir_revenda;
 
-    private String[] cDebito = {
-            "ELO",
-            "VISA",
-            "MASTERCARD",
-            "CABAL"
-    };
 
-    private String[] cCredito = {
-            "ELO",
-            "VISA",
-            "MASTERCARD",
-            "CABAL",
-            "HIPER",
-            "HIPERCARD"
-    };
-
-    private String[] cAlimentacao = {
-            "ALELO",
-            "VR",
-            "TICKET",
-            "SODEXO"
-    };
     private CompraFinalParcelable cfp = null;
     private String telefoneMain = "";
     private String ruaMain = "";
@@ -113,8 +87,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private String nomeCliente;
     private int somo, totalVenda;
     private ArrayList<ObjProdutoRevenda> objProdutoRevendas;
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
+    private CheckBox cbCreditoParcelado;
 
 
     @Override
@@ -128,7 +102,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
         et_nome_conf_revenda = (TextInputEditText) findViewById(R.id.et_nome_conf_revenda);
         et_bairro_conf_revenda = (TextInputEditText) findViewById(R.id.et_bairro_conf_revenda);
         et_rua_conf_revenda = (TextInputEditText) findViewById(R.id.et_rua_conf_revenda);
-        etTroco = (TextInputEditText) findViewById(R.id.text_input_troco_conf_revenda);
+
         totalComissaoTV = (TextView) findViewById(R.id.total_lista_revenda);
         total_venda_lista_revenda = (TickerView) findViewById(R.id.total_venda_lista_revenda);
         title_rv_minhas_ultimas_revendas = (TextView) findViewById(R.id.title_rv_minhas_ultimas_revendas);
@@ -136,17 +110,13 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
         cbDinheiro = (CheckBox) findViewById(R.id.cb_dinheiro);
         cbDebito = (CheckBox) findViewById(R.id.cb_debito);
         cbCredito = (CheckBox) findViewById(R.id.cb_credito);
-        cbAlimentacao = (CheckBox) findViewById(R.id.cb_alimentacao);
-        cbSemTroco = (CheckBox) findViewById(R.id.cb_nao_precisa_troco);
-
-        tvDebito = (TextView) findViewById(R.id.tv_debito);
-        tvCredito = (TextView) findViewById(R.id.tv_credito);
-        tvAlimentacao = (TextView) findViewById(R.id.tv_alimentacao);
+        cbPix = (CheckBox) findViewById(R.id.cb_pix);
+        cbCreditoParcelado = (CheckBox) findViewById(R.id.cb_credito_parcelado);
 
         efab_concluir_revenda = (LinearLayout) findViewById(R.id.efab_concluir_revenda);
 
         firestore = FirebaseFirestore.getInstance();
-        total_venda_lista_revenda.setCharacterList(TickerUtils.getDefaultNumberList());
+        total_venda_lista_revenda.setCharacterLists(TickerUtils.provideNumberList());
         auth = FirebaseAuth.getInstance();
 
         if (user == null) {
@@ -160,7 +130,6 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             finish();
         }
 
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
 
         rv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -185,46 +154,51 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
     private void cbListener() {
 
-        cbDinheiro.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+        cbPix.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    etTroco.requestFocus();
-                    cbAlimentacao.setChecked(false);
-                    cbDebito.setChecked(false);
-                    cbCredito.setChecked(false);
-                    tvAlimentacao.setText("");
-                    tvCredito.setText("");
-                    tvDebito.setText("");
-                    totalComissaoTV.setText("R$ " + somo + ",00");
-                    total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+            public void onClick(View v) {
+                if (cbPix.isChecked()) {
+                    tipoDePagamento = 5;
+                    int juros = (totalVenda * 10) / 100;
+                    int somaComJuros = totalVenda;
 
-                    tipoDePagamento = 4;
-                    totalComissaoTV.setText("R$ " + somo + ",00");
-                    total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
-
-
+                    total_venda_lista_revenda.setText("R$ " + somaComJuros + ",00");
+                    myShowDialog(5);
                 } else {
-                    cbSemTroco.setChecked(false);
-                    etTroco.setText("");
+                    detalhePagamento = "";
+                    Log.d("ListaRevendaActivity", "CB not checked");
+                    if(tipoDePagamento == 5) {
+
+                        tipoDePagamento = 0;
+                        total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+                    }
+                    Log.d("ListaRevendaActivity", "Tipo de pagamento: " + tipoDePagamento);
                 }
 
             }
         });
 
-        cbAlimentacao.setOnClickListener(new View.OnClickListener() {
+        cbDinheiro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cbAlimentacao.isChecked()) {
-                    tipoDePagamento = 3;
+                if (cbDinheiro.isChecked()) {
+                    tipoDePagamento = 4;
                     int juros = (totalVenda * 10) / 100;
-                    int somaComJuros = juros + totalVenda;
+                    int somaComJuros = totalVenda;
 
                     total_venda_lista_revenda.setText("R$ " + somaComJuros + ",00");
-                    myShowDialog(3);
+                    myShowDialog(4);
                 } else {
-                    tvAlimentacao.setText("");
                     detalhePagamento = "";
+                    Log.d("ListaRevendaActivity", "CB not checked");
+                    if(tipoDePagamento == 4) {
+
+                        tipoDePagamento = 0;
+                        total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+                    }
+                    Log.d("ListaRevendaActivity", "Tipo de pagamento: " + tipoDePagamento);
                 }
 
             }
@@ -236,13 +210,19 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
                 if (cbCredito.isChecked()) {
                     tipoDePagamento = 2;
                     int juros = (totalVenda * 10) / 100;
-                    int somaComJuros = juros + totalVenda;
+                    int somaComJuros = totalVenda;
 
                     total_venda_lista_revenda.setText("R$ " + somaComJuros + ",00");
                     myShowDialog(2);
                 } else {
-                    tvDebito.setText("");
                     detalhePagamento = "";
+                    Log.d("ListaRevendaActivity", "CB not checked");
+                    if(tipoDePagamento == 2) {
+
+                        tipoDePagamento = 0;
+                        total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+                    }
+                    Log.d("ListaRevendaActivity", "Tipo de pagamento: " + tipoDePagamento);
                 }
 
             }
@@ -254,34 +234,55 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
                 if (cbDebito.isChecked()) {
                     tipoDePagamento = 1;
                     int juros = (totalVenda * 10) / 100;
-                    int somaComJuros = juros + totalVenda;
+                    int somaComJuros = totalVenda;
 
                     total_venda_lista_revenda.setText("R$ " + somaComJuros + ",00");
 
 
                     myShowDialog(1);
                 } else {
-                    tvDebito.setText("");
                     detalhePagamento = "";
+                    Log.d("ListaRevendaActivity", "CB not checked");
+                    if(tipoDePagamento == 1) {
+
+                        tipoDePagamento = 0;
+                        total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+                    }
+                    Log.d("ListaRevendaActivity", "Tipo de pagamento: " + tipoDePagamento);
                 }
 
             }
         });
 
-        cbSemTroco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cbCreditoParcelado.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    detalhePagamento = "está trocado";
-                    etTroco.clearFocus();
-                    cbDinheiro.setChecked(true);
-                    esconderTeclado(etTroco);
+            public void onClick(View v) {
+                if (cbCreditoParcelado.isChecked()) {
+                    tipoDePagamento = 3;
+                    int juros = (totalVenda * 10) / 100;
+                    int somaComJuros = totalVenda + juros;
+
+                    total_venda_lista_revenda.setText("R$ " + somaComJuros + ",00");
+
+
+                    myShowDialog(3);
+                    Log.d("ListaRevendaActivity", "CB checked");
+                    Log.d("ListaRevendaActivity", "Tipo de pagamento: " + tipoDePagamento);
                 } else {
                     detalhePagamento = "";
-                    etTroco.requestFocus();
+                    Log.d("ListaRevendaActivity", "CB not checked");
+                    if(tipoDePagamento == 3) {
+
+                        tipoDePagamento = 0;
+                        total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+                    }
+                    Log.d("ListaRevendaActivity", "Tipo de pagamento: " + tipoDePagamento);
+
                 }
+
             }
         });
+
 
     }
 
@@ -339,23 +340,6 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
 
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        etTroco.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                detalhePagamento = etTroco.getText().toString();
             }
 
             @Override
@@ -447,7 +431,6 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         if (!ADMINISTRADOR) {
 
-            analitycsFacebook.logViewCartRevendaEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
             analitycsGoogle.logViewCartRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
 
         }
@@ -512,7 +495,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
                 }
 
 
-                if (tipoDePagamento != 0 && tipoDePagamento != 4) {
+                if (tipoDePagamento == 3) {
 
                     int juros = (totalVenda * 10) / 100;
                     int tt = juros + totalVenda;
@@ -550,46 +533,63 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
         switch (tipo) {
 
             case 1:
-
-                cbAlimentacao.setChecked(false);
+                //debito
+                cbPix.setChecked(false);
                 cbDebito.setChecked(true);
                 cbCredito.setChecked(false);
+                cbCreditoParcelado.setChecked(false);
                 cbDinheiro.setChecked(false);
 
                 totalComissaoTV.setText("R$ " + somo + ",00");
-                total_venda_lista_revenda.setText("R$ " + tt + ",00");
+                total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
 
                 break;
             case 2:
-
-                cbAlimentacao.setChecked(false);
+                //credito avista
+                cbPix.setChecked(false);
                 cbDebito.setChecked(false);
                 cbCredito.setChecked(true);
+                cbCreditoParcelado.setChecked(false);
                 cbDinheiro.setChecked(false);
 
                 totalComissaoTV.setText("R$ " + somo + ",00");
-                total_venda_lista_revenda.setText("R$ " + tt + ",00");
+                total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
                 break;
             case 3:
-                cbAlimentacao.setChecked(true);
+                //credito parcelado
+                cbPix.setChecked(false);
                 cbDebito.setChecked(false);
                 cbCredito.setChecked(false);
+                cbCreditoParcelado.setChecked(true);
                 cbDinheiro.setChecked(false);
 
                 totalComissaoTV.setText("R$ " + somo + ",00");
                 total_venda_lista_revenda.setText("R$ " + tt + ",00");
                 break;
             case 4:
-                cbAlimentacao.setChecked(false);
+                //dinheiro
+                cbPix.setChecked(false);
                 cbDebito.setChecked(false);
                 cbCredito.setChecked(false);
+                cbCreditoParcelado.setChecked(false);
                 cbDinheiro.setChecked(true);
 
                 totalComissaoTV.setText("R$ " + somo + ",00");
                 total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
                 break;
+            case 5:
+                //pix
+                cbPix.setChecked(true);
+                cbDebito.setChecked(false);
+                cbCredito.setChecked(false);
+                cbCreditoParcelado.setChecked(false);
+                cbDinheiro.setChecked(false);
+
+                totalComissaoTV.setText("R$ " + somo + ",00");
+                total_venda_lista_revenda.setText("R$ " + totalVenda + ",00");
+                break;
             default:
-                cbAlimentacao.setChecked(false);
+                cbPix.setChecked(false);
                 cbDebito.setChecked(false);
                 cbCredito.setChecked(false);
                 cbDinheiro.setChecked(false);
@@ -599,6 +599,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         }
 
+        /*
         switch (tipo) {
             case 1:
                 //debito
@@ -694,6 +695,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             default:
                 break;
         }
+
+         */
     }
 
     private ObjectRevenda getDadosCompra() {
@@ -737,14 +740,16 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             return null;
         }
 
-        if (tipoDePagamento != 0 && tipoDePagamento != 4) {
+        int valorTotalVenda = totalVenda;
+
+        if (tipoDePagamento == 3) {
 
             int juros = (totalVenda * 10) / 100;
-            totalVenda = juros + totalVenda;
+            valorTotalVenda = juros + totalVenda;
 
         }
 
-        ObjectRevenda objectRevenda = new ObjectRevenda(ruaMain, somo, bairroMain, totalVenda, detalhePagamento, tipoDePagamento, tipoEntrega, 0, null, 0, objProdutoRevendas, 0, nomeCliente, false, auth.getCurrentUser().getPhotoUrl().getPath(), telefoneMain, 1, 0, auth.getUid(), auth.getCurrentUser().getDisplayName(), totalVenda, false, documentoPrincipalDoUsuario.isAdmConfirmado(), documentoPrincipalDoUsuario.getUidAdm());
+        ObjectRevenda objectRevenda = new ObjectRevenda(ruaMain, somo, bairroMain, valorTotalVenda, detalhePagamento, tipoDePagamento, tipoEntrega, 0, null, 0, objProdutoRevendas, 0, nomeCliente, false, auth.getCurrentUser().getPhotoUrl().getPath(), telefoneMain, 1, 0, auth.getUid(), auth.getCurrentUser().getDisplayName(), totalVenda, false, documentoPrincipalDoUsuario.isAdmConfirmado(), documentoPrincipalDoUsuario.getUidAdm(), 0, null);
 
         return objectRevenda;
     }
@@ -869,7 +874,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         //colocar referencia a minhas revendas
 
-        final ObjectRevenda novaCompra = new ObjectRevenda(objRev.getAdress(), objRev.getComissaoTotal(), objRev.getComplemento(), objRev.getCompraValor(), objRev.getDetalhePag(), objRev.getFormaDePagar(), objRev.getFrete(), System.currentTimeMillis(), revendaRef.getId(), objRev.getLat(), objRev.getListaDeProdutos(), objRev.getLng(), objRev.getNomeCliente(), objRev.isPagamentoRecebido(), objRev.getPathFotoUserRevenda(), objRev.getPhoneCliente(), objRev.getStatusCompra(), objRev.getTipoDeEntrega(), objRev.getUidUserRevendedor(), objRev.getUserNomeRevendedor(), objRev.getValorTotal(), objRev.isVendaConcluida(), possuiComissaoAfiliados, documentoPrincipalDoUsuario.getUidAdm());
+        final ObjectRevenda novaCompra = new ObjectRevenda(objRev.getAdress(), objRev.getComissaoTotal(), objRev.getComplemento(), objRev.getCompraValor(), objRev.getDetalhePag(), objRev.getFormaDePagar(), objRev.getFrete(), System.currentTimeMillis(), revendaRef.getId(), objRev.getLat(), objRev.getListaDeProdutos(), objRev.getLng(), objRev.getNomeCliente(), objRev.isPagamentoRecebido(), objRev.getPathFotoUserRevenda(), objRev.getPhoneCliente(), objRev.getStatusCompra(), objRev.getTipoDeEntrega(), objRev.getUidUserRevendedor(), objRev.getUserNomeRevendedor(), objRev.getValorTotal(), objRev.isVendaConcluida(), possuiComissaoAfiliados, documentoPrincipalDoUsuario.getUidAdm(), objRev.getIdCancelamento(), objRev.getDetalheCancelamento());
 
 
         batch.set(revendaRef, novaCompra);
@@ -887,9 +892,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
                 if (!ADMINISTRADOR) {
 
                     analitycsGoogle.logVenda(novaCompra);
-                    analitycsFacebook.logVenda(novaCompra);
 
-                    analitycsFacebook.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
                     analitycsGoogle.logRevenda(user.getDisplayName(), user.getUid(), pathFotoUser);
 
 

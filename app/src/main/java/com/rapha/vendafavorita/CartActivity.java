@@ -22,7 +22,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.rapha.vendafavorita.analitycs.AnalitycsFacebook;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.CompraFinalParcelable;
 import com.rapha.vendafavorita.objects.UserStreamView;
@@ -54,7 +53,6 @@ public class CartActivity extends AppCompatActivity implements AdapterCart.Anali
     private FirebaseAuth auth;
     private CollectionReference cart;
 
-    private AnalitycsFacebook analitycsFacebook;
     private AnalitycsGoogle analitycsGoogle;
     private DocumentReference usuarioRef;
     private CollectionReference enderecosColecao;
@@ -81,7 +79,6 @@ public class CartActivity extends AppCompatActivity implements AdapterCart.Anali
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        analitycsFacebook = new AnalitycsFacebook(this);
         analitycsGoogle = new AnalitycsGoogle(this);
         usuarioRef = firestore.collection("Usuario").document(user.getUid());
         enderecosColecao = firestore.collection("Enderecos").document("Clientes").collection(user.getUid());
@@ -113,9 +110,9 @@ public class CartActivity extends AppCompatActivity implements AdapterCart.Anali
 
             }
         };
-        totalTV.setCharacterList(TickerUtils.getDefaultNumberList());
-        economiaTV.setCharacterList(TickerUtils.getDefaultNumberList());
-        itensTV.setCharacterList(TickerUtils.getDefaultNumberList());
+        totalTV.setCharacterLists(TickerUtils.provideNumberList());
+        economiaTV.setCharacterLists(TickerUtils.provideNumberList());
+        itensTV.setCharacterLists(TickerUtils.provideNumberList());
 
         rv.setLayoutManager(new LinearLayoutManager(CartActivity.this));
         adapter = new AdapterCart(CartActivity.this, CartActivity.this);
@@ -194,7 +191,6 @@ public class CartActivity extends AppCompatActivity implements AdapterCart.Anali
         });
 
         if (!ADMINISTRADOR) {
-            analitycsFacebook.logUserVisitaCarrinhoEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
             analitycsGoogle.logUserVisitaCarrinhoEvent(user.getDisplayName(), user.getUid(), pathFotoUser);
             UserStreamView userStreamView = new UserStreamView(user.getDisplayName(), user.getUid(), pathFotoUser, System.currentTimeMillis());
             firestore.collection("Eventos").document("stream").collection("cart").document(user.getUid()).set(userStreamView);

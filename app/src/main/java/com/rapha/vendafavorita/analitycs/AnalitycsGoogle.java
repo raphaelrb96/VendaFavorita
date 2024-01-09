@@ -192,7 +192,7 @@ public class AnalitycsGoogle {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.CURRENCY, "BRL");
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, idProduto);
-        bundle.putString(FirebaseAnalytics.Param.ITEM_LOCATION_ID, nomeProduto);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, nomeProduto);
         bundle.putDouble(FirebaseAnalytics.Param.VALUE, valorProduto);
         logger.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
