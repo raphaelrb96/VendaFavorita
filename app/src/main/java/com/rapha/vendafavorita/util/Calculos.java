@@ -57,22 +57,22 @@ public class Calculos {
             comissaoVarejo = 15;
         }
         int valorVarejo = (int) getValorVarejo(valor);
-        VariantePrecificacao varejo = new VariantePrecificacao(comissaoVarejo, 0, valorVarejo, "VAREJO", 1, "");
+        VariantePrecificacao varejo = new VariantePrecificacao(comissaoVarejo, 0, valorVarejo, "VAREJO", 1, "", 0);
 
         //promocao
         int promoComissao = 10;
         int valorPromo = (int) getValorPromocional(valor);
-        VariantePrecificacao promocao = new VariantePrecificacao(promoComissao, 0, valorPromo, "PROMOÇÃO", 1, "");
+        VariantePrecificacao promocao = new VariantePrecificacao(promoComissao, 0, valorPromo, "PROMOÇÃO", 1, "", 1);
 
         //atacarejo
         int atacarejoComissao = 5;
         int valorAtacarejo = (int) getValorAtacarejo(valor);
-        VariantePrecificacao atacarejo = new VariantePrecificacao(atacarejoComissao, 0, valorAtacarejo, "ATACAREJO", 1, "");
+        VariantePrecificacao atacarejo = new VariantePrecificacao(atacarejoComissao, 0, valorAtacarejo, "ATACAREJO", 1, "", 2);
 
         //atacado
         int atacadoComissao = 3;
         int valorAtacado = (int) getValorAtacado(valor);
-        VariantePrecificacao atacado = new VariantePrecificacao(atacadoComissao, 0, valorAtacado, "ATACADO", 6, "");
+        VariantePrecificacao atacado = new VariantePrecificacao(atacadoComissao, 0, valorAtacado, "ATACADO", 6, "", 3);
 
         precificacoes.add(varejo);
         precificacoes.add(promocao);

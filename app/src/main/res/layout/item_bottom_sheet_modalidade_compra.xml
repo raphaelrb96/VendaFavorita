@@ -169,6 +169,7 @@
                 </LinearLayout>
             </LinearLayout>
             <TextView
+                android:visibility="gone"
                 android:id="@+id/aviso_item_modelo_preco"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"

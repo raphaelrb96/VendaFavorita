@@ -1,5 +1,7 @@
 package com.rapha.vendafavorita.objects;
 
+import com.rapha.vendafavorita.util.Listas;
+
 import java.util.ArrayList;
 
 public class ObjectRevenda {
@@ -34,11 +36,24 @@ public class ObjectRevenda {
     private int idCancelamento;
     private String detalheCancelamento;
 
+    private GarantiaObj garantiaFinal;
+    private EntregaObj entregaFinal;
+    private PagamentosObj pagamentoFinal;
+    private ParcelamentoObj parcelaFinal;
+
+    private String cep;
+    private String cidade;
+    private String estado;
+    private String obs;
+
+
+
     public ObjectRevenda () {
 
     }
 
-    public ObjectRevenda(String adress, int comissaoTotal, String complemento, int compraValor, String detalhePag, int formaDePagar, int frete, long hora, String idCompra, double lat, ArrayList<ObjProdutoRevenda> listaDeProdutos, double lng, String nomeCliente, boolean pagamentoRecebido, String pathFotoUserRevenda, String phoneCliente, int statusCompra, int tipoDeEntrega, String uidUserRevendedor, String userNomeRevendedor, int valorTotal, boolean vendaConcluida, boolean existeComissaoAfiliados, String uidAdm, int idCancelamento, String detalheCancelamento) {
+
+    public ObjectRevenda(String adress, int comissaoTotal, String complemento, int compraValor, String detalhePag, int formaDePagar, int frete, long hora, String idCompra, double lat, ArrayList<ObjProdutoRevenda> listaDeProdutos, double lng, String nomeCliente, boolean pagamentoRecebido, String pathFotoUserRevenda, String phoneCliente, int statusCompra, int tipoDeEntrega, String uidUserRevendedor, String userNomeRevendedor, int valorTotal, boolean vendaConcluida, boolean existeComissaoAfiliados, String uidAdm, int idCancelamento, String detalheCancelamento, GarantiaObj garantiaFinal, EntregaObj entregaFinal, PagamentosObj pagamentoFinal, ParcelamentoObj parcelaFinal, String cep, String cidade, String estado, String obs) {
         this.adress = adress;
         this.comissaoTotal = comissaoTotal;
         this.complemento = complemento;
@@ -65,6 +80,30 @@ public class ObjectRevenda {
         this.uidAdm = uidAdm;
         this.idCancelamento = idCancelamento;
         this.detalheCancelamento = detalheCancelamento;
+        this.garantiaFinal = garantiaFinal;
+        this.entregaFinal = entregaFinal;
+        this.pagamentoFinal = pagamentoFinal;
+        this.parcelaFinal = parcelaFinal;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.obs = obs;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getObs() {
+        return obs;
     }
 
     public String getAdress() {
@@ -169,5 +208,21 @@ public class ObjectRevenda {
 
     public String getDetalheCancelamento() {
         return detalheCancelamento;
+    }
+
+    public GarantiaObj getGarantiaFinal() {
+        return garantiaFinal;
+    }
+
+    public EntregaObj getEntregaFinal() {
+        return entregaFinal;
+    }
+
+    public PagamentosObj getPagamentoFinal() {
+        return pagamentoFinal;
+    }
+
+    public ParcelamentoObj getParcelaFinal() {
+        return parcelaFinal;
     }
 }

@@ -13,8 +13,11 @@ public class ObjProdutoRevenda {
     private int valorTotalComComissao;
     private int valorUni;
     private int valorUniComComissao;
+    private int idModoPreco;
+    private String modoPreco;
+    private int quantidadeMinima;
 
-    public ObjProdutoRevenda(String caminhoImg, int comissaoTotal, int comissaoUnidade, String idProdut, String labo, String produtoName, int quantidade, int valorTotal, int valorTotalComComissao, int valorUni, int valorUniComComissao) {
+    public ObjProdutoRevenda(String caminhoImg, int comissaoTotal, int comissaoUnidade, String idProdut, String labo, String produtoName, int quantidade, int valorTotal, int valorTotalComComissao, int valorUni, int valorUniComComissao, int idModoPreco, String modoPreco, int quantidadeMinima) {
         this.caminhoImg = caminhoImg;
         this.comissaoTotal = comissaoTotal;
         this.comissaoUnidade = comissaoUnidade;
@@ -26,6 +29,9 @@ public class ObjProdutoRevenda {
         this.valorTotalComComissao = valorTotalComComissao;
         this.valorUni = valorUni;
         this.valorUniComComissao = valorUniComComissao;
+        this.modoPreco = modoPreco;
+        this.idModoPreco = idModoPreco;
+        this.quantidadeMinima = quantidadeMinima;
     }
 
     public ObjProdutoRevenda() {
@@ -74,5 +80,17 @@ public class ObjProdutoRevenda {
 
     public int getValorUniComComissao() {
         return valorUniComComissao;
+    }
+
+    public int getQuantidadeMinima() {
+        return quantidadeMinima;
+    }
+
+    public String getModoPreco() {
+        return modoPreco;
+    }
+
+    public int getIdModoPreco() {
+        return idModoPreco;
     }
 }

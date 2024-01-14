@@ -26,8 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -76,6 +74,9 @@ import com.rapha.vendafavorita.objects.TokenFcm;
 import com.rapha.vendafavorita.objects.UserStreamView;
 import com.rapha.vendafavorita.objects.Usuario;
 import com.rapha.vendafavorita.rankings.ResumeRankingActivity;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,7 +147,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     public static final boolean ADMINISTRADOR = true;
     private ImageView fundo;
 
-    private FrameLayout bt_homeBottombar, bt_meu_perfil_main, bt_afiliados_main, bt_mensagem_main;
+    private FrameLayout bt_homeBottombar, bt_meu_perfil_main, bt_afiliados_main, bt_mensagem_main, bt_carrinho_bottom_main;
     private NestedScrollView lista_principal;
 
     private CardView bt_categ_11_fones;
@@ -213,6 +214,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         bt_afiliados_main = (FrameLayout) view.findViewById(R.id.bt_afiliados_main);
         bt_mensagem_main = (FrameLayout) view.findViewById(R.id.bt_mensagem_main);
         bt_meu_perfil_main = (FrameLayout) view.findViewById(R.id.bt_meu_perfil_main);
+        bt_carrinho_bottom_main = (FrameLayout) view.findViewById(R.id.bt_carrinho_bottom_main);
         //mensagem_main = (FrameLayout) view.findViewById(R.id.mensagem_main);
         //bt_painel_revendedor = (FrameLayout) view.findViewById(R.id.bt_painel_revendedor);
 
@@ -517,7 +519,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
             public void onClick(View view) {
                 lista_principal.scrollTo(0, 0);
                 telaInicialLoadding(null);
-                myQuery(firestore.collection("produtos").whereEqualTo("categorias.14", true), false, "", -1);
+                myQuery(firestore.collection("produtos").whereEqualTo("categorias.4", true), false, "", -1);
             }
         });
 
@@ -550,6 +552,14 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
                 intent.putExtra("nome", user.getDisplayName());
                 intent.putExtra("path", user.getPhotoUrl());
                 intent.putExtra("zap", user.getPhoneNumber());
+                startActivity(intent);
+            }
+        });
+
+        bt_carrinho_bottom_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListaRevendaActivity.class);
                 startActivity(intent);
             }
         });
@@ -850,7 +860,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private void painelAdm() {
         if (ADMINISTRADOR) {
             //TODO DESCOMENTAR NA VERSAO ADM
-            startActivity(new Intent(getActivity(), AdmActivity.class));
+            startActivity(new Intent(getActivity(), Secretaria.class));
         } else {
             startActivity(new Intent(getActivity(), MeuPerfilActivity.class));
         }

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_marginLeft="16dp"
     android:layout_marginTop="10dp"
+    app:cardCornerRadius="12dp"
     android:layout_marginRight="16dp"
+    app:contentPadding="6dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,131 +16,317 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-            <TextView
-                android:visibility="gone"
-                android:textColor="@color/colorSecondaryLight"
-                android:text="Editar"
-                android:id="@+id/bt_editar_item_lista_revenda"
-                android:textAllCaps="true"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <View
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:textColor="@color/colorSecondaryLight"
-                android:text="Remover"
-                android:id="@+id/bt_remover_item_lista_revenda"
-                android:textAllCaps="true"
-                android:gravity="center"
-                android:textSize="12sp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="8dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/img_prod_revenda"
-                android:minHeight="300dp"
-                android:maxHeight="650dp"
-                android:scaleType="centerCrop"
+            <androidx.cardview.widget.CardView
+                app:cardElevation="1dp"
+                app:cardCornerRadius="8dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_prod_revenda"
+                    android:scaleType="centerCrop"
+                    android:layout_width="130dp"
+                    android:layout_height="150dp"
+                    android:adjustViewBounds="true"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_margin="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"/>
+                android:orientation="vertical">
 
-        </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_marginTop="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:id="@+id/titulo_prod_revenda"
-            android:textSize="16sp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:textColor="@color/colorSecondaryLight"
-            android:maxLines="2"
-            android:maxHeight="50dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                    <com.google.android.material.card.MaterialCardView
+                        app:strokeColor="@color/azul_dark"
+                        app:strokeWidth="0.2dp"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        app:contentPaddingLeft="3dp"
+                        app:contentPaddingRight="3dp"
+                        app:cardElevation="2dp"
+                        app:cardCornerRadius="14dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="4dp"
+                                android:visibility="gone"
+                                android:padding="3dp"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:tint="@color/azul_dark"
+                                android:src="@drawable/ic_baseline_verified_24" />
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|start"
+                                    android:fontFamily="sans-serif-black"
+                                    android:textAllCaps="true"
+                                    android:id="@+id/text_bt_modelo_precificacao_item_carrinho"
+                                    android:gravity="start"
+                                    android:textAlignment="textStart"
+                                    android:text="VAREJO"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="@color/azul_dark"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+                            <ImageView
+                                android:visibility="gone"
+                                android:layout_gravity="center|end"
+                                android:padding="3dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:tint="@color/azul_dark"
+                                android:src="@drawable/ic_action_ir_right" />
+                        </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"/>
+
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginRight="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_gravity="center"
+                            app:strokeWidth="0.1dp"
+                            android:layout_marginRight="6dp"
+                            app:strokeColor="@color/cinza_text"
+                            app:contentPadding="3dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textColor="@color/colorSecondaryLight"
+                                android:drawableRight="@drawable/ic_baseline_edit_24"
+                                android:id="@+id/bt_editar_item_lista_revenda"
+                                android:textAllCaps="true"
+                                android:gravity="center"
+                                android:textSize="12sp"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_gravity="center"
+                            app:strokeWidth="0.1dp"
+                            app:strokeColor="@color/cinza_text"
+                            app:contentPadding="3dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textColor="@color/colorSecondaryLight"
+                                android:text=""
+                                android:drawableRight="@drawable/ic_delete_primary_secudary_25dp"
+                                android:id="@+id/bt_remover_item_lista_revenda"
+                                android:textAllCaps="true"
+                                android:gravity="center"
+                                android:textSize="12sp"
+                                android:layout_gravity="center"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:id="@+id/valor_produto_detalhe_revenda"
-                    android:textSize="20sp"
-                    android:text="R$ 0,00"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorSecondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent" />
-
-                <View
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/titulo_prod_revenda"
+                    android:textSize="16sp"
+                    android:layout_marginRight="6dp"
+                    android:textAllCaps="true"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="12dp"
+                    android:textColor="@color/cinza_text"
+                    android:lines="2"
+                    android:maxHeight="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <LinearLayout
-                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="6dp"
                     android:orientation="horizontal"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <View
-                        android:id="@+id/bt_diminui_prod_lista_revenda"
-                        android:background="@drawable/ic_remove_circle_outline_black_30dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_gravity="center|start"
-                        app:backgroundTint="@color/colorSecondary"
-                        app:fabSize="mini"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp" />
-                    <TextView
-                        android:id="@+id/quantidade_prod_lista_revenda"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:textSize="22sp"
-                        android:text="2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:id="@+id/bt_aumentar_prod_lista_revenda"
-                        android:background="@drawable/ic_add_circle_outline_black_30dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="center|end"
-                        app:backgroundTint="@color/colorSecondary"
-                        app:fabSize="mini"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp" />
-                </LinearLayout>
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_gravity="bottom"
+                        android:gravity="bottom"
+                        android:orientation="horizontal"
+                        android:paddingBottom="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_gravity="top"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                android:layout_gravity="bottom"
+                                android:textSize="8sp"
+                                android:text="Total"
+                                android:gravity="center"
+                                android:textColor="@color/cinza_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_gravity="bottom"
+                                android:id="@+id/valor_produto_detalhe_revenda"
+                                android:textSize="22sp"
+                                android:paddingTop="0dp"
+                                android:text="R$100"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                android:layout_gravity="bottom"
+                                android:textSize="10sp"
+                                android:text="Lucro"
+                                android:gravity="center"
+                                android:textColor="@color/cinza_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_gravity="bottom"
+                                android:id="@+id/comissao_produto_item_lista_revenda"
+                                android:textSize="20sp"
+                                android:text="R$100"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
 
+
+                        <View
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_gravity="bottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_gravity="center"
+                                app:strokeWidth="0.1dp"
+                                android:layout_marginRight="6dp"
+                                app:strokeColor="@color/cinza_text"
+                                app:contentPadding="3dp"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp">
+                                <View
+                                    android:id="@+id/bt_diminui_prod_lista_revenda"
+                                    android:background="@drawable/ic_baseline_remove_24"
+                                    android:layout_gravity="center|start"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" />
+                            </com.google.android.material.card.MaterialCardView>
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_gravity="center"
+                                app:strokeWidth="0.1dp"
+                                android:layout_marginRight="6dp"
+                                app:strokeColor="@color/cinza_text"
+                                app:contentPadding="3dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp">
+                                <TextView
+                                    android:id="@+id/quantidade_prod_lista_revenda"
+                                    android:textSize="18sp"
+                                    android:layout_gravity="center"
+                                    android:textStyle="bold"
+                                    android:gravity="center"
+                                    android:text="2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_gravity="center"
+                                app:strokeWidth="0.1dp"
+                                android:layout_marginRight="6dp"
+                                app:strokeColor="@color/cinza_text"
+                                app:contentPadding="3dp"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp">
+                                <View
+                                    android:id="@+id/bt_aumentar_prod_lista_revenda"
+                                    android:background="@drawable/ic_baseline_add_24"
+                                    android:layout_gravity="center|end"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
+
+
+
+
+
+
     </LinearLayout>
-</FrameLayout>
+</com.google.android.material.card.MaterialCardView>

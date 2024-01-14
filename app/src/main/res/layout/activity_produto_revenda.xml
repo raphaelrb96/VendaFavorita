@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -64,9 +64,7 @@
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
                         android:layout_width="match_parent"
-                        android:minHeight="300dp"
-                        android:maxHeight="550dp"
-                        android:layout_height="400dp" />
+                        android:layout_height="360dp" />
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -116,6 +114,27 @@
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="6dp"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:text="Simulação do parcelamento"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        tools:listitem="@layout/item_parcelamento"
+                        tools:itemCount="1"
+                        android:clipToPadding="false"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:id="@+id/rv_parcelamento_detalhes"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                     <LinearLayout
@@ -295,27 +314,6 @@
                     android:layout_marginBottom="2dp"
                     android:layout_marginStart="20dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:text="Simulação do parcelamento"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="16dp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorSecondary"
-                    android:textSize="16sp"
-                    android:layout_marginLeft="16dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <androidx.recyclerview.widget.RecyclerView
-                    tools:listitem="@layout/item_parcelamento"
-                    tools:itemCount="1"
-                    android:clipToPadding="false"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:id="@+id/rv_parcelamento_detalhes"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
 
@@ -599,7 +597,7 @@
 
                 <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="80dp" />
+                    android:layout_height="150dp" />
 
             </LinearLayout>
 
@@ -612,13 +610,17 @@
     </LinearLayout>
 
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.bottomappbar.BottomAppBar
         android:backgroundTint="@color/colorPrimaryLight"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        app:elevation="16dp"
-        android:layout_height="wrap_content">
+        android:layout_marginLeft="-16dp"
+        android:gravity="center"
+        app:elevation="12dp"
+        android:layout_height="80dp">
         <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -626,11 +628,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:paddingStart="6dp"
-                android:paddingEnd="16dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <com.google.android.material.card.MaterialCardView
+                    android:visibility="gone"
                     app:strokeColor="@color/azul_dark"
                     app:strokeWidth="1dp"
                     app:contentPaddingLeft="8dp"
@@ -665,21 +670,43 @@
                     android:layout_marginBottom="4dp"
                     android:layout_marginTop="4dp"
                     app:cardBackgroundColor="@color/colorPrimaryLight"
-                    app:cardCornerRadius="10dp"
-                    android:layout_width="50dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <com.robinhood.ticker.TickerView
-                        app:ticker_animationDuration="1500"
-                        app:ticker_defaultCharacterList="number"
-                        android:textStyle="bold"
+                    <LinearLayout
+                        android:gravity="center"
                         android:layout_gravity="center"
-                        android:textSize="24sp"
-                        android:text="10"
-                        android:textColor="@color/azul_dark"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4dp"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/azul_dark"
+                            android:src="@drawable/ic_baseline_monetization_on_24" />
+                        <com.robinhood.ticker.TickerView
+                            android:id="@+id/tv_valor_variante_produto"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            app:ticker_animationDuration="500"
+                            app:ticker_defaultCharacterList="alphabet"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:paddingBottom="2dp"
+                            android:text="R$100"
+                            android:textColor="@color/azul_dark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
+                    android:visibility="gone"
                     app:strokeColor="@color/azul_dark"
                     app:strokeWidth="1dp"
                     app:contentPaddingLeft="8dp"
@@ -729,7 +756,7 @@
 
 
         </LinearLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
 
 
@@ -759,16 +786,15 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="horizontal">
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <ImageButton
+                style="@style/Widget.AppCompat.ButtonBar"
                 android:onClick="fecha"
-                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:backgroundTint="@color/colorSecondary"
+                android:background="@drawable/ic_arrow_back_black_24dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="12dp"
-                app:elevation="6dp"
-                app:backgroundTint="#fff"
-                app:fabCustomSize="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_marginLeft="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -880,7 +906,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:tint="@color/azul_dark"
-                            android:src="@drawable/ic_action_ir_right" />
+                            android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -890,4 +916,4 @@
 
 
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

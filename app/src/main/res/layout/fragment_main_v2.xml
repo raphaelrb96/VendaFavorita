@@ -1702,6 +1702,7 @@
 
             </FrameLayout>
             <FrameLayout
+                android:visibility="gone"
                 android:id="@+id/bt_mensagem_main"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -1710,6 +1711,18 @@
                     android:layout_gravity="center"
                     android:backgroundTint="@color/colorSecondaryDark"
                     android:background="@drawable/ic_baseline_chat_24"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+            </FrameLayout>
+            <FrameLayout
+                android:id="@+id/bt_carrinho_bottom_main"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:background="@drawable/ic_baseline_shopping_cart_24"
                     android:layout_width="30dp"
                     android:layout_height="30dp" />
             </FrameLayout>

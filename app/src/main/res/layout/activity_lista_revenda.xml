@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorLightGray"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListaRevendaActivity">
@@ -14,43 +15,81 @@
         android:orientation="horizontal">
         <View
             android:id="@+id/voltar_lista_revendas"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/colorSecondary"
             android:layout_gravity="end|center"
             android:background="@drawable/ic_arrow_back_black_24dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <TextView
+            android:id="@+id/tv_toolbar_painel_afiliados"
+            android:layout_marginLeft="32dp"
+            android:text="Pedido"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <FrameLayout
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/colorSecondaryLight"
-            android:text="Total: "
-            android:textSize="16sp"
-            android:gravity="center"
-            android:layout_gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+
         <FrameLayout
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <com.robinhood.ticker.TickerView
-                android:id="@+id/total_venda_lista_revenda"
-                android:maxLines="1"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                app:ticker_animationDuration="1500"
-                android:textSize="24sp"
-                android:layout_gravity="center|end"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorSecondaryLight"/>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="16dp"
+                app:contentPaddingLeft="3dp"
+                app:contentPaddingRight="3dp"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="19dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:minWidth="70dp"
+                android:layout_height="38dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:padding="3dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:tint="@color/azul_dark"
+                        android:src="@drawable/ic_baseline_payments_24" />
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                        <com.robinhood.ticker.TickerView
+                            app:ticker_animationDuration="2000"
+                            app:ticker_defaultCharacterList="alphabet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:text="R$15"
+                            android:id="@+id/total_lista_revenda"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="6dp"
+                            android:textColor="@color/azul_dark"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
+
     </LinearLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="60dp"
@@ -63,15 +102,14 @@
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/title_rv_minhas_ultimas_revendas"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="18dp"
+                android:text="Itens do Pedido"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorSecondary"
+                android:textSize="16sp"
                 android:layout_marginLeft="16dp"
-                android:textSize="28sp"
                 android:textStyle="bold"
-                android:textColor="@color/colorSecondaryLight"
-                android:gravity="center|start"
-                android:layout_gravity=""
-                android:text="Produtos à Venda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <androidx.recyclerview.widget.RecyclerView
@@ -81,307 +119,757 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_gravity="end"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="#000"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="8dp"
-                    android:textSize="18sp"
-                    android:gravity="bottom|end"
-                    android:text="Comissão pela venda :"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/total_lista_revenda"
-                    android:textColor="#000"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="18dp"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:gravity="center|start"
-                    android:text="25,00"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
             <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="30dp"
-                android:text="Formas de Pagamento:"
-                android:textStyle="bold"
-                android:textColor="@color/colorSecondaryLight"
-                android:textSize="28sp"
-                android:gravity="center|top"
-                android:layout_gravity="top"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="6dp"
-                android:text="Taxa de 10% se o pagamento for pelo cartão"
-                android:textStyle="bold"
-                android:textColor="@color/colorSecondaryLight"
-                android:textSize="12sp"
-                android:gravity="center|top"
-                android:layout_gravity="top"
+                android:visibility="gone"
+                android:textSize="13sp"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:drawableTop="@drawable/emptycart"
+                android:drawableTint="@color/cinza_medio"
+                android:drawablePadding="6dp"
+                android:layout_gravity="center|top"
+                android:id="@+id/tv_error_pedido_vazio"
+                android:text="Nenhum produto na sua lista. Adicione um produto na sua lista de pedidos e ele aparecerá aqui para você definir a quantidade"
+                android:textStyle="italic|bold"
+                android:textColor="@color/cinza_medio"
+                android:maxWidth="300dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <!--dinheiro-->
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Taxas de Frete e Entregas"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/option_frete_pedido"
+                    app:contentPaddingTop="10dp"
+                    app:contentPaddingBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
+                    android:minHeight="100dp">
+                    <LinearLayout
+                        android:padding="6dp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/entrega" />
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/title_entrega_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_gravity="center"
+                                android:gravity="bottom|start"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Entrega Local" />
+                            <TextView
+                                android:id="@+id/desc_entrega_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:layout_gravity="center"
+                                android:textStyle="italic"
+                                android:gravity="top|start"
+                                android:layout_marginLeft="12dp"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_marginRight="12dp"
+                                android:lines="2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Frete padrão para a maioria dos bairros de Manaus. Exceto bairros distantes" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginRight="4dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/valor_entrega_pedido"
+                                android:paddingLeft="4dp"
+                                android:textColor="@color/azul_dark"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginRight="4dp"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:textAllCaps="true"
+                                android:text="R$ 10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorSecondaryDark"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                android:gravity="center|end"
+                                android:layout_gravity="end|center" />
+                        </LinearLayout>
 
-                    <CheckBox
-                        android:id="@+id/cb_dinheiro"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|start"
-                        android:layout_marginRight="10dp"
-                        android:buttonTint="@color/colorSecondaryDark"
-                        android:text="Dinheiro"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
-                    <View
-                        android:id="@+id/icon_tipo_pagamento"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center|start"
-                        android:background="@drawable/ic_dinheiro_black_24dp" />
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Extensão da garantia"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-                <!--debitto-->
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/option_garantia_pedido"
+                    app:contentPaddingTop="10dp"
+                    app:contentPaddingBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <CheckBox
-                        android:id="@+id/cb_debito"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textSize="20sp"
-                        android:buttonTint="@color/colorSecondaryDark"
-                        android:text="Débito"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="center|start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:layout_gravity="center|start"
-                        android:background="@drawable/ic_cartao_black_24dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp">
+                    <LinearLayout
+                        android:padding="6dp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/garantia" />
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/title_garantia_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_gravity="center"
+                                android:gravity="bottom|start"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Garantia de Segurança" />
+                            <TextView
+                                android:id="@+id/desc_garantia_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:layout_gravity="center"
+                                android:textStyle="italic"
+                                android:gravity="top|start"
+                                android:layout_marginLeft="12dp"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_marginRight="12dp"
+                                android:lines="2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Prazo de 7 dias para troca apos a compra. Para defeito de fabricação" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginRight="4dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/valor_garantia_pedido"
+                                android:paddingLeft="4dp"
+                                android:textColor="@color/azul_dark"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginRight="4dp"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:textAllCaps="true"
+                                android:text="Grátis"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorSecondaryDark"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                android:gravity="center|end"
+                                android:layout_gravity="end|center" />
+                        </LinearLayout>
 
-                <!--credito-->
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <CheckBox
-                        android:id="@+id/cb_credito"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textSize="20sp"
-                        android:buttonTint="@color/colorSecondaryDark"
-                        android:text="Crédito"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="center|start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:layout_gravity="center|start"
-                        android:background="@drawable/ic_cartao_black_24dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                </LinearLayout>
-
-                <!--credito-->
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <CheckBox
-                        android:id="@+id/cb_credito_parcelado"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textSize="20sp"
-                        android:buttonTint="@color/colorSecondaryDark"
-                        android:text="Crédito Parcelado"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="center|start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:layout_gravity="center|start"
-                        android:background="@drawable/ic_cartao_black_24dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                </LinearLayout>
-
-                <!--alimentacao-->
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <CheckBox
-                        android:id="@+id/cb_pix"
-                        android:textStyle="bold"
-                        android:textColor="@color/colorSecondaryDark"
-                        android:textSize="20sp"
-                        android:buttonTint="@color/colorSecondaryDark"
-                        android:text="Pix"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="center|start"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <View
-                        android:layout_gravity="center|start"
-                        android:background="@drawable/ic_dinheiro_black_24dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"/>
-                </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Formas de Pagamento"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/option_pag_form_pedido"
+                    app:contentPaddingTop="10dp"
+                    app:contentPaddingBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp">
+                    <LinearLayout
+                        android:padding="6dp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/pagar" />
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/title_pag_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_gravity="center"
+                                android:gravity="bottom|start"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Crédito Parcelado" />
+                            <TextView
+                                android:id="@+id/desc_pag_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:layout_gravity="center"
+                                android:textStyle="italic"
+                                android:gravity="top|start"
+                                android:layout_marginLeft="12dp"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_marginRight="12dp"
+                                android:lines="2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Pagamento Presencial através do motoboy no ato da entrega" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginRight="4dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/valor_pag_pedido"
+                                android:paddingLeft="4dp"
+                                android:textColor="@color/azul_dark"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginRight="4dp"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:textAllCaps="true"
+                                android:text="Com Taxa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorSecondaryDark"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                android:gravity="center|end"
+                                android:layout_gravity="end|center" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/container_parcelamento_pedido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Opções de Parcelamento"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/option_pag_parcelamento_pedido"
+                    app:contentPaddingTop="10dp"
+                    app:contentPaddingBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp">
+                    <LinearLayout
+                        android:padding="6dp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/parcelamento" />
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/title_parcela_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_gravity="center"
+                                android:gravity="bottom|start"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Crédito Parcelado" />
+                            <TextView
+                                android:id="@+id/desc_parcela_pedido"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:layout_gravity="center"
+                                android:textStyle="italic"
+                                android:gravity="top|start"
+                                android:layout_marginLeft="12dp"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_marginRight="12dp"
+                                android:lines="2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Pagamento Presencial através do motoboy no ato da entrega" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginRight="4dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/valor_parcela_pedido"
+                                android:paddingLeft="4dp"
+                                android:textColor="@color/azul_dark"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginRight="4dp"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:textAllCaps="true"
+                                android:text="Com Taxa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorSecondaryDark"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                android:gravity="center|end"
+                                android:layout_gravity="end|center" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
             <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="40dp"
                 android:text="Informações do cliente: "
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorSecondary"
+                android:textSize="16sp"
+                android:layout_marginLeft="16dp"
                 android:textStyle="bold"
-                android:textColor="@color/colorSecondaryLight"
-                android:textSize="28sp"
-                android:gravity="center|top"
-                android:layout_gravity="top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.card.MaterialCardView
+            app:contentPaddingTop="10dp"
+            app:contentPaddingBottom="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="12dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:padding="6dp"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    app:hintEnabled="true"
+                    app:hintTextColor="@color/colorSecondaryDark"
+                    app:boxCornerRadiusTopEnd="4dp"
+                    app:boxCornerRadiusTopStart="4dp"
+                    app:boxCornerRadiusBottomEnd="4dp"
+                    app:boxCornerRadiusBottomStart="4dp"
+                    style="@style/MeuEditText"
+                    app:hintAnimationEnabled="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    app:helperTextTextColor="@color/cinza_medio"
+                    app:helperText="Nome de quem vai receber a compra"
+                    app:helperTextEnabled="true"
+                    android:hint="Nome">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nome_conf_revenda"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/MeuEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:hint="Telefone pra Contato"
+                    app:hintEnabled="true"
+                    app:hintTextColor="@color/colorSecondaryDark"
+                    app:hintAnimationEnabled="true"
+                    app:errorEnabled="true"
+                    app:helperTextTextColor="@color/cinza_medio"
+                    app:helperText="De preferencia o WhatsApp ou celular"
+                    app:helperTextEnabled="true"
+                    app:boxCornerRadiusTopEnd="4dp"
+                    app:boxCornerRadiusTopStart="4dp"
+                    app:boxCornerRadiusBottomEnd="4dp"
+                    app:boxCornerRadiusBottomStart="4dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_celular_conf_revenda"
+                        android:inputType="phone"
+                        android:imeOptions="actionDone"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="16dp"
+                    app:errorEnabled="true"
+                    app:hintEnabled="true"
+                    app:hintTextColor="@color/colorSecondaryDark"
+                    app:helperTextTextColor="@color/cinza_medio"
+                    app:boxCornerRadiusTopEnd="4dp"
+                    app:boxCornerRadiusTopStart="4dp"
+                    app:boxCornerRadiusBottomEnd="4dp"
+                    app:boxCornerRadiusBottomStart="4dp"
+                    app:helperText="Coloque detalhes sobre o pedido aqui"
+                    app:helperTextEnabled="true"
+                    style="@style/MeuEditText"
+                    app:hintAnimationEnabled="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Observações">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_obs_conf_revenda"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
+                        android:textCursorDrawable="@drawable/curso_text_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:text="Informações do Endereço: "
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textColor="@color/colorSecondary"
+                android:textSize="16sp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.card.MaterialCardView
+                app:contentPaddingTop="10dp"
+                app:contentPaddingBottom="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="15dp"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/colorSecondaryDark"
-                app:boxCornerRadiusTopEnd="4dp"
-                app:boxCornerRadiusTopStart="4dp"
-                app:boxCornerRadiusBottomEnd="4dp"
-                app:boxCornerRadiusBottomStart="4dp"
-                style="@style/MeuEditText"
-                app:hintAnimationEnabled="true"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nome">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_nome_conf_revenda"
-                    android:imeOptions="actionDone"
-                    android:textCursorDrawable="@drawable/curso_text_input"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="6dp"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorSecondaryDark"
+                        app:boxCornerRadiusTopEnd="4dp"
+                        app:boxCornerRadiusTopStart="4dp"
+                        app:boxCornerRadiusBottomEnd="4dp"
+                        app:boxCornerRadiusBottomStart="4dp"
+                        style="@style/MeuEditText"
+                        app:hintAnimationEnabled="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Endereço"
+                        app:helperTextTextColor="@color/cinza_medio"
+                        app:helperText="Informação obrigatória"
+                        app:helperTextEnabled="true">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="15dp"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/colorSecondaryDark"
-                app:boxCornerRadiusTopEnd="4dp"
-                app:boxCornerRadiusTopStart="4dp"
-                app:boxCornerRadiusBottomEnd="4dp"
-                app:boxCornerRadiusBottomStart="4dp"
-                style="@style/MeuEditText"
-                app:hintAnimationEnabled="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Bairro">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_rua_conf_revenda"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_bairro_conf_revenda"
-                    android:imeOptions="actionDone"
-                    android:textCursorDrawable="@drawable/curso_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorSecondaryDark"
+                        app:boxCornerRadiusTopEnd="4dp"
+                        app:boxCornerRadiusTopStart="4dp"
+                        app:boxCornerRadiusBottomEnd="4dp"
+                        app:boxCornerRadiusBottomStart="4dp"
+                        style="@style/MeuEditText"
+                        app:hintAnimationEnabled="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Bairro"
+                        app:helperTextTextColor="@color/cinza_medio"
+                        app:helperText="Informação obrigatória"
+                        app:helperTextEnabled="true">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="15dp"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/colorSecondaryDark"
-                app:boxCornerRadiusTopEnd="4dp"
-                app:boxCornerRadiusTopStart="4dp"
-                app:boxCornerRadiusBottomEnd="4dp"
-                app:boxCornerRadiusBottomStart="4dp"
-                style="@style/MeuEditText"
-                app:hintAnimationEnabled="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nome da Rua">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_bairro_conf_revenda"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_rua_conf_revenda"
-                    android:imeOptions="actionDone"
-                    android:textCursorDrawable="@drawable/curso_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorSecondaryDark"
+                        app:boxCornerRadiusTopEnd="4dp"
+                        app:boxCornerRadiusTopStart="4dp"
+                        app:boxCornerRadiusBottomEnd="4dp"
+                        app:boxCornerRadiusBottomStart="4dp"
+                        style="@style/MeuEditText"
+                        app:hintAnimationEnabled="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CEP"
+                        app:helperTextTextColor="@color/cinza_medio"
+                        app:helperText="Obrigatório em vendas para fora de Manaus"
+                        app:helperTextEnabled="true">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="15dp"
-                app:errorEnabled="true"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/colorSecondaryDark"
-                app:helperTextTextColor="@color/colorSecondary"
-                app:boxCornerRadiusTopEnd="4dp"
-                app:boxCornerRadiusTopStart="4dp"
-                app:boxCornerRadiusBottomEnd="4dp"
-                app:boxCornerRadiusBottomStart="4dp"
-                app:helperText="De preferencia o WhatsApp ou celular"
-                app:helperTextEnabled="true"
-                style="@style/MeuEditText"
-                app:hintAnimationEnabled="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Telefone pra Contato">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_cep_conf_revenda"
+                            android:inputType="number"
+                            android:imeOptions="actionDone"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_celular_conf_revenda"
-                    android:inputType="phone"
-                    android:imeOptions="actionDone"
-                    android:textCursorDrawable="@drawable/curso_text_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorSecondaryDark"
+                        app:boxCornerRadiusTopEnd="4dp"
+                        app:boxCornerRadiusTopStart="4dp"
+                        app:boxCornerRadiusBottomEnd="4dp"
+                        app:boxCornerRadiusBottomStart="4dp"
+                        style="@style/MeuEditText"
+                        app:hintAnimationEnabled="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Cidade"
+                        app:helperTextTextColor="@color/cinza_medio"
+                        app:helperText="Obrigatório em vendas para fora de Manaus"
+                        app:helperTextEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_cidade_conf_revenda"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="16dp"
+                        app:hintEnabled="true"
+                        app:hintTextColor="@color/colorSecondaryDark"
+                        app:boxCornerRadiusTopEnd="4dp"
+                        app:boxCornerRadiusTopStart="4dp"
+                        app:boxCornerRadiusBottomEnd="4dp"
+                        app:boxCornerRadiusBottomStart="4dp"
+                        style="@style/MeuEditText"
+                        app:hintAnimationEnabled="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Estado"
+                        app:helperTextTextColor="@color/cinza_medio"
+                        app:helperText="Obrigatório em vendas para fora de Manaus"
+                        app:helperTextEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_estado_conf_revenda"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:textCursorDrawable="@drawable/curso_text_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
 
             <FrameLayout
                 android:layout_width="40dp"
@@ -400,30 +888,108 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <LinearLayout
-        android:id="@+id/efab_concluir_revenda"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal|bottom"
-        android:gravity="center"
-        android:elevation="12dp"
-        android:background="@color/red"
+
+
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:backgroundTint="@color/colorPrimaryLight"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <FrameLayout
-            android:backgroundTint="#fff"
-            android:background="@drawable/ic_check_black_100dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp"/>
-        <FrameLayout
-            android:layout_width="8dp"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#fff"
-            android:textAllCaps="true"
-            android:text="Concluir revenda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</FrameLayout>
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="-16dp"
+        android:gravity="center"
+        app:elevation="12dp"
+        android:layout_height="80dp">
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    app:strokeColor="@color/azul_dark"
+                    app:strokeWidth="1dp"
+                    app:contentPaddingLeft="8dp"
+                    app:contentPaddingRight="8dp"
+                    app:contentPaddingTop="8dp"
+                    app:contentPaddingBottom="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    app:cardCornerRadius="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="4dp"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/azul_dark"
+                            android:src="@drawable/ic_baseline_monetization_on_24" />
+                        <com.robinhood.ticker.TickerView
+                            android:id="@+id/total_venda_lista_revenda"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            app:ticker_animationDuration="500"
+                            app:ticker_defaultCharacterList="alphabet"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:paddingBottom="2dp"
+                            android:text="R$100"
+                            android:textColor="@color/azul_dark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingRight="16dp"
+                android:paddingLeft="6dp">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_confirmar_pedido"
+                    app:backgroundTint="@color/azul_dark"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    app:elevation="12dp"
+                    android:layout_gravity="center|end"
+                    android:text="Confirmar"
+                    app:icon="@drawable/ic_action_ir_right"
+                    app:iconGravity="end"
+                    android:layout_width="match_parent"
+                    app:cornerRadius="12dp"
+                    android:layout_height="60dp" />
+            </FrameLayout>
+
+        </LinearLayout>
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

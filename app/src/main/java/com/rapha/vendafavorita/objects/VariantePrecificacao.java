@@ -8,14 +8,21 @@ public class VariantePrecificacao {
     private String nome;
     private int quantidadeMinima;
     private String aviso;
+    int id;
 
-    public VariantePrecificacao(int comissao, int bonusVip, float valor, String nome, int quantidadeMinima, String aviso) {
+    public VariantePrecificacao(int comissao, int bonusVip, float valor, String nome, int quantidadeMinima, String aviso, int id) {
         this.comissao = comissao;
         this.bonusVip = bonusVip;
         this.valor = valor;
         this.nome = nome;
         this.quantidadeMinima = quantidadeMinima;
         this.aviso = aviso;
+        this.id = id;
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     public int getComissao() {

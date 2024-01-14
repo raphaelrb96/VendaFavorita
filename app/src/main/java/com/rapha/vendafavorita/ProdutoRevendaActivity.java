@@ -62,7 +62,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
     private String tituloString = "";
     private MaterialCardView bt_modelo_precificacao;
-    private TickerView text_bt_modelo_precificacao, text_comissao;
+    private TickerView text_bt_modelo_precificacao, text_comissao, tv_valor_variante_produto;
 
 
     private AnalitycsGoogle analitycsGoogle;
@@ -76,6 +76,8 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
     private String idProd;
     private Button bt_link_site, bt_link_app;
     private int modoDePrecificacao = 0;
+    private VariantePrecificacao varianteAtual;
+    private String fotoPrincipal;
 
 
     @Override
@@ -107,7 +109,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
         text_comissao = (TickerView) findViewById(R.id.text_comissao);
         text_bt_modelo_precificacao = (TickerView) findViewById(R.id.text_bt_modelo_precificacao);
-        text_bt_modelo_precificacao = (TickerView) findViewById(R.id.text_bt_modelo_precificacao);
+        tv_valor_variante_produto = (TickerView) findViewById(R.id.tv_valor_variante_produto);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -130,6 +132,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
                     } else {
                         ProdObj obj = documentSnapshot.toObject(ProdObj.class);
                         prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores());
+                        fotoPrincipal = prodObjParcelable.getImgCapa();
                         conteudo_produto_revenda.setVisibility(View.VISIBLE);
                         pb_produto_revenda.setVisibility(View.GONE);
                         ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
@@ -148,6 +151,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
         } else {
             idProd = prodObjParcelable.getIdProduto();
+            fotoPrincipal = prodObjParcelable.getImgCapa();
             conteudo_produto_revenda.setVisibility(View.VISIBLE);
             pb_produto_revenda.setVisibility(View.GONE);
             ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
@@ -161,6 +165,8 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
     private void atualizarInterface (VariantePrecificacao variante) {
 
+        varianteAtual = variante;
+
         analitycsGoogle = new AnalitycsGoogle(this);
 
         if (!ADMINISTRADOR) {
@@ -173,8 +179,10 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
         tituloString = prodObjParcelable.getProdName();
 
-        Glide.with(this).load(prodObjParcelable.getImgCapa()).into(imageView);
+
+        Glide.with(this).load(fotoPrincipal).into(imageView);
         valor_dinheiro_produto_detalhe_revenda.setText("R$ " + totalProduto + ",00");
+        tv_valor_variante_produto.setText("R$" + totalProduto);
         text_comissao.setText("R$" + totalComissao, true);
         text_bt_modelo_precificacao.setText(variante.getNome(), true);
         tv_detalhe_prod_revenda_nome.setText(tituloString);
@@ -243,9 +251,12 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
                         if(varianteDePreco == null) {
                             ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
                             novaVariante = modelosDePreco.get(modoDePrecificacao);
+
                         }
                         atualizarInterface(novaVariante);
                         modoDePrecificacao = pos;
+                        bottomSheetPro.dismiss();
+                        conteudo_produto_revenda.smoothScrollTo(0, 0, 1500);
                     }
                 });
                 bottomSheetPro.show(getSupportFragmentManager(), "BottomSheet");
@@ -274,7 +285,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
                 public void onClick(View v) {
                     final ProdObj prodObj = prodObjParcelable.getProd();
                     final String str = prodObj.getIdProduto();
-                    ObjProdutoRevenda objProdutoRevenda = new ObjProdutoRevenda(prodObj.getImgCapa(), totalComissao, totalComissao, str, prodObj.getFabricante(), tituloString, 1, (int) prodObj.getProdValor(), totalProduto, (int) prodObj.getProdValor(), totalProduto);
+                    ObjProdutoRevenda objProdutoRevenda = new ObjProdutoRevenda(prodObj.getImgCapa(), (totalComissao * variante.getQuantidadeMinima()), totalComissao, str, prodObj.getFabricante(), tituloString, variante.getQuantidadeMinima(), (totalProduto * variante.getQuantidadeMinima()), (totalProduto * variante.getQuantidadeMinima()), totalProduto, totalProduto, varianteAtual.getId(), varianteAtual.getNome(), variante.getQuantidadeMinima());
                     DocumentReference reference = firebaseFirestore.collection("listaRevendas").document("usuario").collection(auth.getCurrentUser().getUid()).document(str);
                     reference.set(objProdutoRevenda);
                     if (!ADMINISTRADOR) {
@@ -352,7 +363,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
     private void fotoSelecionada(String path) {
         Glide.with(this).load(path).into(imageView);
         conteudo_produto_revenda.smoothScrollTo(0, 0, 1000);
-
+        fotoPrincipal = path;
 
     }
 
