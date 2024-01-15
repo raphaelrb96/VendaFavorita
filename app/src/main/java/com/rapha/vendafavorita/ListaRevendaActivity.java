@@ -70,7 +70,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private ArrayList<ObjProdutoRevenda> objProdutoRevendas;
     private String detalhePagamento = "";
     private CompraFinalParcelable cfp = null;
-    private String nomeCliente;
+    private String nomeCliente = "";
     private int somo, totalVenda;
     private String observacoes = "";
     private String telefoneMain = "";
@@ -258,8 +258,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
                     return;
                 }
 
-                btn_confirmar_pedido.setEnabled(false);
-                pb.setVisibility(View.VISIBLE);
+
 
                 Log.d("TesteCadastroAfiliados", "Produto: " + objectRevenda.getListaDeProdutos().get(0).getProdutoName());
 
@@ -270,7 +269,11 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     }
 
     private void showBottomSheetOption(String tag, int type, int id) {
-        bottomSheetPro = BottomSheetOptions.newInstance(type, totalVenda, id);
+        int ttal = getTotal();
+        if(type == TYPE_GARANTIA) {
+            ttal = getTotalItens();
+        }
+        bottomSheetPro = BottomSheetOptions.newInstance(type, ttal, id);
         bottomSheetPro.setListener(this);
         bottomSheetPro.show(getSupportFragmentManager(), tag);
     }
@@ -484,6 +487,26 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
         });
     }
 
+    private int getTotal() {
+        int ttVenda = 0;
+        for (int i = 0; i < querySnapshot.getDocuments().size(); i++) {
+            ObjProdutoRevenda carComprasActivy = (ObjProdutoRevenda) querySnapshot.getDocuments().get(i).toObject(ObjProdutoRevenda.class);
+            ttVenda = ttVenda + (carComprasActivy.getValorUni() * carComprasActivy.getQuantidade());
+        }
+        ttVenda = ttVenda + garantiaFinal.getValor();
+        ttVenda = ttVenda + entregaFinal.getValor();
+        return ttVenda;
+    }
+
+    private int getTotalItens() {
+        int ttVenda = 0;
+        for (int i = 0; i < querySnapshot.getDocuments().size(); i++) {
+            ObjProdutoRevenda carComprasActivy = (ObjProdutoRevenda) querySnapshot.getDocuments().get(i).toObject(ObjProdutoRevenda.class);
+            ttVenda = ttVenda + (carComprasActivy.getValorUni() * carComprasActivy.getQuantidade());
+        }
+        return ttVenda;
+    }
+
     private void emptyScreen() {
         title_rv_minhas_ultimas_revendas.setVisibility(View.GONE);
         rv.setVisibility(View.GONE);
@@ -555,6 +578,12 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             objProdutoRevendas.add(carComprasActivy);
         }
 
+        if(garantiaFinal == null) {
+            garantiaFinal = Listas.getListOptionsGarantia(getTotalItens()).get(0);
+        } else {
+            garantiaFinal = Listas.getListOptionsGarantia(getTotalItens()).get(garantiaFinal.getId());
+        }
+
         totalVenda = totalVenda + garantiaFinal.getValor();
         totalVenda = totalVenda + entregaFinal.getValor();
 
@@ -587,6 +616,20 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         String enderecoCompacto = "";
 
+        observacoes = "Teste teste teste";
+        telefoneMain = "1234567890";
+        ruaMain = "Teste teste teste";
+        bairroMain = "Teste teste teste";
+        nomeCliente = "Teste teste teste";
+
+        if (nomeCliente.length() < 2) {
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            mToast = Toast.makeText(this, "Insira o nome da pessoa que vai receber o pedido", Toast.LENGTH_LONG);
+            mToast.show();
+            return null;
+        }
 
         if (telefoneMain.length() < 8) {
             if (mToast != null) {
@@ -694,6 +737,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
     private void concluirPedidoDeCompra(final ObjectRevenda objRev) {
 
+        btn_confirmar_pedido.setEnabled(false);
+        pb.setVisibility(View.VISIBLE);
 
 
         WriteBatch batch = firestore.batch();
@@ -770,7 +815,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             @Override
             public void onFailure(Exception e) {
                 btn_confirmar_pedido.setEnabled(true);
-                pb.setVisibility(View.VISIBLE);
+                pb.setVisibility(View.GONE);
                 showDialogCompra(3, "", null);
             }
         });
@@ -795,7 +840,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     public void clickBottomSheetOption(String s, int pos, int type, int id) {
         switch (type) {
             case TYPE_GARANTIA:
-                garantiaFinal = Listas.getListOptionsGarantia(totalVenda).get(pos);
+                garantiaFinal = Listas.getListOptionsGarantia(getTotalItens()).get(pos);
                 break;
             case TYPE_ENTREGA:
                 entregaFinal = Listas.getListOptionsEntregas().get(pos);

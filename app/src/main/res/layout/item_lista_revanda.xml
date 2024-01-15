@@ -174,7 +174,7 @@
                 <TextView
                     android:layout_marginTop="10dp"
                     android:id="@+id/titulo_prod_revenda"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginRight="6dp"
                     android:textAllCaps="true"
                     android:layout_marginLeft="6dp"

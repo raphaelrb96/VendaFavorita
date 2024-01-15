@@ -26,6 +26,11 @@ public class ProdObj {
     int comissao;
 
     private ArrayList<String> cores;
+
+    private float prodValorPromocional;
+    private float prodValorAtacarejo;
+    private float prodValorAtacado;
+
     private ArrayList<String> tamanhos;
     private ArrayList<String> numeros;
 
@@ -43,7 +48,7 @@ public class ProdObj {
     }
 
 
-    public ProdObj(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, long timeUpdate, int comissao, ArrayList<String> cores) {
+    public ProdObj(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, long timeUpdate, int comissao, ArrayList<String> cores, float prodValorPromocional, float prodValorAtacarejo, float prodValorAtacado) {
         this.categorias = categorias;
         this.descr = descr;
         this.disponivel = disponivel;
@@ -62,6 +67,9 @@ public class ProdObj {
         this.timeUpdate = timeUpdate;
         this.comissao = comissao;
         this.cores = cores;
+        this.prodValorPromocional = prodValorPromocional;
+        this.prodValorAtacarejo = prodValorAtacarejo;
+        this.prodValorAtacado = prodValorAtacado;
     }
 
     public ArrayList<String> getCores() {
@@ -134,5 +142,17 @@ public class ProdObj {
 
     public int getComissao() {
         return comissao;
+    }
+
+    public float getProdValorPromocional() {
+        return prodValorPromocional;
+    }
+
+    public float getProdValorAtacarejo() {
+        return prodValorAtacarejo;
+    }
+
+    public float getProdValorAtacado() {
+        return prodValorAtacado;
     }
 }

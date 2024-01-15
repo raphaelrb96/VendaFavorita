@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListaRevendaActivity">
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:background="@color/colorPrimaryLight"
         android:elevation="6dp"
         android:layout_width="match_parent"
@@ -90,7 +90,7 @@
             </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
 
-    </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="60dp"
         android:layout_marginTop="56dp"

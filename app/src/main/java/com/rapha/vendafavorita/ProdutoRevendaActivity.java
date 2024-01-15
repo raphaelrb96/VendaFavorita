@@ -1,5 +1,8 @@
 package com.rapha.vendafavorita;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.DialogCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -131,7 +137,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
                         finish();
                     } else {
                         ProdObj obj = documentSnapshot.toObject(ProdObj.class);
-                        prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores());
+                        prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
                         fotoPrincipal = prodObjParcelable.getImgCapa();
                         conteudo_produto_revenda.setVisibility(View.VISIBLE);
                         pb_produto_revenda.setVisibility(View.GONE);
@@ -386,4 +392,37 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
     }
 
 
+    public void copiarValores(View view) {
+        if(prodObjParcelable == null) return;
+
+
+        String modelosDePreco = Calculos.getCopyValores(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor(), prodObjParcelable.getProdName());
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("Valores", modelosDePreco));
+
+        AlertDialog.Builder dialogOffline = new AlertDialog.Builder(this);
+        dialogOffline.setTitle("Valores Copiados");
+        dialogOffline.setMessage("Compartilhe ou cole usando area de transferencia");
+
+        AlertDialog alertDialogOff = dialogOffline.create();
+        alertDialogOff.show();
+    }
+
+
+    public void copiarDetalhes(View view) {
+        if(prodObjParcelable == null) return;
+
+        String texto = "*" + prodObjParcelable.getProdName() + "*" + " \n\n" + prodObjParcelable.getDescr();
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("Detalhes", texto));
+
+        AlertDialog.Builder dialogOffline = new AlertDialog.Builder(this);
+        dialogOffline.setTitle("Detalhes Copiados");
+        dialogOffline.setMessage("Compartilhe ou cole usando area de transferencia");
+
+        AlertDialog alertDialogOff = dialogOffline.create();
+        alertDialogOff.show();
+    }
 }

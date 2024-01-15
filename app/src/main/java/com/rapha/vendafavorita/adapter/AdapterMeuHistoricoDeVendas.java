@@ -16,10 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.bijoysingh.starter.recyclerview.RecyclerViewHolder;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.rapha.vendafavorita.DateFormatacao;
 import com.rapha.vendafavorita.R;
+import com.rapha.vendafavorita.objects.EntregaObj;
+import com.rapha.vendafavorita.objects.GarantiaObj;
 import com.rapha.vendafavorita.objects.ObjProdutoRevenda;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
+import com.rapha.vendafavorita.util.FormatoString;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -84,31 +88,52 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
             holder.setNome_cliente_revenda("" + obj.getNomeCliente());
             holder.setNumero_cliente_revenda("" + obj.getPhoneCliente());
             String rua = obj.getAdress();
+            String cidade = obj.getCidade() != null ? obj.getCidade() : "Manaus";
+            String estado = obj.getEstado() != null ? obj.getEstado() : "Amazonas";
+            String cep = obj.getCep() != null ? obj.getCep() : "69000-000";
 
+            String observacoes = "Nenhuma";
+
+            if(obj.getObs() != null) {
+                if(obj.getObs().length() > 1) {
+                    observacoes = obj.getObs();
+                }
+            }
+
+            holder.obs_item_revenda.setText(observacoes);
 
             String formaDePagamento = "";
+            String parcelamento = "";
 
-            switch (obj.getFormaDePagar()) {
+            if(obj.getParcelaFinal() != null) {
+                parcelamento = obj.getParcelaFinal().getTitulo() + " de " + FormatoString.formartarPreco(obj.getParcelaFinal().getTotal() / obj.getParcelaFinal().getId()) + "\n";
+            }
+
+            int formaDePagamentoFinal = obj.getPagamentoFinal() != null ? obj.getPagamentoFinal().getId() : obj.getFormaDePagar();
+            switch (formaDePagamentoFinal) {
                 default:
                     break;
                 case 4:
                     formaDePagamento = "Dinheiro";
                     break;
                 case 2:
-                    formaDePagamento = "Crédito Avista";
+                case 3:
+                    formaDePagamento = parcelamento + "Crédito";
                     break;
                 case 1:
                     formaDePagamento = "Débito";
                     break;
-                case 3:
-                    formaDePagamento = "Crédito Parcelado";
-                    break;
                 case 5:
                     formaDePagamento = "Pix";
                     break;
+                case 6:
+                    formaDePagamento = parcelamento + "Link";
+                    break;
             }
 
-            holder.setEndereco_cliente_revenda(rua);
+            holder.setTaxa(obj.getEntregaFinal());
+            holder.setGarantia(obj.getGarantiaFinal());
+            holder.setEndereco_cliente_revenda(rua, cidade, estado, cep);
             if (obj.getComplemento().length() > 0) {
                 holder.setBairro_cliente_revenda(obj.getComplemento().toUpperCase());
             }
@@ -119,24 +144,19 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
             int status = obj.getStatusCompra();
             switch (status) {
                 case 1:
-                    holder.setStatus_revender("Aguardando a confirmação do pedido");
-                    holder.setCardColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                    holder.setStatus_revender("Aguardando a confirmação");
+                    holder.setCardColor(ContextCompat.getColor(context, R.color.cinza_medio));
                     holder.close_motivo_cancelamento();
-                    holder.comissao_revendedor_revenda.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark));
-                    holder.status_revender.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark));
                     break;
                 case 2:
                     holder.setStatus_revender("Confirmada");
                     holder.close_motivo_cancelamento();
-                    holder.setCardColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                    holder.comissao_revendedor_revenda.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark));
-                    holder.status_revender.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryDark));
+                    holder.setCardColor(ContextCompat.getColor(context, R.color.colorSecondary));
 
                     break;
                 case 3:
                     holder.setStatus_revender("Cancelada");
                     holder.setCardColor(ContextCompat.getColor(context, R.color.verdeDark));
-                    holder.comissao_revendedor_revenda.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                     if (obj.getIdCancelamento() > 0) {
                         holder.set_motivo_cancelamento(getMotivoCancelamento(obj.getIdCancelamento()));
                     } else {
@@ -150,13 +170,11 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
                     holder.close_motivo_cancelamento();
                     holder.setCardColor(ContextCompat.getColor(context, R.color.red_dark));
                     holder.close_motivo_cancelamento();
-                    holder.comissao_revendedor_revenda.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                     break;
                 case 5:
                     holder.setStatus_revender("Concluida");
                     holder.close_motivo_cancelamento();
                     holder.setCardColor(ContextCompat.getColor(context, R.color.verde));
-                    holder.comissao_revendedor_revenda.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                     break;
                 default:
                     break;
@@ -165,9 +183,7 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
             if (obj.isPagamentoRecebido()) {
                 if (obj.getStatusCompra() == 5) {
                     holder.setStatus_revender("PAGAMENTO CONCLUIDO");
-                    holder.setCardColor(ContextCompat.getColor(context, R.color.colorSecondaryLight));
-                    holder.comissao_revendedor_revenda.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                    holder.status_revender.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight));
+                    holder.setCardColor(ContextCompat.getColor(context, R.color.cinza_text));
 
                 }
             } else {
@@ -207,10 +223,10 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
     class RevendaMeuHistoricoViewHolder extends RecyclerView.ViewHolder {
 
         private TextView endereco_cliente_revenda, numero_cliente_revenda, nome_cliente_revenda, hora_revenda;
-        private TextView comissao_revendedor_revenda, total_revenda, bairro_cliente_revenda;
+        private TextView comissao_revendedor_revenda, total_revenda, bairro_cliente_revenda, cidade_cliente_revenda, estado_cliente_revenda;
         private RecyclerView rv_produtos_revenda;
-        private TextView forma_pag_revenda, status_revender_motivo_cancelamento;
-        private CardView card_comissao_revendedor_revenda;
+        private TextView forma_pag_revenda, status_revender_motivo_cancelamento, obs_item_revenda, cep, taxa, garantia;
+        private MaterialCardView card_comissao_revendedor_revenda;
 
 
         private TextView status_revender;
@@ -226,14 +242,45 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
             hora_revenda = (TextView) itemView.findViewById(R.id.hora_revenda);
             comissao_revendedor_revenda = (TextView) itemView.findViewById(R.id.comissao_revendedor_revenda);
             total_revenda = (TextView) itemView.findViewById(R.id.total_revenda);
+            cidade_cliente_revenda = (TextView) itemView.findViewById(R.id.cidade_cliente_revenda);
+            obs_item_revenda = (TextView) itemView.findViewById(R.id.obs_item_revenda);
+            estado_cliente_revenda = (TextView) itemView.findViewById(R.id.estado_cliente_revenda);
+            cep = (TextView) itemView.findViewById(R.id.cep_cliente_revenda);
+            taxa = (TextView) itemView.findViewById(R.id.taxa_entrega_cliente_revenda);
+            garantia = (TextView) itemView.findViewById(R.id.garantia_item_revenda);
             status_revender_motivo_cancelamento = (TextView) itemView.findViewById(R.id.status_revender_motivo_cancelamento);
             rv_produtos_revenda = (RecyclerView) itemView.findViewById(R.id.rv_produtos_revenda);
-            card_comissao_revendedor_revenda = (CardView) itemView.findViewById(R.id.card_comissao_revendedor_revenda);
+            card_comissao_revendedor_revenda = (MaterialCardView) itemView.findViewById(R.id.card_comissao_revendedor_revenda);
+        }
+
+        public void setGarantia(GarantiaObj garantiaObj) {
+            if(garantiaObj == null) {
+                String texto = "7 dias pra Troca";
+                this.garantia.setText(texto);
+                return;
+            }
+            String titulo = garantiaObj.getTitulo();
+            String desc = garantiaObj.getValorString();
+            String texto = titulo + "\n" + desc;
+            this.garantia.setText(texto);
+        }
+
+        public void setTaxa(EntregaObj entregaObj) {
+            if(entregaObj == null) {
+                this.taxa.setText("Entrega Local\nGrátis");
+                return;
+            }
+
+            String titulo = entregaObj.getTitulo();
+            String desc = entregaObj.getValorString();
+            String texto = titulo + "\n" + desc;
+            this.taxa.setText(texto);
         }
 
         public void setCardColor(int cor) {
-            this.card_comissao_revendedor_revenda.setCardBackgroundColor(cor);
+            this.card_comissao_revendedor_revenda.setStrokeColor(cor);
             this.status_revender.setTextColor(cor);
+            this.comissao_revendedor_revenda.setTextColor(cor);
         }
 
         public void set_motivo_cancelamento(String motivo) {
@@ -247,10 +294,6 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
 
         public void setForma_pag_revenda(String s) {
             this.forma_pag_revenda.setText(s);
-        }
-
-        public void setEndereco_cliente_revenda(String endereco) {
-            this.endereco_cliente_revenda.setText(endereco);
         }
 
         public void setNumero_cliente_revenda(String num) {
@@ -279,13 +322,20 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
         }
 
         public void setTotal_revenda(int total) {
-            this.total_revenda.setText("R$" + total + ",00");
+            this.total_revenda.setText(FormatoString.formartarPreco(total) + ",00");
         }
 
         public void setRv_produtos_revenda(ArrayList<ObjProdutoRevenda> lista, Context context) {
-            this.rv_produtos_revenda.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+            this.rv_produtos_revenda.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
             AdapterProdutosRevenda adapter = new AdapterProdutosRevenda(lista, context);
             this.rv_produtos_revenda.setAdapter(adapter);
+        }
+
+        public void setEndereco_cliente_revenda(String rua, String cidade, String estado, String cep) {
+            this.endereco_cliente_revenda.setText(rua);
+            this.cidade_cliente_revenda.setText(cidade);
+            this.estado_cliente_revenda.setText(estado);
+            this.cep.setText(cep);
         }
     }
 

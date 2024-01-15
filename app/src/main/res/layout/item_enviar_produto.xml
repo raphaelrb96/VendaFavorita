@@ -6,54 +6,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="4dp"
+        app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="16dp"
         android:layout_width="150dp"
-        android:layout_height="220dp">
-        <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp">
-            <TextView
-                android:id="@+id/nome_produto_cart"
-                android:maxLines="1"
-                android:gravity="center_vertical"
-                android:textSize="12sp"
-                android:text="Torsilax"
-                android:textColor="@color/colorSecondaryLight"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_produto_cart"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.cardview.widget.CardView>
-        <ImageView
-            android:id="@+id/img_produto_cart"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="150dp" />
-        <androidx.cardview.widget.CardView
-            android:id="@+id/bt_enviar_prod"
-            app:cardElevation="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom">
-            <TextView
-                android:id="@+id/tv_n_itens_top"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="10sp"
-                android:text="ENVIAR"
+                android:layout_height="150dp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/bt_enviar_prod"
+                app:cardElevation="16dp"
+                app:contentPaddingLeft="6dp"
+                app:contentPaddingRight="6dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_n_itens_top"
+                        android:textStyle="bold"
+                        android:gravity="start"
+                        android:textSize="10sp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="12dp"
+                        android:text="ENVIAR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/nome_produto_cart"
+                        android:lines="2"
+                        android:gravity="start"
+                        android:textSize="12sp"
+                        android:text="titulo do produto"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
 </FrameLayout>

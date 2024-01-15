@@ -38,7 +38,8 @@ public class AdapterTopProdutos extends RecyclerView.Adapter<AdapterTopProdutos.
         TopProdutosRevenda produto = produtosRevendas.get(position);
         Glide.with(context).load(produto.getPathProduto()).into(holder.imageView);
         holder.nomeProd.setText(produto.getNomeProduto());
-        holder.numeroDeVendas.setText("Itens: " + produto.getNumeroDeRevendas());
+        String stringItens = produto.getNumeroDeRevendas() > 1 ? " Itens vendidos" : " Item vendido";
+        holder.numeroDeVendas.setText(produto.getNumeroDeRevendas() + stringItens);
     }
 
     @Override
@@ -57,8 +58,8 @@ public class AdapterTopProdutos extends RecyclerView.Adapter<AdapterTopProdutos.
         public TopProdutosViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.img_produto_cart);
-            numeroDeVendas = (TextView) itemView.findViewById(R.id.nome_produto_cart);
-            nomeProd = (TextView) itemView.findViewById(R.id.tv_n_itens_top);
+            numeroDeVendas = (TextView) itemView.findViewById(R.id.tv_n_itens_top);
+            nomeProd = (TextView) itemView.findViewById(R.id.nome_produto_cart);
         }
     }
 

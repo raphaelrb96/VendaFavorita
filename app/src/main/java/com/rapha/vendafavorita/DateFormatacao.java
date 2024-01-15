@@ -68,9 +68,9 @@ public class DateFormatacao {
         String hh = getHoraString(horaMensagem);
 
         if (isHoje(hm, ha)) {
-            return "Hoje as " + hh;
+            return "Hoje às " + hh;
         } else {
-            return hm + " as " + hh;
+            return hm + " às " + hh;
         }
 
     }

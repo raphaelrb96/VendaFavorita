@@ -286,7 +286,7 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
     @Override
     public void abrirProduto(ProdObj obj) {
         Log.d("TesteQuantidade", String.valueOf(obj.getQuantidade()) );
-        ProdObjParcelable prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(), obj.getImagens(), obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(),obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores());
+        ProdObjParcelable prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(), obj.getImagens(), obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(),obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
         Intent intent = new Intent(this, CadastroDeProdutoActivity.class);
         intent.putExtra("prod", prodObjParcelable);
         Bundle bundle = new Bundle();
@@ -358,7 +358,7 @@ public class InventarioActivity extends AppCompatActivity implements AdapterProd
 
 
         DocumentReference documentReference = firestore.collection("produtos").document(obj.getIdProduto());
-        ProdObj novoObj = new ProdObj(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(), obj.getImagens(), obj.getFabricante(), 7, obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(),  obj.isPromocional(), tag, obj.getFornecedores(), obj.getQuantidade(), System.currentTimeMillis(), obj.getComissao(), obj.getCores());
+        ProdObj novoObj = new ProdObj(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(), obj.getImagens(), obj.getFabricante(), 7, obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(),  obj.isPromocional(), tag, obj.getFornecedores(), obj.getQuantidade(), System.currentTimeMillis(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
         documentReference.set(novoObj).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

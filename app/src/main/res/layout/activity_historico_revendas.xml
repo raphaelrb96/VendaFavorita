@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
+            android:elevation="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -19,19 +20,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp">
                 <View
-                    android:layout_marginRight="12dp"
                     android:backgroundTint="@color/colorSecondaryLight"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_arrow_back_black_24dp"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:id="@+id/bt_voltar_historico_revendas" />
                 <TextView
                     android:textSize="20sp"
-                    android:layout_marginLeft="6dp"
-                    android:textStyle="bold"
+                    android:layout_marginLeft="32dp"
                     android:text="Meu Historico"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:layout_width="wrap_content"
@@ -42,6 +41,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:background="@color/colorLightGray"
         android:id="@+id/nestedscroll_historico_vendas"
         android:layout_marginTop="56dp"
         android:layout_width="match_parent"
@@ -73,19 +73,25 @@
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/titulo_top_produtos"
+                    android:text="Mais vendidos"
                     android:visibility="gone"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
                     android:layout_marginLeft="16dp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Mais vendidos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    tools:listitem="@layout/item_enviar_produto"
+                    tools:itemCount="1"
                     android:id="@+id/rv_comissoes_top_produtos"
+                    android:clipToPadding="false"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:layout_width="match_parent"
                     android:nestedScrollingEnabled="false"
                     android:layout_height="wrap_content"/>
@@ -93,13 +99,14 @@
                 <TextView
                     android:id="@+id/titulo_comissoes_afiliados"
                     android:visibility="gone"
-                    android:layout_marginTop="16dp"
+                    android:text="Comissões de afiliados"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
                     android:layout_marginLeft="16dp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Comissões de afiliados"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -112,13 +119,14 @@
                 <TextView
                     android:id="@+id/titulo_comissoes_revendas"
                     android:visibility="gone"
-                    android:layout_marginTop="16dp"
+                    android:text="Comissões das minhas revendas"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
                     android:layout_marginLeft="16dp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorSecondaryLight"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="10dp"
-                    android:text="Comissões das minhas revendas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

@@ -28,8 +28,12 @@ public class ProdObjParcelable implements Parcelable {
 
     ArrayList<String> cores;
 
+    private float prodValorPromocional;
+    private float prodValorAtacarejo;
+    private float prodValorAtacado;
 
-    public ProdObjParcelable(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, int comissao, ArrayList<String> cores) {
+
+    public ProdObjParcelable(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, int comissao, ArrayList<String> cores, float prodValorPromocional, float prodValorAtacarejo, float prodValorAtacado) {
         this.categorias = categorias;
         this.descr = descr;
         this.disponivel = disponivel;
@@ -47,6 +51,9 @@ public class ProdObjParcelable implements Parcelable {
         this.quantidade = quantidade;
         this.cores = cores;
         this.comissao = comissao;
+        this.prodValorPromocional = prodValorPromocional;
+        this.prodValorAtacarejo = prodValorAtacarejo;
+        this.prodValorAtacado = prodValorAtacado;
     }
 
 
@@ -112,7 +119,7 @@ public class ProdObjParcelable implements Parcelable {
     }
 
     public ProdObj getProd() {
-        return new ProdObj(categorias, descr, disponivel, idProduto, imgCapa, imagens, fabricante, nivel, prodName, prodValor, valorAntigo, promocional, tag, fornecedores, quantidade, 0, comissao, cores);
+        return new ProdObj(categorias, descr, disponivel, idProduto, imgCapa, imagens, fabricante, nivel, prodName, prodValor, valorAntigo, promocional, tag, fornecedores, quantidade, 0, comissao, cores, prodValorPromocional, prodValorAtacarejo, prodValorAtacado);
     }
 
     public String getFabricante() {
