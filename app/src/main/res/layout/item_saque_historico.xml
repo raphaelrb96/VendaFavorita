@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="2dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="2dp"
+        app:cardCornerRadius="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:gravity="top"
+                android:layout_gravity="top"
+                android:paddingHorizontal="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/total_item_saque"
+                    android:textStyle="bold"
+                    android:layout_gravity="top"
+                    android:gravity="top"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R$ 00,00"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondaryDark"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/status_item_saque"
+                        android:gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Agendado"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="13sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <TextView
+                        android:id="@+id/timestamp_item_saque"
+                        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                        android:textColor="@color/cinza_text"
+                        android:text="21/01/19 as 09:45"
+                        android:textAllCaps="true"
+                        android:layout_gravity="end|center"
+                        android:gravity="end|center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/banco_item_saque"
+                        android:text="Nome do Banco"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                        android:textSize="12sp"
+                        android:textColor="@color/cinza_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/nome_item_saque"
+                        android:text="Titular da Conta"
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                        android:textSize="12sp"
+                        android:textColor="@color/cinza_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                        android:textSize="12sp"
+                        android:textColor="@color/cinza_text"
+                        android:text="Chave Pix"
+                        android:textAllCaps="false"
+                        android:id="@+id/chave_item_saque"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>

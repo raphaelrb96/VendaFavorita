@@ -2,18 +2,22 @@ package com.rapha.vendafavorita.carteira;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rapha.vendafavorita.DateFormatacao;
+import com.rapha.vendafavorita.MeusPagamentosActivity;
 import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.ComissaoAfiliados;
@@ -38,6 +42,7 @@ public class CarteiraUsuario extends AppCompatActivity {
     private ArrayList<ComissaoAfiliados> listaDeComissaoAfiliados;
 
     private int total = 0;
+    private int emAnalise = 0;
 
     private int lucro30 = 0;
     private int lucro7 = 0;
@@ -45,13 +50,14 @@ public class CarteiraUsuario extends AppCompatActivity {
 
     private TextView data_comissoes_afiliados, total_comissoes_afiliados;
     private TextView data_comissoes_vendas, total_comissoes_vendas;
-    private TextView total_a_receber_carteira, data_comissoes_gerais;
+    private TextView total_a_receber_carteira, total_em_analise_carteira;
     private TextView total_do_dia, total_da_semana, total_do_mes;
 
     private ProgressBar pb_carteira;
-    private LinearLayout container_carteira;
 
     private Calendar c30, c7, c1;
+
+    private MaterialButton btn_solicitar_saque_carteira;
 
     private long x = 0;
 
@@ -67,15 +73,15 @@ public class CarteiraUsuario extends AppCompatActivity {
         total_comissoes_vendas = (TextView) findViewById(R.id.total_comissoes_vendas);
 
         total_a_receber_carteira = (TextView) findViewById(R.id.total_a_receber_carteira);
-        data_comissoes_gerais = (TextView) findViewById(R.id.data_comissoes_gerais);
+        total_em_analise_carteira = (TextView) findViewById(R.id.total_em_analise_carteira);
 
         total_do_dia = (TextView) findViewById(R.id.total_do_dia);
         total_da_semana = (TextView) findViewById(R.id.total_da_semana);
         total_do_mes = (TextView) findViewById(R.id.total_do_mes);
 
         pb_carteira = (ProgressBar) findViewById(R.id.pb_carteira);
+        btn_solicitar_saque_carteira = (MaterialButton) findViewById(R.id.btn_solicitar_saque_carteira);
 
-        container_carteira = (LinearLayout) findViewById(R.id.container_carteira);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -111,8 +117,9 @@ public class CarteiraUsuario extends AppCompatActivity {
                         for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
 
                             ObjectRevenda obj = queryDocumentSnapshots.getDocuments().get(i).toObject(ObjectRevenda.class);
+                            int statusComp = obj.getStatusCompra();
 
-                            if (obj.getStatusCompra() == 5) {
+                            if (statusComp == 5) {
                                 //listaDeComissoes.add(obj);
                                 if (!obj.isPagamentoRecebido()) {
                                     total = total + obj.getComissaoTotal();
@@ -135,6 +142,13 @@ public class CarteiraUsuario extends AppCompatActivity {
                                     lucro1 = lucro1 + obj.getComissaoTotal();
                                 }
 
+                            }
+
+                            if (statusComp == 1 || statusComp == 2 || statusComp == 4) {
+                                //listaDeComissoes.add(obj);
+                                if (!obj.isPagamentoRecebido()) {
+                                    emAnalise = emAnalise + obj.getComissaoTotal();
+                                }
                             }
 
                             listaDeComissoes.add(obj);
@@ -164,10 +178,8 @@ public class CarteiraUsuario extends AppCompatActivity {
 
                             String dtx = DateFormatacao.getDiaString(new Date(x));
 
-                            data_comissoes_gerais.setText("Desde " + dtx);
 
                         } else {
-                            data_comissoes_gerais.setText("Nenhum");
                             data_comissoes_vendas.setText("Nenhum");
                         }
 
@@ -175,18 +187,28 @@ public class CarteiraUsuario extends AppCompatActivity {
 
 
                     } else {
-                        data_comissoes_gerais.setText("Nenhum");
                         data_comissoes_vendas.setText("Nenhum");
                         getListComissoes();
                     }
                 } else {
                     getListComissoes();
-                    data_comissoes_gerais.setText("Nenhum");
                     data_comissoes_vendas.setText("Nenhum");
                 }
             }
         });
 
+    }
+
+    private void clickListeners() {
+        btn_solicitar_saque_carteira.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CarteiraUsuario.this, MeusPagamentosActivity.class);
+                intent.putExtra("total", total);
+                Log.d("ClickListener", "total carteira: "+total);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -195,6 +217,8 @@ public class CarteiraUsuario extends AppCompatActivity {
         refComissoes.orderBy("hora", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                clickListeners();
 
                 listaDeComissaoAfiliados = new ArrayList<>();
 
@@ -237,6 +261,8 @@ public class CarteiraUsuario extends AppCompatActivity {
 
                     //card_carteira_historico_comissoes.setVisibility(View.VISIBLE);
                     total_a_receber_carteira.setText("R$" + formatarNumeroEmReais(total) + ",00");
+                    total_em_analise_carteira.setText("R$" + formatarNumeroEmReais(emAnalise) + ",00");
+
 
                     if (listaDeComissaoAfiliados.size() > 0) {
 
@@ -249,10 +275,10 @@ public class CarteiraUsuario extends AppCompatActivity {
 
                     semComissoesAfiliados();
                     total_a_receber_carteira.setText("R$" + formatarNumeroEmReais(total) + ",00");
+                    total_em_analise_carteira.setText("R$" + formatarNumeroEmReais(emAnalise) + ",00");
 
                     if (x == 0) {
 
-                        data_comissoes_gerais.setText("Nenhum");
                     }
                 }
 
@@ -264,7 +290,6 @@ public class CarteiraUsuario extends AppCompatActivity {
                 total_do_mes.setText("R$ " + formatarNumeroEmReais(lucro30) + ",00");
 
                 pb_carteira.setVisibility(View.GONE);
-                container_carteira.setVisibility(View.VISIBLE);
 
             }
         });
@@ -319,7 +344,6 @@ public class CarteiraUsuario extends AppCompatActivity {
             x = time;
             String dtx = DateFormatacao.getDiaString(new Date(x));
 
-            data_comissoes_gerais.setText("Desde " + dtx);
         }
 
         dataDaPrimeiraRevendaPendente = DateFormatacao.getDiaString(new Date(time));
@@ -332,4 +356,7 @@ public class CarteiraUsuario extends AppCompatActivity {
     }
 
 
+    public void voltar(View view) {
+        onBackPressed();
+    }
 }

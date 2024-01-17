@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightGray"
+    tools:context=".MeusPagamentosActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+                <View
+                    android:onClick="voltar"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_arrow_back_black_24dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/bt_voltar_carteira" />
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_marginLeft="32dp"
+                    android:text="Meus Pagamentos"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/lista_meus_pagamentos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/pb_pagamentos"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center|top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/container_solicitar_saque"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Solicitar Pagamento"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        app:cardElevation="4dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="2dp"
+                        app:cardCornerRadius="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:paddingHorizontal="6dp"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_marginLeft="22dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="6dp"
+                                    android:layout_gravity="start"
+                                    android:gravity="start"
+                                    android:layout_marginBottom="6dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:gravity="center|start"
+                                        android:layout_marginTop="22dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Saldo Disponivel"
+                                        android:textStyle="bold"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorSecondaryLight"
+                                        android:textSize="13sp"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                                    <TextView
+                                        android:id="@+id/total_disponivel_carteira"
+                                        android:textStyle="bold"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="R$ 00,00"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorSecondaryDark"
+                                        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge" />
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/gif_retirar_dinheiro"
+                                    android:src="@drawable/retirar_dinheiro"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="22dp"
+                                    android:layout_marginTop="22dp"
+                                    android:layout_gravity="top|center"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:layout_width="match_parent"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginTop="2dp"
+                                    app:hintEnabled="true"
+                                    app:hintTextColor="@color/colorSecondaryLight"
+                                    app:boxStrokeColor="@color/colorSecondaryLight"
+                                    android:textColorHint="@color/colorSecondaryLight"
+                                    app:boxCornerRadiusTopEnd="4dp"
+                                    app:boxCornerRadiusTopStart="4dp"
+                                    app:boxCornerRadiusBottomEnd="4dp"
+                                    app:boxCornerRadiusBottomStart="4dp"
+                                    style="@style/MeuEditText"
+                                    app:hintAnimationEnabled="true"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Chave Pix">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/et_chave_meus_pagamentos"
+                                        android:inputType="text"
+                                        android:imeOptions="actionDone"
+                                        android:textCursorDrawable="@drawable/curso_text_input"
+                                        android:layout_width="match_parent"
+                                        android:textAllCaps="false"
+                                        tools:text="Teste"
+                                        android:layout_height="wrap_content"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginTop="10dp"
+                                    app:hintEnabled="true"
+                                    app:hintTextColor="@color/colorSecondaryLight"
+                                    app:boxStrokeColor="@color/colorSecondaryLight"
+                                    android:textColorHint="@color/colorSecondaryLight"
+                                    app:boxCornerRadiusTopEnd="4dp"
+                                    app:boxCornerRadiusTopStart="4dp"
+                                    app:boxCornerRadiusBottomEnd="4dp"
+                                    app:boxCornerRadiusBottomStart="4dp"
+                                    style="@style/MeuEditText"
+                                    app:hintAnimationEnabled="true"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Nome do Banco">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/et_banco_meus_pagamentos"
+                                        android:inputType="text"
+                                        android:imeOptions="actionDone"
+                                        tools:text="Teste"
+                                        android:layout_height="wrap_content"
+                                        android:textCursorDrawable="@drawable/curso_text_input"
+                                        android:layout_width="match_parent" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:layout_marginTop="10dp"
+                                    app:hintEnabled="true"
+                                    app:hintTextColor="@color/colorSecondaryLight"
+                                    app:boxStrokeColor="@color/colorSecondaryLight"
+                                    android:textColorHint="@color/colorSecondaryLight"
+                                    app:boxCornerRadiusTopEnd="4dp"
+                                    app:boxCornerRadiusTopStart="4dp"
+                                    app:boxCornerRadiusBottomEnd="4dp"
+                                    app:boxCornerRadiusBottomStart="4dp"
+                                    style="@style/MeuEditText"
+                                    app:hintAnimationEnabled="true"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:helperTextTextColor="@color/colorSecondaryLight"
+                                    android:hint="Titular da Conta">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/et_nome_meus_pagamentos"
+                                        android:inputType="text"
+                                        tools:text="Teste"
+                                        android:layout_height="wrap_content"
+                                        android:imeOptions="actionDone"
+                                        android:textCursorDrawable="@drawable/curso_text_input"
+                                        android:layout_width="match_parent" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_solicitar_saque_carteira"
+                                android:textColor="@color/colorPrimaryLight"
+                                app:backgroundTint="@color/azul_dark"
+                                app:strokeColor="@color/azul_dark"
+                                app:strokeWidth="2dp"
+                                app:cornerRadius="12dp"
+                                android:drawableTint="@color/colorPrimaryLight"
+                                android:paddingLeft="22dp"
+                                android:textAlignment="textStart"
+                                app:elevation="12dp"
+                                android:drawableRight="@drawable/ic_action_ir_right"
+                                android:text="Retirar Dinheiro"
+                                android:layout_marginLeft="22dp"
+                                android:layout_marginRight="22dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_marginTop="22dp" />
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/container_saque_em_andamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Pagamento Em Andamento"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        app:cardElevation="1dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="2dp"
+                        app:cardCornerRadius="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_marginTop="6dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+
+                            <LinearLayout
+                                android:gravity="top"
+                                android:layout_gravity="top"
+                                android:paddingHorizontal="16dp"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <LinearLayout
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_gravity="start"
+                                    android:gravity="start"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:gravity="center|start"
+                                        android:layout_marginTop="20dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Saldo A Receber"
+                                        android:textStyle="bold"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorSecondaryLight"
+                                        android:textSize="13sp"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                                    <TextView
+                                        android:id="@+id/total_em_andamento"
+                                        android:textStyle="bold"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_marginBottom="12dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="R$ 00,00"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorSecondaryDark"
+                                        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" />
+
+                                <LinearLayout
+                                    android:layout_marginLeft="0dp"
+                                    android:layout_marginRight="0dp"
+                                    android:layout_marginTop="0dp"
+                                    android:layout_marginBottom="0dp"
+                                    android:layout_gravity="end"
+                                    android:gravity="end"
+                                    android:orientation="vertical"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:gravity="center|end"
+                                        android:layout_marginTop="22dp"
+                                        android:layout_marginBottom="0dp"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Prazo:"
+                                        android:textStyle="bold"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/colorSecondaryLight"
+                                        android:textSize="13sp"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                                    <TextView
+                                        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+                                        android:id="@+id/hora_revenda"
+                                        android:textColor="@color/cinza_text"
+                                        android:text="2 a 3 dias úteis"
+                                        android:textAllCaps="true"
+                                        android:layout_gravity="end|center"
+                                        android:gravity="end|center"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp" />
+                                </LinearLayout>
+                                <ImageView
+                                    android:id="@+id/gif_aguardar_dinheiro"
+                                    android:src="@drawable/aguardar"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginRight="12dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_gravity="top|center"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+                            </LinearLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_status_em_andamento"
+                                android:textColor="@color/cinza_text"
+                                app:backgroundTint="@color/back_rv"
+                                app:strokeColor="@color/cinza_medio"
+                                app:strokeWidth="2dp"
+                                app:cornerRadius="12dp"
+                                android:drawableTint="@color/cinza_text"
+                                android:paddingLeft="22dp"
+                                android:textAlignment="textStart"
+                                app:elevation="0dp"
+                                android:clickable="false"
+                                android:enabled="false"
+                                android:alpha="0.7"
+                                android:drawableRight="@drawable/ic_action_ir_right"
+                                android:text="Aguardando Confirmação"
+                                android:layout_marginLeft="22dp"
+                                android:layout_marginRight="22dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_marginTop="6dp" />
+
+                            <TextView
+                                android:id="@+id/previsao_pagamento"
+                                android:textStyle="italic"
+                                android:textSize="12sp"
+                                android:textColor="@color/cinza_medio"
+                                android:layout_marginBottom="20dp"
+                                android:layout_gravity="center"
+                                android:visibility="visible"
+                                android:textAllCaps="true"
+                                android:gravity="center"
+                                android:text="Previsão do pagamento"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/container_historico_saques"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Histórico de Pagamentos"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_saque_historico"
+                        android:clipToPadding="false"
+                        android:paddingBottom="42dp"
+                        android:paddingTop="2dp"
+                        android:id="@+id/rv_historico_saques" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

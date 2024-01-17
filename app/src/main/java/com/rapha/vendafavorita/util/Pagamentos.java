@@ -3,6 +3,7 @@ package com.rapha.vendafavorita.util;
 import java.util.ArrayList;
 
 public class Pagamentos {
+
     public static ArrayList<String> simularParcelamento(int valor) {
 
         ArrayList<String> list = new ArrayList<>();
@@ -19,4 +20,5 @@ public class Pagamentos {
         }
         return list;
     }
+
 }

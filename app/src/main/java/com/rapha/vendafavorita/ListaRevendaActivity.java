@@ -476,14 +476,11 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         }
 
-        listaRevenda.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+        listaRevenda.addSnapshotListener(this, (snapshot, e) -> {
 
-                querySnapshot = snapshot;
-                updateScreen();
+            querySnapshot = snapshot;
+            updateScreen();
 
-            }
         });
     }
 
@@ -616,11 +613,11 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         String enderecoCompacto = "";
 
-        observacoes = "Teste teste teste";
-        telefoneMain = "1234567890";
-        ruaMain = "Teste teste teste";
-        bairroMain = "Teste teste teste";
-        nomeCliente = "Teste teste teste";
+        //observacoes = "Teste teste teste";
+        //telefoneMain = "1234567890";
+        //ruaMain = "Teste teste teste";
+        //bairroMain = "Teste teste teste";
+        //nomeCliente = "Teste teste teste";
 
         if (nomeCliente.length() < 2) {
             if (mToast != null) {

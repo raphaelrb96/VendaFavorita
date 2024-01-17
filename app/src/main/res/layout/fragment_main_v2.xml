@@ -206,7 +206,7 @@
                                     android:textColor="@color/colorSecondaryLight"
                                     android:textAllCaps="true"
                                     android:lines="2"
-                                    android:text="Minhas Comissões"
+                                    android:text="Minha Carteira"
                                     android:layout_width="match_parent"
                                     android:layout_height="36dp"
                                     android:gravity="center" />
@@ -978,7 +978,7 @@
 
                 <LinearLayout
                     android:id="@+id/container_resumo_principal"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -1046,6 +1046,7 @@
 
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1061,25 +1062,27 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="1º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_adm_1"
                                     android:gravity="center|top"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:textSize="13sp"
                                     android:text="Revendedor"
                                     android:textColor="@color/cinza_text"
                                     android:lines="1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="20dp"
+                                    android:layout_height="wrap_content"
                                     />
 
                             </LinearLayout>
@@ -1107,6 +1110,7 @@
 
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1122,25 +1126,27 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="2º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_adm_2"
                                     android:gravity="center|top"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:textSize="13sp"
                                     android:text="Revendedor"
                                     android:textColor="@color/cinza_text"
                                     android:lines="1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="20dp" />
+                                    android:layout_height="wrap_content" />
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -1167,6 +1173,7 @@
 
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1181,25 +1188,27 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="2dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="3º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_adm_3"
                                     android:gravity="center|top"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="14sp"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:textSize="13sp"
                                     android:text="Revendedor"
                                     android:textColor="@color/cinza_text"
                                     android:lines="1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="20dp" />
+                                    android:layout_height="wrap_content" />
                             </LinearLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -1268,6 +1277,7 @@
 
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1282,13 +1292,13 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="1º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_vend_1"
@@ -1324,6 +1334,7 @@
 
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1338,13 +1349,13 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="2º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_vend_2"
@@ -1379,6 +1390,7 @@
                                 android:layout_height="wrap_content" >
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1393,13 +1405,13 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="3º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_vend_3"
@@ -1443,6 +1455,7 @@
 
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1457,13 +1470,13 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="4º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_vend_4"
@@ -1498,6 +1511,7 @@
                                 android:layout_height="wrap_content" >
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1512,13 +1526,13 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="5º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_vend_5"
@@ -1553,6 +1567,7 @@
                                 android:layout_height="wrap_content" >
                                 <FrameLayout
                                     android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp">
                                     <ImageView
@@ -1567,13 +1582,13 @@
                                     android:gravity="center"
                                     android:layout_marginLeft="5dp"
                                     android:layout_marginRight="5dp"
-                                    android:textSize="15sp"
+                                    android:layout_marginTop="5dp"
+                                    android:textSize="11sp"
                                     android:textColor="@color/cinza_text"
-                                    android:textStyle="bold"
                                     android:lines="1"
                                     android:text="6º Lugar"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp" />
+                                    android:layout_height="wrap_content" />
 
                                 <TextView
                                     android:id="@+id/nome_top_vend_6"

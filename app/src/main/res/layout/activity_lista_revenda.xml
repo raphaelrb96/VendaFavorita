@@ -7,90 +7,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListaRevendaActivity">
+
     <com.google.android.material.appbar.AppBarLayout
-        android:background="@color/colorPrimaryLight"
-        android:elevation="6dp"
+        app:elevation="12dp"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:orientation="horizontal">
-        <View
-            android:id="@+id/voltar_lista_revendas"
-            android:layout_marginStart="16dp"
-            android:backgroundTint="@color/colorSecondary"
-            android:layout_gravity="end|center"
-            android:background="@drawable/ic_arrow_back_black_24dp"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/colorPrimaryLight"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
+            <View
+                android:id="@+id/voltar_lista_revendas"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="@color/colorSecondary"
+                android:layout_gravity="end|center"
+                android:background="@drawable/ic_arrow_back_black_24dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
 
-        <TextView
-            android:id="@+id/tv_toolbar_painel_afiliados"
-            android:layout_marginLeft="32dp"
-            android:text="Pedido"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <FrameLayout
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
-        <FrameLayout
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <com.google.android.material.card.MaterialCardView
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="16dp"
-                app:contentPaddingLeft="3dp"
-                app:contentPaddingRight="3dp"
-                app:cardElevation="6dp"
-                app:cardCornerRadius="19dp"
+            <TextView
+                android:id="@+id/tv_toolbar_painel_afiliados"
+                android:layout_marginLeft="32dp"
+                android:text="Pedido"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:minWidth="70dp"
-                android:layout_height="38dp">
-                <LinearLayout
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="16dp"
+                    app:contentPaddingLeft="3dp"
+                    app:contentPaddingRight="3dp"
+                    app:cardElevation="6dp"
+                    app:cardCornerRadius="19dp"
+                    android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
-                        android:padding="3dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:tint="@color/azul_dark"
-                        android:src="@drawable/ic_baseline_payments_24" />
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent">
-                        <com.robinhood.ticker.TickerView
-                            app:ticker_animationDuration="2000"
-                            app:ticker_defaultCharacterList="alphabet"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-black"
+                    android:minWidth="70dp"
+                    android:layout_height="38dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
                             android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textAlignment="center"
-                            android:text="R$15"
-                            android:id="@+id/total_lista_revenda"
-                            android:layout_marginRight="6dp"
-                            android:layout_marginLeft="6dp"
-                            android:textColor="@color/azul_dark"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </FrameLayout>
-                </LinearLayout>
+                            android:layout_marginLeft="4dp"
+                            android:padding="3dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:tint="@color/azul_dark"
+                            android:src="@drawable/ic_baseline_payments_24" />
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent">
+                            <com.robinhood.ticker.TickerView
+                                app:ticker_animationDuration="2000"
+                                app:ticker_defaultCharacterList="alphabet"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-black"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:text="R$15"
+                                android:id="@+id/total_lista_revenda"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginLeft="6dp"
+                                android:textColor="@color/azul_dark"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </FrameLayout>
+                    </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
-        </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="60dp"
         android:layout_marginTop="56dp"
@@ -888,8 +895,6 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:backgroundTint="@color/colorPrimaryLight"

@@ -8,24 +8,22 @@
     tools:context=".rankings.ResumeRankingActivity">
     <LinearLayout
         android:background="@color/colorPrimaryLight"
-        android:elevation="6dp"
+        android:elevation="12dp"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal">
         <View
             android:id="@+id/voltar_ranking_resume"
-            android:layout_marginStart="8dp"
-            android:backgroundTint="@color/colorSecondaryLight"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/colorSecondaryDark"
             android:layout_gravity="end|center"
             android:background="@drawable/ic_arrow_back_black_24dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
         <TextView
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/colorSecondaryLight"
-            android:text="Detalhes Ranking"
-            android:textStyle="bold"
-            android:textSize="20sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_marginLeft="32dp"
+            android:text="Recompensas e Bônus"
             android:gravity="center"
             android:layout_gravity="end"
             android:layout_width="wrap_content"
@@ -33,13 +31,12 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:background="@color/colorLightGray"
         android:id="@+id/scroll_bonus"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <FrameLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -401,6 +398,7 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="16dp"
+                    android:visibility="gone"
                     android:textSize="22sp"
                     android:textColor="@color/colorSecondaryDark"
                     android:textStyle="bold"
@@ -411,6 +409,7 @@
                     android:layout_height="wrap_content"/>
 
                 <androidx.cardview.widget.CardView
+                    android:visibility="gone"
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="6dp"
                     android:layout_marginRight="12dp"
