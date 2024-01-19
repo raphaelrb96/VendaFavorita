@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
         holder.setQuant(obj.getQuantidade());
         holder.setValorQuantidade();
         holder.setModo(obj.getModoPreco());
+        holder.showAlertAtacado(obj.getIdModoPreco());
         holder.setComissao(obj.getComissaoUnidade());
         holder.setTitulo(obj.getProdutoName());
     }
@@ -68,6 +70,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
 
     class NovoItemListRevenda extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private LinearLayout container_quant_min_atacado;
         TextView bt_editar_item_lista_revenda, bt_remover_item_lista_revenda, quantidade, titulo_prod_revenda, valor_produto_detalhe_revenda;
         TextView text_bt_modelo_precificacao_item_carrinho, comissao_produto_item_lista_revenda;
         View aumentar, diminuir;
@@ -89,6 +92,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
             comissao_produto_item_lista_revenda = (TextView) itemView.findViewById(R.id.comissao_produto_item_lista_revenda);
             text_bt_modelo_precificacao_item_carrinho = (TextView) itemView.findViewById(R.id.text_bt_modelo_precificacao_item_carrinho);
             img_prod_revenda = (ImageView) itemView.findViewById(R.id.img_prod_revenda);
+            container_quant_min_atacado = (LinearLayout) itemView.findViewById(R.id.container_quant_min_atacado);
 
             aumentar.setOnClickListener(this);
             diminuir.setOnClickListener(this);
@@ -121,6 +125,14 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
                 return;
             }
             text_bt_modelo_precificacao_item_carrinho.setText(modo);
+        }
+
+        public void showAlertAtacado(int modoId) {
+            if(modoId == 3) {
+                container_quant_min_atacado.setVisibility(View.VISIBLE);
+            } else {
+                container_quant_min_atacado.setVisibility(View.GONE);
+            }
         }
 
         public void setQuant(int quant) {

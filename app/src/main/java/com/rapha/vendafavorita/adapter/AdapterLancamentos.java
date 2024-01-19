@@ -31,6 +31,12 @@ public class AdapterLancamentos extends RecyclerView.Adapter<AdapterLancamentos.
         this.handler = handler;
     }
 
+    public void atualizarLista(ArrayList<ProdutoObj> atualizacoesProds) {
+        produtos = null;
+        produtos = atualizacoesProds;
+        notifyDataSetChanged();
+    }
+
     public interface HandlerProdAtalho {
         void abriProduto(ProdutoObj prod);
     }

@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.rapha.vendafavorita.DateFormatacao;
 import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.rankings.objcts.RankingObj;
+import com.rapha.vendafavorita.util.Alertas;
 
 import java.util.Date;
 
@@ -26,8 +27,6 @@ public class RankingCreator extends AppCompatActivity {
     private LinearLayout bt_criar_ranking;
 
     private ProgressBar progressBar;
-
-    private Toast mToast = null;
 
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
@@ -153,10 +152,6 @@ public class RankingCreator extends AppCompatActivity {
     }
 
     private void toast(String s) {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-        mToast = Toast.makeText(this, s, Toast.LENGTH_LONG);
-        mToast.show();
+        Alertas.showAlert(this, "Aviso", s);
     }
 }

@@ -29,6 +29,7 @@ import com.rapha.vendafavorita.adapter.AdapterSaques;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.objects.SaquesObj;
+import com.rapha.vendafavorita.util.Alertas;
 import com.rapha.vendafavorita.util.FormatoString;
 import com.rapha.vendafavorita.util.Status;
 
@@ -62,7 +63,6 @@ public class MeusPagamentosActivity extends AppCompatActivity {
     private RecyclerView rv_historico_saques;
     private ProgressBar pb_pagamentos;
     private CollectionReference refPagamentos;
-    private Toast mToast = null;
 
 
     @Override
@@ -225,38 +225,22 @@ public class MeusPagamentosActivity extends AppCompatActivity {
 
 
         if (nome.length() < 5) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira o nome completo do Titular da Conta", Toast.LENGTH_LONG);
-            mToast.show();
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira seu Nome");
             return null;
         }
 
         if (chave.length() < 5) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira sua chave pix", Toast.LENGTH_LONG);
-            mToast.show();
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira sua chave pix");
             return null;
         }
 
         if (banco.length() < 5) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira seu banco", Toast.LENGTH_LONG);
-            mToast.show();
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira seu banco");
             return null;
         }
 
         if (finalTotal < 1) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Nenhum valor disponivel para Saque", Toast.LENGTH_LONG);
-            mToast.show();
+            Alertas.showAlert(this, "Saldo Indisponivel" , "Nenhum valor disponivel para saque");
             return null;
         }
 

@@ -36,7 +36,6 @@ public class ProdutoDetalheActivity extends AppCompatActivity implements Adapter
     private ImageView imagem;
     private FirebaseFirestore firebaseFirestore;
     private ProdObjParcelable prodObjParcelable;
-    private Toast mToast;
     private LinearLayout efab;
     private ProgressBar pb;
     private RecyclerView rvRelacionados, rv_fotos_detalhe_prod;

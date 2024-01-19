@@ -38,6 +38,7 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
     private ArrayList<ObjectRevenda> revendaArrayList;
     private OnChangeListVendasListener listener;
     private int fromIndex, toIndex;
+    private int page = 1;
 
 
     public AdapterMeuHistoricoDeVendas (Context context, ArrayList<ObjectRevenda> revendaArrayList, OnChangeListVendasListener listener) {
@@ -48,7 +49,7 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
     }
 
     public interface OnChangeListVendasListener {
-        void onChangeList();
+        void onChangeList(int pagina);
     }
 
 
@@ -216,8 +217,9 @@ public class AdapterMeuHistoricoDeVendas extends RecyclerView.Adapter<RecyclerVi
 
     public void setRevendaArrayList(ArrayList<ObjectRevenda> list) {
         revendaArrayList = list;
+        page++;
         notifyDataSetChanged();
-        listener.onChangeList();
+        listener.onChangeList(page);
     }
 
     class RevendaMeuHistoricoViewHolder extends RecyclerView.ViewHolder {

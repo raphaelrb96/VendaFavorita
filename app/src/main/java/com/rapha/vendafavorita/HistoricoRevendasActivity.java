@@ -1,8 +1,10 @@
 package com.rapha.vendafavorita;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -56,6 +58,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity implements Adap
 
     private TextView titulo_comissoes_afiliados, titulo_comissoes_revendas, titulo_top_produtos;
     private View bt_voltar_historico_revendas;
+    private ImageView img_historico_revendas;
     private AnalitycsGoogle analitycsGoogle;
 
     private AdapterTopProdutos adapterTopProdutos;
@@ -80,6 +83,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity implements Adap
         titulo_top_produtos = (TextView) findViewById(R.id.titulo_top_produtos);
 
         bt_voltar_historico_revendas = (View) findViewById(R.id.bt_voltar_historico_revendas);
+        img_historico_revendas = (ImageView) findViewById(R.id.img_historico_revendas);
         pb_comissoes = (ProgressBar) findViewById(R.id.pb_comissoes);
         scrol_list_minhas_comissoes = (LinearLayout) findViewById(R.id.scrol_list_minhas_comissoes);
 
@@ -101,6 +105,10 @@ public class HistoricoRevendasActivity extends AppCompatActivity implements Adap
         });
 
         String uid = auth.getUid();
+        //vision
+        //uid = "iRQUihKXA3VXFdDH6kL03qVmwDW2";
+        //lucas
+        //uid = "Vts6WhKZpmhcCbOeotEOSzJSVe23";
 
         c30 = new GregorianCalendar();
         c30.add(Calendar.DAY_OF_MONTH, -30);
@@ -336,7 +344,15 @@ public class HistoricoRevendasActivity extends AppCompatActivity implements Adap
 
 
     @Override
-    public void onChangeList() {
-        nestedscroll_historico_vendas.smoothScrollTo(0, (int)rv_comissoes.getY(), 3000);
+    public void onChangeList(int pagina) {
+        //nestedscroll_historico_vendas.smoothScrollTo(0, (int)0, 3000);
+        titulo_top_produtos.setVisibility(View.GONE);
+        titulo_comissoes_afiliados.setVisibility(View.GONE);
+        img_historico_revendas.setVisibility(View.GONE);
+        rv_comissoes_afiliados.setVisibility(View.GONE);
+        rv_comissoes_top_produtos.setVisibility(View.GONE);
+        titulo_comissoes_revendas.setVisibility(View.VISIBLE);
+        titulo_comissoes_revendas.setText("Meu historico  /  Parte " + pagina);
+        nestedscroll_historico_vendas.smoothScrollTo(0, 0, 3500);
     }
 }

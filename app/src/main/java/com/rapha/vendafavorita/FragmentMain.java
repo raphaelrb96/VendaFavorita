@@ -144,7 +144,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     private int tipoReferencia = 0;
     private Query query;
-    public static final boolean ADMINISTRADOR = true;
+    public static final boolean ADMINISTRADOR = false;
     private ImageView fundo;
 
     private FrameLayout bt_homeBottombar, bt_meu_perfil_main, bt_afiliados_main, bt_mensagem_main, bt_carrinho_bottom_main;
@@ -165,6 +165,10 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private CardView bt_categ_14_salao;
     private CardView bt_categ_18_microfones;
     private CardView bt_categ_50_cozinha;
+
+    private AdapterLancamentos adapterLancamentos;
+    private AdapterEmAlta adapterEmAlta;
+    private AdapterEmAlta adapterMaisVendidos;
 
     //private FrameLayout  bt_painel_revendedor;
 
@@ -1533,10 +1537,6 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private void showScreenMain(FeedPrincipalObj feedObj) {
         feedPrincipalObj = feedObj;
 
-        AdapterLancamentos adapterLancamentos = new AdapterLancamentos(feedPrincipalObj.getAtualizacoesProds(), getActivity(), FragmentMain.this);
-        rv_novidades.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        rv_novidades.setAdapter(adapterLancamentos);
-
         nome_top_vend_1.setText(feedPrincipalObj.getTopRevendedores().get(0).getNomeRevendedor());
         nome_top_vend_2.setText(feedPrincipalObj.getTopRevendedores().get(1).getNomeRevendedor());
         nome_top_vend_3.setText(feedPrincipalObj.getTopRevendedores().get(2).getNomeRevendedor());
@@ -1551,13 +1551,35 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         }
 
 
-        AdapterEmAlta adapterEmAlta = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopProdutos());
-        rv_em_alta.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        rv_em_alta.setAdapter(adapterEmAlta);
+        //RECYCLER VIEW
 
-        AdapterEmAlta adapterMaisVendidos = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopMaisVendidos());
-        rv_mais_vendidos.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        rv_mais_vendidos.setAdapter(adapterMaisVendidos);
+
+        if(adapterLancamentos == null) {
+            rv_novidades.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            adapterLancamentos = new AdapterLancamentos(feedPrincipalObj.getAtualizacoesProds(), getActivity(), FragmentMain.this);
+            rv_novidades.setAdapter(adapterLancamentos);
+        } else {
+            adapterLancamentos.atualizarLista(feedPrincipalObj.getAtualizacoesProds());
+        }
+
+
+        if(adapterEmAlta == null) {
+            rv_em_alta.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+            adapterEmAlta = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopProdutos());
+            rv_em_alta.setAdapter(adapterEmAlta);
+        } else {
+            adapterEmAlta.atualizarLista(feedPrincipalObj.getTopProdutos());
+        }
+
+
+        if(adapterMaisVendidos == null) {
+            rv_mais_vendidos.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+            adapterMaisVendidos = new AdapterEmAlta(getActivity(), FragmentMain.this, feedPrincipalObj.getTopMaisVendidos());
+            rv_mais_vendidos.setAdapter(adapterMaisVendidos);
+        } else {
+            adapterMaisVendidos.atualizarLista(feedPrincipalObj.getTopMaisVendidos());
+        }
+
 
         container_resumo_principal.setVisibility(View.VISIBLE);
     }

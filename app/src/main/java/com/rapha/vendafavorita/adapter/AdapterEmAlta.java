@@ -30,6 +30,12 @@ public class AdapterEmAlta extends RecyclerView.Adapter<AdapterEmAlta.EmAltaView
         this.produtos = produtos;
     }
 
+    public void atualizarLista(ArrayList<ProdutoObj> topProdutos) {
+        produtos = null;
+        produtos = topProdutos;
+        notifyDataSetChanged();
+    }
+
     public interface EmaltaListener {
         void verDetalhesProd(String id);
     }

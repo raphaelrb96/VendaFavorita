@@ -45,6 +45,7 @@ import com.rapha.vendafavorita.objects.ObjProdutoRevenda;
 import com.rapha.vendafavorita.objects.ObjectRevenda;
 import com.rapha.vendafavorita.objects.PagamentosObj;
 import com.rapha.vendafavorita.objects.ParcelamentoObj;
+import com.rapha.vendafavorita.util.Alertas;
 import com.rapha.vendafavorita.util.FormatoString;
 import com.rapha.vendafavorita.util.Listas;
 import com.robinhood.ticker.TickerUtils;
@@ -105,7 +106,6 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private TextInputEditText et_celular_conf_revenda, et_nome_conf_revenda, et_bairro_conf_revenda, et_rua_conf_revenda, et_obs_conf_revenda, et_cep_conf_revenda, et_cidade_conf_revenda, et_estado_conf_revenda;
     private View voltar;
     private CardView option_garantia_pedido, option_frete_pedido, option_pag_form_pedido, option_pag_parcelamento_pedido;
-    private Toast mToast = null;
     private AnalitycsGoogle analitycsGoogle;
     private BottomSheetOptions bottomSheetPro;
     private LinearLayout container_parcelamento_pedido;
@@ -620,38 +620,30 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
         //nomeCliente = "Teste teste teste";
 
         if (nomeCliente.length() < 2) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira o nome da pessoa que vai receber o pedido", Toast.LENGTH_LONG);
-            mToast.show();
+
+
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira o nome da pessoa que vai receber o pedido");
             return null;
         }
 
         if (telefoneMain.length() < 8) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira os 8 digitos do seu número", Toast.LENGTH_LONG);
-            mToast.show();
+
+
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira os 8 digitos do seu número");
             return null;
         }
 
         if (bairroMain.length() < 1) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira seu bairro", Toast.LENGTH_LONG);
-            mToast.show();
+
+
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira seu bairro");
             return null;
         }
 
         if (ruaMain.length() < 1) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, "Insira sua rua", Toast.LENGTH_LONG);
-            mToast.show();
+
+
+            Alertas.showAlert(this, "Dados Incompletos" , "Insira sua rua");
             return null;
         }
 
@@ -830,7 +822,9 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
     @Override
     public void editar(ObjProdutoRevenda obj) {
-
+        Intent intent = new Intent(this, ProdutoRevendaActivity.class);
+        intent.putExtra("id", obj.getIdProdut());
+        startActivity(intent);
     }
 
     @Override
