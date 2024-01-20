@@ -27,7 +27,6 @@
                     android:layout_height="24dp"
                     android:id="@+id/bt_voltar_historico_revendas" />
                 <TextView
-                    android:textSize="20sp"
                     android:layout_marginLeft="32dp"
                     android:text="Meu Historico"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"

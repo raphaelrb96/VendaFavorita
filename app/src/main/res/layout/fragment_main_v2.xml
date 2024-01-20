@@ -143,8 +143,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
                 <TextView
                     android:text="Atalhos Rápidos"
                     android:layout_marginTop="32dp"
@@ -977,6 +975,38 @@
                 </HorizontalScrollView>
 
                 <LinearLayout
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Anuncio Patrocinado"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView_main"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        ads:adSize="SMART_BANNER"
+                        ads:adUnitId="ca-app-pub-8108209584809121/2955527280"/>
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/container_resumo_principal"
                     android:visibility="visible"
                     android:layout_width="match_parent"
@@ -985,7 +1015,7 @@
 
                     <TextView
                         android:text="Em alta nas ultimas 48 horas"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="16dp"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSecondary"
@@ -1606,6 +1636,37 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:text="Anuncio Patrocinado"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginBottom="16dp"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorSecondary"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="16dp"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <com.google.android.gms.ads.AdView
+                            xmlns:ads="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/adView_main_2"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
+                            ads:adSize="SMART_BANNER"
+                            ads:adUnitId="ca-app-pub-8108209584809121/2955527280"/>
+                    </LinearLayout>
+
                     <TextView
                         android:text="Atualizações e Novidades"
                         android:layout_marginTop="24dp"
@@ -1630,6 +1691,24 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView_main_3"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="42dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        ads:adSize="MEDIUM_RECTANGLE"
+                        ads:adUnitId="ca-app-pub-8108209584809121/2955527280"/>
+                </LinearLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/botao_topo"
@@ -1677,7 +1756,7 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimary"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="10dp"
+        app:fabCradleMargin="12dp"
         app:fabCradleRoundedCornerRadius="10dp"
         app:fabCradleVerticalOffset="5dp"
         app:hideOnScroll="false">
@@ -1763,6 +1842,8 @@
         android:layout_height="wrap_content"
         app:elevation="10dp"
         android:src="@drawable/ic_baseline_business_center_24"
+        android:padding="0dp"
+        app:useCompatPadding="false"
         app:backgroundTint="@color/colorPrimaryLight"
         app:fabSize="normal"/>
 

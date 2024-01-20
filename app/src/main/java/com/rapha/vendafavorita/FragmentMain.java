@@ -39,6 +39,13 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -77,6 +84,7 @@ import com.rapha.vendafavorita.rankings.ResumeRankingActivity;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,6 +177,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private AdapterLancamentos adapterLancamentos;
     private AdapterEmAlta adapterEmAlta;
     private AdapterEmAlta adapterMaisVendidos;
+    private AdView mAdView, mAdView2, mAdView3;
 
     //private FrameLayout  bt_painel_revendedor;
 
@@ -184,6 +193,10 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         //whatsappBt = (View) view.findViewById(R.id.bt_whats);
         //faceBt = (View) view.findViewById(R.id.bt_face);
         //instaBt = (View) view.findViewById(R.id.bt_insta);
+
+        mAdView = view.findViewById(R.id.adView_main);
+        mAdView2 = view.findViewById(R.id.adView_main_2);
+        mAdView3 = view.findViewById(R.id.adView_main_3);
 
         chatBt = (View) view.findViewById(R.id.bt_chat);
         botaoCartToolbar = (View) view.findViewById(R.id.bt_perfil);
@@ -258,6 +271,20 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         nome_top_adm_3 = (TextView) view.findViewById(R.id.nome_top_adm_3);
 
 
+        MobileAds.initialize(getContext(), initializationStatus -> Log.d("ADSTESTE", "initializationStatus: " + initializationStatus.getAdapterStatusMap()));
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView2.loadAd(adRequest);
+        mAdView3.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull @NotNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                Log.d("ADSTESTE", "initializationStatus: " + loadAdError.getMessage());
+                mAdView.setVisibility(View.GONE);
+            }
+        });
+
         //View btChat = (View) view.findViewById(R.id.bt_abrir_chat);
         //View btcar = (View) view.findViewById(R.id.bt_abrir_carrinho);
 
@@ -292,7 +319,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 //        auth.addAuthStateListener(mAuthStateListener);
 
 
-        Log.d("TestFragmentMain", "OnCreateView");
+
 
 
 

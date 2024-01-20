@@ -8,6 +8,7 @@
     tools:context=".PainelRevendedorActivity">
 
     <androidx.core.widget.NestedScrollView
+        android:background="@color/colorLightGray"
         android:layout_marginTop="56dp"
         android:layout_width="match_parent"
         android:id="@+id/scrol_revendedor"
@@ -20,6 +21,7 @@
 
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="16dp"
@@ -174,19 +176,18 @@
                 android:id="@+id/bt_afiliados_painel_revenda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginBottom="22dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="5dp"
                 android:layout_marginTop="26dp">
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:adjustViewBounds="true"
                     android:src="@drawable/afiliadosbaner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content" />
 
 
             </androidx.cardview.widget.CardView>
@@ -310,23 +311,19 @@
         android:layout_height="56dp"
         android:orientation="horizontal">
         <View
+            android:layout_marginStart="16dp"
             android:id="@+id/voltar_painel_revendedor"
-            android:layout_marginStart="8dp"
-            android:layout_marginRight="12dp"
             android:backgroundTint="@color/colorSecondaryLight"
-            android:layout_gravity="end|center"
+            android:layout_gravity="center"
             android:background="@drawable/ic_arrow_back_black_24dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
 
         <TextView
-            android:textSize="20sp"
-            android:layout_marginLeft="6dp"
-            android:textStyle="bold"
             android:id="@+id/titulo_painel_revendedor"
-            android:maxLines="1"
-            android:text="Painel do revendedor"
-            android:textColor="@color/colorSecondaryLight"
+            android:layout_marginLeft="32dp"
+            android:text="Painel do Revendedor"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_width="wrap_content"
@@ -355,6 +352,9 @@
         android:text="Meu Carrinho"
         app:icon="@drawable/ic_shopping_cart_branco2_35dp"
         app:iconTint="#fff"
+        app:iconPadding="12dp"
+        app:iconSize="24dp"
+        android:paddingStart="22dp"
         android:textColor="#fff"
         android:layout_gravity="bottom|center"
         android:layout_margin="16dp"

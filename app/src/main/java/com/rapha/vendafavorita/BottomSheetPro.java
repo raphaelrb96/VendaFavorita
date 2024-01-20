@@ -122,6 +122,11 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
 
         public void setVariante(VariantePrecificacao variante) {
             this.variantePrecificacao = variante;
+            if(variante.getId() == 3){
+                aviso.setVisibility(View.VISIBLE);
+            } else {
+                aviso.setVisibility(View.GONE);
+            }
         }
 
         public void btnSelected() {

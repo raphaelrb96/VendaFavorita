@@ -8,6 +8,7 @@
     tools:context=".MeuPerfilActivity">
 
     <androidx.core.widget.NestedScrollView
+        android:background="@color/colorLightGray"
         android:layout_marginTop="56dp"
         android:id="@+id/scrol_meu_perfil"
         android:layout_width="match_parent"
@@ -22,11 +23,11 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_gravity="center_horizontal"
-                android:layout_width="100dp"
+                android:layout_width="60dp"
                 android:layout_marginBottom="6dp"
-                android:layout_marginTop="18dp"
-                app:cardCornerRadius="50dp"
-                android:layout_height="100dp">
+                android:layout_marginTop="28dp"
+                app:cardCornerRadius="30dp"
+                android:layout_height="60dp">
 
                 <ImageView
                     android:adjustViewBounds="true"
@@ -55,6 +56,7 @@
                 android:layout_height="wrap_content"/>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_bt_mensagem_menu"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="6dp"
@@ -89,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <View
-                    android:backgroundTint="@color/colorSecondary"
+                    android:backgroundTint="@color/colorSecondaryLight"
                     android:layout_gravity="start|center"
                     android:background="@drawable/ic_exit_to_app_branco_24dp"
                     android:layout_width="30dp"
@@ -98,7 +100,7 @@
                     android:gravity="center|start"
                     android:text="Sair"
                     android:layout_marginLeft="6dp"
-                    android:textColor="@color/colorSecondary"
+                    android:textColor="@color/colorSecondaryLight"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_gravity="center|start"
@@ -117,11 +119,11 @@
                 style="@style/MeuEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="UserName/Apelido">
+                android:hint="Apelido">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
-                    android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_baseline_alternate_email_24"
+                    android:drawablePadding="12dp"
                     android:drawableTint="@color/colorSecondary"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
@@ -134,7 +136,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_num_usuario_meu_perfil"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="12dp"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -145,8 +147,8 @@
                 android:hint="Contato">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:drawableLeft="@drawable/ic_phone_black_30dp"
-                    android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_phone_black_30dp"
+                    android:drawablePadding="12dp"
                     android:drawableTint="@color/colorSecondary"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
@@ -285,17 +287,26 @@
         android:orientation="horizontal">
         <View
             android:id="@+id/bt_voltar_meu_perfil"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:backgroundTint="@color/colorSecondaryLight"
-            android:layout_gravity="end|center"
+            android:layout_gravity="center"
             android:background="@drawable/ic_arrow_back_black_24dp"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+        <TextView
+            android:layout_marginLeft="32dp"
+            android:text="Meu Perfil"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <FrameLayout
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_bt_divulgar"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="12dp"
@@ -319,7 +330,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:id="@+id/pb_meu_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
