@@ -680,11 +680,9 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.google.android.material.card.MaterialCardView
+                            <androidx.cardview.widget.CardView
                                 android:id="@+id/bt_categ_2_caixa"
                                 app:cardCornerRadius="10dp"
-                                android:layout_marginRight="6dp"
-                                android:layout_marginLeft="16dp"
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="6dp"
                                 android:layout_marginTop="8dp"
@@ -726,7 +724,7 @@
                                         android:layout_height="wrap_content" />
 
                                 </LinearLayout>
-                            </com.google.android.material.card.MaterialCardView>
+                            </androidx.cardview.widget.CardView>
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/bt_categ_9_brinquedos"
@@ -975,14 +973,15 @@
                 </HorizontalScrollView>
 
                 <LinearLayout
-                    android:visibility="visible"
+                    android:visibility="gone"
+                    android:id="@+id/container_ad_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
                         android:text="Anuncio Patrocinado"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="16dp"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSecondary"
@@ -1005,6 +1004,102 @@
                         ads:adUnitId="ca-app-pub-8108209584809121/2955527280"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/container_upgrade_main"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:text="Vendedor Online Profissional"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.cardview.widget.CardView
+                        app:cardCornerRadius="10dp"
+                        app:strokeColor="@color/azul_medium"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_marginTop="22dp"
+                                android:layout_marginBottom="22dp"
+                                android:layout_marginEnd="16dp"
+                                android:visibility="visible"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:adjustViewBounds="true"
+                                    android:elevation="8dp"
+                                    android:id="@+id/gif_upgrade_profile"
+                                    android:layout_marginStart="6dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/carreira"
+                                    android:layout_width="140dp"
+                                    android:layout_height="140dp" />
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1">
+                                    <TextView
+                                        android:textColor="@color/azul_medium"
+                                        android:textAllCaps="true"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Construa carreira e seja recompensado"
+                                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+                                    <TextView
+                                        android:layout_marginTop="6dp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="12sp"
+                                        android:text="Apôs 6 meses junto a nossa equipe de vendas você sobe de nivel e começa a ganhar um bônus extra em cada venda"
+                                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                                </LinearLayout>
+                            </LinearLayout>
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_upgrade_home"
+                                android:textColor="@color/azul_medium"
+                                app:backgroundTint="@color/colorPrimaryLight"
+                                app:strokeColor="@color/azul_medium"
+                                app:strokeWidth="0.5dp"
+                                app:cornerRadius="12dp"
+                                android:drawableTint="@color/azul_medium"
+                                android:paddingLeft="22dp"
+                                android:textAlignment="textStart"
+                                app:elevation="6dp"
+                                android:drawableRight="@drawable/ic_action_ir_right"
+                                android:text="Detalhes"
+                                android:layout_marginLeft="22dp"
+                                android:layout_marginRight="22dp"
+                                android:layout_marginBottom="20dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:layout_marginTop="10dp" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/container_resumo_principal"
@@ -1039,7 +1134,7 @@
 
                     <TextView
                         android:text="Melhores Recrutadores"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="16dp"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSecondary"
@@ -1247,7 +1342,7 @@
 
                     <TextView
                         android:text="Mais Vendidos nos ultimos 30 dias"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="16dp"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSecondary"
@@ -1270,7 +1365,7 @@
 
                     <TextView
                         android:text="Melhores Vendedores"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="16dp"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSecondary"
@@ -1637,14 +1732,15 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:visibility="visible"
+                        android:id="@+id/container_ad_2"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
                             android:text="Anuncio Patrocinado"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="32dp"
                             android:layout_marginBottom="16dp"
                             android:textAllCaps="true"
                             android:textColor="@color/colorSecondary"
@@ -1669,7 +1765,7 @@
 
                     <TextView
                         android:text="Atualizações e Novidades"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="16dp"
                         android:textAllCaps="true"
                         android:textColor="@color/colorSecondary"
@@ -1692,7 +1788,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="visible"
+                    android:id="@+id/container_ad_3"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

@@ -393,7 +393,7 @@ public class PainelDeAfiliados extends AppCompatActivity {
                                 return;
                             }
 
-                            Usuario atualizado = new Usuario(usuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), mAuth.getUid(), nickUser, mAuth.getCurrentUser().getDisplayName(), pathFotoUser, false);
+                            Usuario atualizado = new Usuario(usuario.isVipDiamante(), usuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), mAuth.getUid(), nickUser, mAuth.getCurrentUser().getDisplayName(), pathFotoUser, false);
 
                             Log.d("TesteCadastroAfiliados", "Uid Adm: " + atualizado.getUidAdm());
                             Log.d("TesteCadastroAfiliados", "Apelido Adm: " + atualizado.getUsernameAdm());

@@ -52,8 +52,6 @@ public class PlaceholderFragment extends Fragment implements AdapterTopRevendedo
 
     private Toast mToats;
 
-    private PageViewModel pageViewModel;
-
     private ArrayList<TopProdutosRevenda> topProdutosRevendas;
     private ArrayList<TopRevendedores> topRevendedores;
     private ArrayList<ObjectRevenda> revendas;

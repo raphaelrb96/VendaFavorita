@@ -15,10 +15,13 @@
         android:roundIcon="@mipmap/ic_favoricon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".UpgradeContaActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8108209584809121~8611765375"/>
+            android:value="ca-app-pub-8108209584809121~8611765375" />
 
         <activity android:name=".Secretaria" />
 
@@ -30,11 +33,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
+            android:name=".MeusPagamentosActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".MeusPagamentosActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".carteira.CarteiraUsuario"
             android:exported="false"

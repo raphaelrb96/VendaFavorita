@@ -1,5 +1,6 @@
 package com.rapha.vendafavorita;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.ads.AdListener;
@@ -55,6 +58,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -113,7 +117,6 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     public static RecyclerView mListMercadorias;
     public static FragmentManager manager;
     private LinearLayout containerLogin;
-    private HorizontalScrollView containerMenu;
     private FirebaseAuth auth;
     //private ExtendedFloatingActionButton efabCart;
     private CollectionReference carrinhoDoUsuario;
@@ -138,7 +141,8 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     private RecyclerView rv_novidades, rv_em_alta, rv_mais_vendidos;
 
-    private LinearLayout btZap, btSair, btMensagem, btMinhasCompras, container_resumo_principal;
+    private LinearLayout container_resumo_principal;
+    private LinearLayout container_ad_1, container_ad_2, container_ad_3;
     //private ExtendedFloatingActionButton btMeuCarrinho;
     private EditText etpesquisar;
 
@@ -148,7 +152,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private TextView nome_top_adm_1, nome_top_adm_2, nome_top_adm_3;
 
 
-    private View whatsappBt, faceBt, instaBt, chatBt, botaoCartToolbar;
+    private View whatsappBt, faceBt, instaBt;
 
     private int tipoReferencia = 0;
     private Query query;
@@ -178,9 +182,13 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private AdapterEmAlta adapterEmAlta;
     private AdapterEmAlta adapterMaisVendidos;
     private AdView mAdView, mAdView2, mAdView3;
+    private ImageView gif_upgrade_profile;
+    private MaterialButton btn_upgrade_home;
+    private LinearLayout container_upgrade_main;
 
     //private FrameLayout  bt_painel_revendedor;
 
+    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -194,14 +202,17 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         //faceBt = (View) view.findViewById(R.id.bt_face);
         //instaBt = (View) view.findViewById(R.id.bt_insta);
 
-        mAdView = view.findViewById(R.id.adView_main);
-        mAdView2 = view.findViewById(R.id.adView_main_2);
-        mAdView3 = view.findViewById(R.id.adView_main_3);
+        mAdView = (AdView) view.findViewById(R.id.adView_main);
+        mAdView2 = (AdView) view.findViewById(R.id.adView_main_2);
+        mAdView3 = (AdView) view.findViewById(R.id.adView_main_3);
+        container_ad_1 = (LinearLayout) view.findViewById(R.id.container_ad_1);
+        container_ad_2 = (LinearLayout) view.findViewById(R.id.container_ad_2);
+        container_ad_3 = (LinearLayout) view.findViewById(R.id.container_ad_3);
+        container_upgrade_main = (LinearLayout) view.findViewById(R.id.container_upgrade_main);
 
-        chatBt = (View) view.findViewById(R.id.bt_chat);
-        botaoCartToolbar = (View) view.findViewById(R.id.bt_perfil);
 
         botao_topo = (CardView) view.findViewById(R.id.botao_topo);
+        btn_upgrade_home = (MaterialButton) view.findViewById(R.id.btn_upgrade_home);
 
         bt_categ_11_fones = (CardView) view.findViewById(R.id.bt_categ_11_fones);
         bt_categ_1_smartwatch = (CardView) view.findViewById(R.id.bt_categ_1_smartwatch);
@@ -242,16 +253,12 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         mListMercadorias = (RecyclerView) view.findViewById(R.id.rv_fragment_main);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar_main);
         etpesquisar= (EditText) view.findViewById(R.id.et_pesquisar);
-        btZap = (LinearLayout) view.findViewById(R.id.ll_bt_zap_menu);
-        btSair = (LinearLayout) view.findViewById(R.id.ll_bt_sair);
-        btMensagem = (LinearLayout) view.findViewById(R.id.ll_bt_mensagem_menu);
-        btMinhasCompras = (LinearLayout) view.findViewById(R.id.ll_bt_minhas_compras_menu);
         container_resumo_principal = (LinearLayout) view.findViewById(R.id.container_resumo_principal);
 
         lista_principal = (NestedScrollView) view.findViewById(R.id.lista_principal);
 
-        containerMenu = (HorizontalScrollView) view.findViewById(R.id.container_menu);
         btPesquisar = (ImageButton) view.findViewById(R.id.bt_pesquisar);
+        gif_upgrade_profile = (ImageView) view.findViewById(R.id.gif_upgrade_profile);
 
         //filterIcon = coordinatorLayout.findViewById(R.id.filterIcon);
 
@@ -270,20 +277,10 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         nome_top_adm_2 = (TextView) view.findViewById(R.id.nome_top_adm_2);
         nome_top_adm_3 = (TextView) view.findViewById(R.id.nome_top_adm_3);
 
+        ativeAds();
 
-        MobileAds.initialize(getContext(), initializationStatus -> Log.d("ADSTESTE", "initializationStatus: " + initializationStatus.getAdapterStatusMap()));
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        mAdView2.loadAd(adRequest);
-        mAdView3.loadAd(adRequest);
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(@androidx.annotation.NonNull @NotNull LoadAdError loadAdError) {
-                super.onAdFailedToLoad(loadAdError);
-                Log.d("ADSTESTE", "initializationStatus: " + loadAdError.getMessage());
-                mAdView.setVisibility(View.GONE);
-            }
-        });
+        Glide.with(this).asGif().diskCacheStrategy(DiskCacheStrategy.RESOURCE).load(R.drawable.carreira).into(gif_upgrade_profile);
+
 
         //View btChat = (View) view.findViewById(R.id.bt_abrir_chat);
         //View btcar = (View) view.findViewById(R.id.bt_abrir_carrinho);
@@ -319,148 +316,176 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 //        auth.addAuthStateListener(mAuthStateListener);
 
 
-
-
+        auth.addAuthStateListener(mAuthStateListener);
 
 
 
         return view;
     }
 
-    private void ligarOuvintes() {
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+    private void ativeAds() {
+        MobileAds.initialize(getContext(), initializationStatus -> Log.d("ADSTESTE", "initializationStatus: " + initializationStatus.getAdapterStatusMap()));
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView2.loadAd(adRequest);
+        mAdView3.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                auth = firebaseAuth;
-                user = firebaseAuth.getCurrentUser();
-
-                Log.d("TesteLogin", "onAuthStateChanged( )");
-
-
-
-                FirebaseDynamicLinks.getInstance()
-                        .getDynamicLink(getActivity().getIntent())
-                        .addOnSuccessListener(getActivity(), new OnSuccessListener<PendingDynamicLinkData>() {
-                            @Override
-                            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-                                // Get deep link from result (may be null if no link is found)
-                                Uri deepLink = null;
-                                if (pendingDynamicLinkData != null) {
-                                    deepLink = pendingDynamicLinkData.getLink();
-                                }
-
-                                if(deepLink != null) {
-
-                                    String parameterId = deepLink.getQueryParameter("id");
-                                    String parameterAdm = deepLink.getQueryParameter("adm");
-                                    String pathLink = deepLink.getLastPathSegment();
-
-                                    if(pathLink != null) {
-
-                                        if(pathLink.length() > 0 && pathLink.equals("produto")) {
-                                            if (parameterId != null && user != null) {
-                                                Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
-                                                intent.putExtra("id", parameterId);
-                                                startActivity(intent);
-                                            }
-                                        }
-
-                                        if(pathLink.length() > 0 && pathLink.equals("cadastro")) {
-                                            if(parameterAdm != null) {
-                                                setUidShareLink(parameterAdm);
-                                                if(user == null) {
-                                                    Log.d("TesteLogin", "User null: Ir para login");
-
-                                                    Intent intent = new Intent(getActivity(), LoginMainActivity.class);
-                                                    intent.putExtra("adm", parameterAdm);
-                                                    startActivity(intent);
-                                                    getActivity().finish();
-                                                } else {
-                                                    //Intent intent = new Intent(getActivity(), MainActivity.class);
-                                                    //intent.putExtra("adm", parameterAdm);
-                                                    //startActivity(intent);
-                                                }
-
-                                            }
-                                        }
-                                    }
-
-
-                                }
-
-                                logicaPrincipal();
-
-                            }
-                        })
-                        .addOnFailureListener(getActivity(), new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("DynamicLink", "getDynamicLink:onFailure", e);
-                                logicaPrincipal();
-                            }
-                        });
-
-
-
-
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                container_ad_1.setVisibility(View.VISIBLE);
             }
+
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull @NotNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                Log.d("ADSTESTE", "initializationStatus: " + loadAdError.getMessage());
+                container_ad_1.setVisibility(View.GONE);
+            }
+        });
+        mAdView2.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                container_ad_2.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                container_ad_2.setVisibility(View.GONE);
+            }
+        });
+        mAdView3.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                container_ad_3.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                container_ad_3.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void ligarOuvintes() {
+        mAuthStateListener = firebaseAuth -> {
+            auth = firebaseAuth;
+            user = firebaseAuth.getCurrentUser();
+
+            Log.d("TesteLogin", "onAuthStateChanged( )");
+
+
+
+            FirebaseDynamicLinks.getInstance()
+                    .getDynamicLink(getActivity().getIntent())
+                    .addOnSuccessListener(getActivity(), pendingDynamicLinkData -> {
+                        // Get deep link from result (may be null if no link is found)
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                        }
+
+                        if(deepLink != null) {
+
+                            String parameterId = deepLink.getQueryParameter("id");
+                            String parameterAdm = deepLink.getQueryParameter("adm");
+                            String pathLink = deepLink.getLastPathSegment();
+
+                            if(pathLink != null) {
+
+                                if(pathLink.length() > 0 && pathLink.equals("produto")) {
+                                    if (parameterId != null && user != null) {
+                                        Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
+                                        intent.putExtra("id", parameterId);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                if(pathLink.length() > 0 && pathLink.equals("cadastro")) {
+                                    if(parameterAdm != null) {
+                                        setUidShareLink(parameterAdm);
+                                        if(user == null) {
+                                            Log.d("TesteLogin", "User null: Ir para login");
+
+                                            Intent intent = new Intent(getActivity(), LoginMainActivity.class);
+                                            intent.putExtra("adm", parameterAdm);
+                                            startActivity(intent);
+                                            getActivity().finish();
+                                        } else {
+                                            //Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            //intent.putExtra("adm", parameterAdm);
+                                            //startActivity(intent);
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                        logicaPrincipal();
+
+                    })
+                    .addOnFailureListener(getActivity(), new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w("DynamicLink", "getDynamicLink:onFailure", e);
+                            logicaPrincipal();
+                        }
+                    });
+
+
+
+
         };
 
-        btPesquisar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lista_principal.scrollTo(0,0);
-                String pesq = etpesquisar.getText().toString();
-                if (pesq.length() > 0) {
-                    pesquisar(pesq);
-                }
+        btPesquisar.setOnClickListener(v -> {
+            lista_principal.scrollTo(0,0);
+            String pesq = etpesquisar.getText().toString();
+            if (pesq.length() > 0) {
+                pesquisar(pesq);
             }
         });
 
         //atalhos
 
-        categorias_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BottomSheetCateg bottomSheetCateg = BottomSheetCateg.newInstance();
-                bottomSheetCateg.setContext(getActivity());
-                bottomSheetCateg.setListener(new BottomSheetCateg.ListenerBottomSheetCategoria() {
-                    @Override
-                    public void clickBottomSheetCategoria(String s, int pos) {
-                        bottomSheetCateg.dismiss();
-                        lista_principal.scrollTo(0, 0);
-                        telaInicialLoadding(null);
-                        myQuery(firestore.collection("produtos").whereEqualTo("categorias."+pos, true), false, s, -1);
-                    }
-                });
-                bottomSheetCateg.show(getParentFragmentManager(), "Categoria");
-            }
+        categorias_home.setOnClickListener(view -> {
+            BottomSheetCateg bottomSheetCateg = BottomSheetCateg.newInstance();
+            bottomSheetCateg.setContext(getActivity());
+            bottomSheetCateg.setListener(new BottomSheetCateg.ListenerBottomSheetCategoria() {
+                @Override
+                public void clickBottomSheetCategoria(String s, int pos) {
+                    bottomSheetCateg.dismiss();
+                    lista_principal.scrollTo(0, 0);
+                    telaInicialLoadding(null);
+                    myQuery(firestore.collection("produtos").whereEqualTo("categorias."+pos, true), false, s, -1);
+                }
+            });
+            bottomSheetCateg.show(getParentFragmentManager(), "Categoria");
         });
 
-        bonus_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ResumeRankingActivity.class);
-                startActivity(intent);
-            }
+        bonus_home.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), ResumeRankingActivity.class);
+            startActivity(intent);
         });
 
-        comissoes_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CarteiraUsuario.class);
-                startActivity(intent);
-            }
+        comissoes_home.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), CarteiraUsuario.class);
+            startActivity(intent);
         });
 
-        historico_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HistoricoRevendasActivity.class);
-                startActivity(intent);
-            }
+        historico_home.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), HistoricoRevendasActivity.class);
+            startActivity(intent);
         });
 
+        btn_upgrade_home.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), UpgradeContaActivity.class);
+            startActivity(intent);
+        });
 
         //categorias
 
@@ -950,99 +975,109 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     private void checkDadosUsuario() {
 
+        if(documentoPrincipalDoUsuario != null) {
+
+            if (documentoPrincipalDoUsuario.isVipDiamante()) {
+                container_upgrade_main.setVisibility(View.GONE);
+            } else {
+                container_upgrade_main.setVisibility(View.VISIBLE);
+            }
+
+            return;
+        }
+
         final DocumentReference usuarioRef = firestore.collection("Usuario").document(user.getUid());
         final DocumentReference admRef = firestore.collection("Adm").document(user.getUid());
 
-        usuarioRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot userDoc) {
-                WriteBatch batch = firestore.batch();
+        usuarioRef.get().addOnSuccessListener(userDoc -> {
+            WriteBatch batch = firestore.batch();
 
-                boolean usuarioExiste = false;
+            boolean usuarioExiste = false;
 
-                if (ADMINISTRADOR) {
-                    //TokenFcm tokenFcmAdmin = new TokenFcm(tokenAtual, user.getDisplayName());
-                    //batch.set(admRef, tokenFcmAdmin);
-                }
+            if (ADMINISTRADOR) {
+                //TokenFcm tokenFcmAdmin = new TokenFcm(tokenAtual, user.getDisplayName());
+                //batch.set(admRef, tokenFcmAdmin);
+            }
 
-                if (pathFotoUser.equals("")) {
-                    pathFotoUser = getFotoUser(user);
-                }
+            if (pathFotoUser.equals("")) {
+                pathFotoUser = getFotoUser(user);
+            }
 
-                if (userDoc.exists()) {
+            if (userDoc.exists()) {
 
-                    usuarioExiste = true;
+                usuarioExiste = true;
 
-                    Usuario usuarioObj = userDoc.toObject(Usuario.class);
+                Usuario usuarioObj = userDoc.toObject(Usuario.class);
 
-                    documentoPrincipalDoUsuario = usuarioObj;
-
-
-                } else {
-
-                    usuarioExiste = false;
-
-                    //novo
-                    String num = "";
-                    String provedor = "Google";
-                    if (user.getPhoneNumber() != null) {
-                        num = user.getPhoneNumber();
-                    }
-
-
-                    long time = System.currentTimeMillis();
-                    Usuario noovoUsuario = new Usuario(user.getDisplayName(), user.getEmail(), num, Constantes.CONTROLE_VERSAO_USUARIO, user.getUid(), pathFotoUser, Constantes.USUARIO_TIPO_CLIENTE, provedor, time, time, "", null, "", "", "", "", "", false);
-                    batch.set(usuarioRef, noovoUsuario);
-
-
-                }
-
-                if(!usuarioExiste) {
-                    Log.d("TesteLogin", "Doc usuario não existe: Criando um agora");
-
-                    batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            //Toast.makeText(getActivity(), user.getDisplayName() + ", Ok", Toast.LENGTH_LONG).show();
-
-                            Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
-                            String adm = getUidShareLink();
-
-
-                            if(adm != null) {
-                                intent.putExtra("adm", adm);
-                            }
-
-                            startActivity(intent);
-
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(Exception e) {
-                            Toast.makeText(getActivity(), "Erro ao Salvar", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                } else {
-
-                    if (documentoPrincipalDoUsuario != null) {
-
-                        if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
-
-                            Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
-                            String adm = getUidShareLink();
-                            if(adm != null) {
-                                intent.putExtra("adm", adm);
-                            }
-                            startActivity(intent);
-
-                        }
-
-                    }
-
-                }
+                documentoPrincipalDoUsuario = usuarioObj;
 
 
             }
+            else {
+
+                usuarioExiste = false;
+
+                //novo
+                String num = "";
+                String provedor = "Google";
+                if (user.getPhoneNumber() != null) {
+                    num = user.getPhoneNumber();
+                }
+
+
+                long time = System.currentTimeMillis();
+                Usuario noovoUsuario = new Usuario(false, user.getDisplayName(), user.getEmail(), num, Constantes.CONTROLE_VERSAO_USUARIO, user.getUid(), pathFotoUser, Constantes.USUARIO_TIPO_CLIENTE, provedor, time, time, "", null, "", "", "", "", "", false);
+                batch.set(usuarioRef, noovoUsuario);
+
+
+            }
+
+            if(!usuarioExiste) {
+                Log.d("TesteLogin", "Doc usuario não existe: Criando um agora");
+
+                batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //Toast.makeText(getActivity(), user.getDisplayName() + ", Ok", Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
+                        String adm = getUidShareLink();
+
+
+                        if(adm != null) {
+                            intent.putExtra("adm", adm);
+                        }
+
+                        startActivity(intent);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        Toast.makeText(getActivity(), "Erro ao Salvar", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            else {
+
+                if (documentoPrincipalDoUsuario != null) {
+
+                    if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
+
+                        Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
+                        String adm = getUidShareLink();
+                        if(adm != null) {
+                            intent.putExtra("adm", adm);
+                        }
+                        startActivity(intent);
+
+                    }
+
+                }
+
+            }
+
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(Exception e) {
@@ -1105,9 +1140,10 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     public void onStart() {
         Log.d("TestFragmentMain", "OnStart");
         //telaInicialLoadding();
-        auth.addAuthStateListener(mAuthStateListener);
         super.onStart();
-
+        if(user != null) {
+            obterListaDeProdutos(feedPrincipalObj);
+        }
 
     }
 
@@ -1120,14 +1156,16 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     public void onStop() {
         Log.d("TestFragmentMain", "OnStop");
         super.onStop();
-
+        if(documentoPrincipalDoUsuario != null) {
+            documentoPrincipalDoUsuario = null;
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (this.mAuthStateListener != null) {
-            //auth.removeAuthStateListener(this.mAuthStateListener);
+        if (mAuthStateListener != null) {
+            auth.removeAuthStateListener(this.mAuthStateListener);
         }
     }
 
@@ -1609,6 +1647,8 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
 
         container_resumo_principal.setVisibility(View.VISIBLE);
+
+
     }
 
     private void telaInicialSucesso() {

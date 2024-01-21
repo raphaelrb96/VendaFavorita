@@ -533,10 +533,10 @@ public class MeuPerfilActivity extends AppCompatActivity {
                 usuarioInterface(true, true, false);
 
                 if(admCadastrado) {
-                    usuario = new Usuario(documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), usuario.getUidAdm(), usuario.getUsernameAdm(), usuario.getNomeAdm(), usuario.getPathFotoAdm(), true);
+                    usuario = new Usuario(documentoPrincipalDoUsuario.isVipDiamante(), documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), usuario.getUidAdm(), usuario.getUsernameAdm(), usuario.getNomeAdm(), usuario.getPathFotoAdm(), true);
                     documentoPrincipalDoUsuario = usuario;
                 } else {
-                    usuario = new Usuario(documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), uidAdm, apelido, nomeAdm, photo, true);
+                    usuario = new Usuario(documentoPrincipalDoUsuario.isVipDiamante(), documentoPrincipalDoUsuario.getNome(), usuario.getEmail(), usuario.getCelular(), usuario.getControleDeVersao(), usuario.getUid(), usuario.getPathFoto(), usuario.getTipoDeUsuario(), usuario.getProvedor(), usuario.getUltimoLogin(), usuario.getPrimeiroLogin(), usuario.getTokenFcm(), usuario.getEndereco(), usuario.getUserName(), uidAdm, apelido, nomeAdm, photo, true);
                     documentoPrincipalDoUsuario = usuario;
                 }
 

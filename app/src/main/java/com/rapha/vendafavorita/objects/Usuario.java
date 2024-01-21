@@ -25,11 +25,14 @@ public class Usuario {
 
     private boolean admConfirmado;
 
+    private boolean vipDiamante;
+
     public Usuario() {
 
     }
 
-    public Usuario(String nome, String email, String celular, int controleDeVersao, String uid, String pathFoto, int tipoDeUsuario, String provedor, long ultimoLogin, long primeiroLogin, String tokenFcm, Endereco endereco, String userName, String uidAdm, String usernameAdm, String nomeAdm, String pathFotoAdm, boolean admConfirmado) {
+
+    public Usuario(boolean vipDiamante, String nome, String email, String celular, int controleDeVersao, String uid, String pathFoto, int tipoDeUsuario, String provedor, long ultimoLogin, long primeiroLogin, String tokenFcm, Endereco endereco, String userName, String uidAdm, String usernameAdm, String nomeAdm, String pathFotoAdm, boolean admConfirmado) {
         this.nome = nome;
         this.email = email;
         this.celular = celular;
@@ -48,6 +51,11 @@ public class Usuario {
         this.nomeAdm = nomeAdm;
         this.pathFotoAdm = pathFotoAdm;
         this.admConfirmado = admConfirmado;
+        this.vipDiamante = vipDiamante;
+    }
+
+    public boolean isVipDiamante() {
+        return vipDiamante;
     }
 
     public String getUserName() {
