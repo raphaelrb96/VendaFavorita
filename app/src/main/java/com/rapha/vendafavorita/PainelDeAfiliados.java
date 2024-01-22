@@ -31,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.rapha.vendafavorita.adapter.AdapterAfilidos;
+import com.rapha.vendafavorita.adapter.AdapterAfiliados;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.Usuario;
 
@@ -212,9 +212,9 @@ public class PainelDeAfiliados extends AppCompatActivity {
                         titulo_meus_revendedores.setVisibility(View.GONE);
                     }
 
-                    AdapterAfilidos adapterAfilidos = new AdapterAfilidos(meusAfiliados,PainelDeAfiliados.this);
+                    AdapterAfiliados adapterAfiliados = new AdapterAfiliados(meusAfiliados,PainelDeAfiliados.this);
                     rv_painel_afiliados.setLayoutManager(new LinearLayoutManager(PainelDeAfiliados.this));
-                    rv_painel_afiliados.setAdapter(adapterAfilidos);
+                    rv_painel_afiliados.setAdapter(adapterAfiliados);
 
                 } else {
                     //nenhum afiliado ainda

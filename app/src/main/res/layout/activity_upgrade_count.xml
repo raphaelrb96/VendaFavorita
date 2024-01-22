@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightGray"
+    android:orientation="vertical"
+    tools:context=".UpgradeContaActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:elevation="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+                <View
+                    android:onClick="voltar"
+                    android:backgroundTint="@color/colorSecondaryDark"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_arrow_back_black_24dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/bt_voltar_carteira" />
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_marginLeft="32dp"
+                    android:text="Nível Diamante"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_up_conta"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/carreira"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_title_up_conta"
+                        android:textAllCaps="true"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Falta Pouco !!"
+                        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+
+
+
+                    <TextView
+                        android:layout_marginTop="6dp"
+                        android:paddingBottom="12dp"
+                        android:textAllCaps="true"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="No nível Diamante você ganha um Bônus fixo em cada venda que fizer"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        app:cardElevation="4dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="2dp"
+        app:cardCornerRadius="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_marginTop="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nível Atual"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="13sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                    <TextView
+                        android:id="@+id/nivel_conta_upgrade"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Iniciante"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryDark"
+                        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+                </LinearLayout>
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/pb_up_conta"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_gravity="top"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"/>
+                <ImageView
+                    android:id="@+id/icon_up_conta"
+                    android:src="@drawable/iniciante"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_gravity="top"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_text_up_conta"
+                android:gravity="start"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="22dp"
+                android:textAllCaps="true"
+                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
+                android:text="Continue anunciando e em breve você alcançará o nível Diamante"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_up_conta"
+                android:textColor="@color/colorPrimaryLight"
+                app:strokeColor="@color/azul_dark"
+                app:strokeWidth="2dp"
+                app:cornerRadius="12dp"
+                android:drawableTint="@color/colorPrimaryLight"
+                app:backgroundTint="@color/azul_dark"
+                android:paddingLeft="22dp"
+                android:textAlignment="textStart"
+                app:elevation="12dp"
+                android:drawableRight="@drawable/ic_action_ir_right"
+                android:text="Atualizar meu nível"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

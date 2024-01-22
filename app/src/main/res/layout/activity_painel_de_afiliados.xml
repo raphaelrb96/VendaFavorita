@@ -389,7 +389,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:clipToPadding="false"
-                android:paddingVertical="26dp"
+                android:paddingTop="26dp"
                 tools:listitem="@layout/item_usuario_afiliado"
                 tools:itemCount="6"
                 android:nestedScrollingEnabled="true"
@@ -403,10 +403,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

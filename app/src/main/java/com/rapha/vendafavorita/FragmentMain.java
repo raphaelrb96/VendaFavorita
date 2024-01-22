@@ -70,7 +70,9 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -95,6 +97,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.BiConsumer;
 
 import static android.app.Activity.RESULT_OK;
 import static com.rapha.vendafavorita.MainActivity.getUidShareLink;
@@ -185,6 +189,8 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private ImageView gif_upgrade_profile;
     private MaterialButton btn_upgrade_home;
     private LinearLayout container_upgrade_main;
+    private DocumentReference usuarioRef;
+    private EventListener<DocumentSnapshot> eventUserListener;
 
     //private FrameLayout  bt_painel_revendedor;
 
@@ -279,7 +285,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
         ativeAds();
 
-        Glide.with(this).asGif().diskCacheStrategy(DiskCacheStrategy.RESOURCE).load(R.drawable.carreira).into(gif_upgrade_profile);
+
 
 
         //View btChat = (View) view.findViewById(R.id.bt_abrir_chat);
@@ -370,9 +376,11 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     }
 
     private void ligarOuvintes() {
-        mAuthStateListener = firebaseAuth -> {
+
+        mAuthStateListener = (FirebaseAuth firebaseAuth) -> {
             auth = firebaseAuth;
             user = firebaseAuth.getCurrentUser();
+
 
             Log.d("TesteLogin", "onAuthStateChanged( )");
 
@@ -860,6 +868,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     private void logicaPrincipal() {
         if (user != null) {
 
+            usuarioRef = firestore.collection("Usuario").document(user.getUid());
 
             onSignedInInitialize();
 
@@ -975,22 +984,20 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     private void checkDadosUsuario() {
 
-        if(documentoPrincipalDoUsuario != null) {
 
-            if (documentoPrincipalDoUsuario.isVipDiamante()) {
-                container_upgrade_main.setVisibility(View.GONE);
-            } else {
-                container_upgrade_main.setVisibility(View.VISIBLE);
-            }
 
+        if(eventUserListener != null) {
             return;
         }
 
-        final DocumentReference usuarioRef = firestore.collection("Usuario").document(user.getUid());
-        final DocumentReference admRef = firestore.collection("Adm").document(user.getUid());
 
-        usuarioRef.get().addOnSuccessListener(userDoc -> {
+
+
+        eventUserListener = (DocumentSnapshot userDoc, FirebaseFirestoreException error) -> {
             WriteBatch batch = firestore.batch();
+
+            Log.d("EventUserListener", "callChangeDoc");
+
 
             boolean usuarioExiste = false;
 
@@ -1000,7 +1007,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
             }
 
             if (pathFotoUser.equals("")) {
-                pathFotoUser = getFotoUser(user);
+                pathFotoUser = FragmentMain.this.getFotoUser(user);
             }
 
             if (userDoc.exists()) {
@@ -1008,12 +1015,22 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
                 usuarioExiste = true;
 
                 Usuario usuarioObj = userDoc.toObject(Usuario.class);
-
+                Log.d("EventUserListener", "DATA: " + usuarioObj.getPrimeiroLogin());
+                Log.d("EventUserListener", "DATA: " + usuarioObj.isVipDiamante());
                 documentoPrincipalDoUsuario = usuarioObj;
 
+                if(documentoPrincipalDoUsuario != null) {
 
-            }
-            else {
+                    if (documentoPrincipalDoUsuario.isVipDiamante()) {
+                        container_upgrade_main.setVisibility(View.GONE);
+                    } else {
+                        container_upgrade_main.setVisibility(View.VISIBLE);
+                        Glide.with(requireActivity()).asGif().diskCacheStrategy(DiskCacheStrategy.RESOURCE).load(R.drawable.carreira).into(gif_upgrade_profile);
+                    }
+
+                }
+
+            } else {
 
                 usuarioExiste = false;
 
@@ -1032,7 +1049,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
             }
 
-            if(!usuarioExiste) {
+            if (!usuarioExiste) {
                 Log.d("TesteLogin", "Doc usuario não existe: Criando um agora");
 
                 batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -1044,7 +1061,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
                         String adm = getUidShareLink();
 
 
-                        if(adm != null) {
+                        if (adm != null) {
                             intent.putExtra("adm", adm);
                         }
 
@@ -1057,19 +1074,18 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
                         Toast.makeText(getActivity(), "Erro ao Salvar", Toast.LENGTH_LONG).show();
                     }
                 });
-            }
-            else {
+            } else {
 
                 if (documentoPrincipalDoUsuario != null) {
 
                     if (documentoPrincipalDoUsuario.getUserName() == null || documentoPrincipalDoUsuario.getUserName().length() == 0) {
 
-                        Intent intent = new Intent(getActivity(), MeuPerfilActivity.class);
+                        Intent intent = new Intent(FragmentMain.this.getActivity(), MeuPerfilActivity.class);
                         String adm = getUidShareLink();
-                        if(adm != null) {
+                        if (adm != null) {
                             intent.putExtra("adm", adm);
                         }
-                        startActivity(intent);
+                        FragmentMain.this.startActivity(intent);
 
                     }
 
@@ -1078,12 +1094,9 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
             }
 
 
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(Exception e) {
-                Toast.makeText(getActivity(), "Erro ao Salvar", Toast.LENGTH_LONG).show();
-            }
-        });
+        };
+
+        usuarioRef.addSnapshotListener(eventUserListener);
 
     }
 
@@ -1156,9 +1169,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     public void onStop() {
         Log.d("TestFragmentMain", "OnStop");
         super.onStop();
-        if(documentoPrincipalDoUsuario != null) {
-            documentoPrincipalDoUsuario = null;
-        }
+
     }
 
     @Override
@@ -1167,6 +1178,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
         if (mAuthStateListener != null) {
             auth.removeAuthStateListener(this.mAuthStateListener);
         }
+
     }
 
     private void showDialog(int tipo, String msg) {

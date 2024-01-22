@@ -119,6 +119,16 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/pb_lista_revenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:visibility="visible" />
+
             <androidx.recyclerview.widget.RecyclerView
                 tools:listitem="@layout/item_lista_revanda"
                 tools:itemCount="1"
@@ -884,15 +894,6 @@
 
 
 
-
-
-            <ProgressBar
-                android:visibility="gone"
-                android:id="@+id/pb_lista_revenda"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -466,7 +466,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             finish();
         }
 
-        Log.d("TestePagamento", "onstart");
+        //Log.d("TestePagamento", "onstart");
 
         pb.setVisibility(View.VISIBLE);
 
