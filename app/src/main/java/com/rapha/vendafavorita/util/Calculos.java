@@ -88,7 +88,7 @@ public class Calculos {
 
     }
 
-    public static ArrayList<VariantePrecificacao> getListaPrecificacao(int comissao, float valor) {
+    public static ArrayList<VariantePrecificacao> getListaPrecificacao(int comissao, float valor, boolean isAtacado) {
 
         ArrayList<VariantePrecificacao> precificacoes = new ArrayList<>();
 
@@ -118,7 +118,10 @@ public class Calculos {
         precificacoes.add(varejo);
         precificacoes.add(promocao);
         precificacoes.add(atacarejo);
-        precificacoes.add(atacado);
+
+        if(isAtacado) {
+            precificacoes.add(atacado);
+        }
 
 
         return precificacoes;

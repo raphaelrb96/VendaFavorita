@@ -337,7 +337,7 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     @Override
     public void clickProduto(ProdObj obj) {
 
-        ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
+        ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado(), obj.isAtacado(), obj.getUrlVideo(), obj.getNumVendas(), obj.getAvaliacao());
         Intent intent = new Intent(this, ProdutoRevendaActivity.class);
 
         intent.putExtra("prod", objParcelable);

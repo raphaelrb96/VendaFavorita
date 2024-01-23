@@ -583,7 +583,7 @@ public class CadastroDeProdutoActivity extends AppCompatActivity implements Adap
             }
         }
 
-        ProdObj prodObj = new ProdObj(catMap, descricao, switch_disponibilidade_cadastro_de_produto.isChecked(), "null", pathFotoPrincipal, photos, labo, 7, nome, precoVenda,precoAntigo,  cb_cadastro_de_produto_promocional.isChecked(), tagMap, FORNECEDORES, quantidadeInt, System.currentTimeMillis(), comissaoInt, CORES, 0, 0, 0);
+        ProdObj prodObj = new ProdObj(catMap, descricao, switch_disponibilidade_cadastro_de_produto.isChecked(), "null", pathFotoPrincipal, photos, labo, 7, nome, precoVenda,precoAntigo,  cb_cadastro_de_produto_promocional.isChecked(), tagMap, FORNECEDORES, quantidadeInt, System.currentTimeMillis(), comissaoInt, CORES, 0, 0, 0, false, null, 0, 0);
 
         return prodObj;
     }
@@ -688,7 +688,7 @@ public class CadastroDeProdutoActivity extends AppCompatActivity implements Adap
 
         Log.d("TesteImagemCadastro", "tamanho lista: " + photos.size());
 
-        ProdObj prodObj = new ProdObj(catMap, descricao, switch_disponibilidade_cadastro_de_produto.isChecked(), obj.getIdProduto(), pathFotoPrincipal, photos, labo, 7, nome, precoVenda, precoAntigo, cb_cadastro_de_produto_promocional.isChecked(), tagMap, FORNECEDORES, quantidadeInt, System.currentTimeMillis(), comissaoInt, CORES, 0, 0, 0);
+        ProdObj prodObj = new ProdObj(catMap, descricao, switch_disponibilidade_cadastro_de_produto.isChecked(), obj.getIdProduto(), pathFotoPrincipal, photos, labo, 7, nome, precoVenda, precoAntigo, cb_cadastro_de_produto_promocional.isChecked(), tagMap, FORNECEDORES, quantidadeInt, System.currentTimeMillis(), comissaoInt, CORES, 0, 0, 0, false, null, 0, 0);
 
         return prodObj;
     }
@@ -892,7 +892,7 @@ public class CadastroDeProdutoActivity extends AppCompatActivity implements Adap
         DocumentReference documentReference = firestore.collection("produtos").document();
         final String prodId = documentReference.getId();
 
-        ProdObj newProd = new ProdObj(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), prodId, pathFoto, obj.getImagens(), obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), System.currentTimeMillis(), obj.getComissao(), obj.getCores(), 0, 0, 0);
+        ProdObj newProd = new ProdObj(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), prodId, pathFoto, obj.getImagens(), obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), System.currentTimeMillis(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado(), obj.isAtacado(), obj.getUrlVideo(), obj.getNumVendas(), obj.getAvaliacao());
 
         documentReference.set(newProd).addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
@@ -923,7 +923,7 @@ public class CadastroDeProdutoActivity extends AppCompatActivity implements Adap
 
         final String prodId = documentReference.getId();
 
-        ProdObj newProd = new ProdObj(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), prodId, pathFoto, obj.getImagens(), obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), System.currentTimeMillis(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
+        ProdObj newProd = new ProdObj(obj.getCategorias(), obj.getDescr(), obj.isDisponivel(), prodId, pathFoto, obj.getImagens(), obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), System.currentTimeMillis(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado(), obj.isAtacado(), obj.getUrlVideo(), obj.getNumVendas(), obj.getAvaliacao());
 
     }
 

@@ -94,6 +94,7 @@
                         style="@style/Widget.AppCompat.RatingBar.Indicator"
                         android:layout_marginLeft="16dp"
                         android:progressTint="@color/amarelo"
+                        android:secondaryProgressTint="@color/amarelo"
                         android:isIndicator="true"
                         android:rating="4.5"
                         android:stepSize=".5"
@@ -115,6 +116,25 @@
                         android:layout_marginTop="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
+                    <TextView
+                        android:visibility="visible"
+                        android:id="@+id/aviso_frete_produto"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_width="250dp"
+                        android:drawablePadding="6dp"
+                        android:gravity="center|start"
+                        android:layout_gravity="top"
+                        android:textStyle="italic"
+                        android:layout_height="wrap_content"
+                        android:lines="2"
+                        android:textSize="12sp"
+                        android:lineHeight="12dp"
+                        android:textColor="@color/cinza_text"
+                        android:drawableTint="@color/cinza_medio"
+                        android:drawableLeft="@drawable/ic_baseline_info_18_blue_dark"
+                        android:text="Taxa de Entrega não está incluida no preço" />
 
                     <TextView
                         android:text="Simulação do parcelamento"
@@ -316,7 +336,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-
                 <TextView
                     android:text="Mais opções para continuar"
                     android:layout_marginTop="32dp"
@@ -439,6 +458,40 @@
 
                     </LinearLayout>
                 </HorizontalScrollView>
+
+                <LinearLayout
+                    android:visibility="visible"
+                    android:id="@+id/container_ad_prod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_gravity="start"
+                        android:text="Anuncio Patrocinado"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondary"
+                        android:textSize="16sp"
+                        android:layout_marginLeft="16dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.gms.ads.AdView
+                        xmlns:ads="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/adView_produto"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        ads:adSize="SMART_BANNER"
+                        ads:adUnitId="ca-app-pub-8108209584809121/5506056047"/>
+                </LinearLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content"

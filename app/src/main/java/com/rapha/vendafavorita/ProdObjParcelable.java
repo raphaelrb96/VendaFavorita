@@ -32,8 +32,13 @@ public class ProdObjParcelable implements Parcelable {
     private float prodValorAtacarejo;
     private float prodValorAtacado;
 
+    private boolean atacado;
+    private String urlVideo;
+    private int numVendas;
+    private float avaliacao;
 
-    public ProdObjParcelable(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, int comissao, ArrayList<String> cores, float prodValorPromocional, float prodValorAtacarejo, float prodValorAtacado) {
+
+    public ProdObjParcelable(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, int comissao, ArrayList<String> cores, float prodValorPromocional, float prodValorAtacarejo, float prodValorAtacado, boolean atacado, String urlVideo, int numVendas, float avaliacao) {
         this.categorias = categorias;
         this.descr = descr;
         this.disponivel = disponivel;
@@ -54,6 +59,10 @@ public class ProdObjParcelable implements Parcelable {
         this.prodValorPromocional = prodValorPromocional;
         this.prodValorAtacarejo = prodValorAtacarejo;
         this.prodValorAtacado = prodValorAtacado;
+        this.atacado = atacado;
+        this.urlVideo = urlVideo;
+        this.numVendas = numVendas;
+        this.avaliacao = avaliacao;
     }
 
 
@@ -72,6 +81,43 @@ public class ProdObjParcelable implements Parcelable {
         quantidade = in.readInt();
         comissao = in.readInt();
         cores = in.createStringArrayList();
+        prodValorPromocional = in.readFloat();
+        prodValorAtacarejo = in.readFloat();
+        prodValorAtacado = in.readFloat();
+        atacado = in.readByte() != 0;
+        urlVideo = in.readString();
+        numVendas = in.readInt();
+        avaliacao = in.readFloat();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(descr);
+        dest.writeByte((byte) (disponivel ? 1 : 0));
+        dest.writeString(idProduto);
+        dest.writeString(imgCapa);
+        dest.writeStringList(imagens);
+        dest.writeString(fabricante);
+        dest.writeInt(nivel);
+        dest.writeString(prodName);
+        dest.writeFloat(prodValor);
+        dest.writeFloat(valorAntigo);
+        dest.writeByte((byte) (promocional ? 1 : 0));
+        dest.writeInt(quantidade);
+        dest.writeInt(comissao);
+        dest.writeStringList(cores);
+        dest.writeFloat(prodValorPromocional);
+        dest.writeFloat(prodValorAtacarejo);
+        dest.writeFloat(prodValorAtacado);
+        dest.writeByte((byte) (atacado ? 1 : 0));
+        dest.writeString(urlVideo);
+        dest.writeInt(numVendas);
+        dest.writeFloat(avaliacao);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<ProdObjParcelable> CREATOR = new Creator<ProdObjParcelable>() {
@@ -119,7 +165,7 @@ public class ProdObjParcelable implements Parcelable {
     }
 
     public ProdObj getProd() {
-        return new ProdObj(categorias, descr, disponivel, idProduto, imgCapa, imagens, fabricante, nivel, prodName, prodValor, valorAntigo, promocional, tag, fornecedores, quantidade, 0, comissao, cores, prodValorPromocional, prodValorAtacarejo, prodValorAtacado);
+        return new ProdObj(categorias, descr, disponivel, idProduto, imgCapa, imagens, fabricante, nivel, prodName, prodValor, valorAntigo, promocional, tag, fornecedores, quantidade, 0, comissao, cores, prodValorPromocional, prodValorAtacarejo, prodValorAtacado, atacado, urlVideo, numVendas, avaliacao);
     }
 
     public String getFabricante() {
@@ -158,26 +204,31 @@ public class ProdObjParcelable implements Parcelable {
         return cores;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public float getProdValorPromocional() {
+        return prodValorPromocional;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(descr);
-        parcel.writeByte((byte) (disponivel ? 1 : 0));
-        parcel.writeString(idProduto);
-        parcel.writeString(imgCapa);
-        parcel.writeStringList(imagens);
-        parcel.writeString(fabricante);
-        parcel.writeInt(nivel);
-        parcel.writeString(prodName);
-        parcel.writeFloat(prodValor);
-        parcel.writeFloat(valorAntigo);
-        parcel.writeByte((byte) (promocional ? 1 : 0));
-        parcel.writeInt(quantidade);
-        parcel.writeInt(comissao);
-        parcel.writeStringList(cores);
+    public float getProdValorAtacarejo() {
+        return prodValorAtacarejo;
+    }
+
+    public float getProdValorAtacado() {
+        return prodValorAtacado;
+    }
+
+    public boolean isAtacado() {
+        return atacado;
+    }
+
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public int getNumVendas() {
+        return numVendas;
+    }
+
+    public float getAvaliacao() {
+        return avaliacao;
     }
 }

@@ -26,6 +26,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,6 +57,9 @@ import com.robinhood.ticker.TickerView;
 import java.util.ArrayList;
 
 import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
+import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
+
+import org.jetbrains.annotations.NotNull;
 
 public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAdapterRevenda.CoresListenerRevenda, FotosDetalheProdutosAdapter.FotoDetalheListener {
 
@@ -84,6 +92,8 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
     private int modoDePrecificacao = 0;
     private VariantePrecificacao varianteAtual;
     private String fotoPrincipal;
+    private LinearLayout container_ad_prod;
+    private AdView mAdView;
 
 
     @Override
@@ -110,12 +120,17 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
         efab_prod_detalhe_revenda = (MaterialButton) findViewById(R.id.efab_prod_detalhe_revenda);
         container_variantes_produto_revenda = (LinearLayout) findViewById(R.id.container_variantes_produto_revenda);
+        container_ad_prod = (LinearLayout) findViewById(R.id.container_ad_prod);
         conteudo_produto_revenda = (NestedScrollView) findViewById(R.id.conteudo_produto_revenda);
         pb_produto_revenda = (ProgressBar) findViewById(R.id.pb_produto_revenda);
 
         text_comissao = (TickerView) findViewById(R.id.text_comissao);
         text_bt_modelo_precificacao = (TickerView) findViewById(R.id.text_bt_modelo_precificacao);
         tv_valor_variante_produto = (TickerView) findViewById(R.id.tv_valor_variante_produto);
+
+        mAdView = (AdView) findViewById(R.id.adView_produto);
+
+        ativeAds();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -137,11 +152,12 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
                         finish();
                     } else {
                         ProdObj obj = documentSnapshot.toObject(ProdObj.class);
-                        prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
+                        prodObjParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado(), obj.isAtacado(), obj.getUrlVideo(), obj.getNumVendas(), obj.getAvaliacao());
                         fotoPrincipal = prodObjParcelable.getImgCapa();
                         conteudo_produto_revenda.setVisibility(View.VISIBLE);
                         pb_produto_revenda.setVisibility(View.GONE);
-                        ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
+                        boolean atacado = prodObjParcelable.isAtacado();
+                        ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor(), atacado);
                         VariantePrecificacao variantePreco = modelosDePreco.get(modoDePrecificacao);
                         atualizarInterface(variantePreco);
                     }
@@ -160,12 +176,34 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
             fotoPrincipal = prodObjParcelable.getImgCapa();
             conteudo_produto_revenda.setVisibility(View.VISIBLE);
             pb_produto_revenda.setVisibility(View.GONE);
-            ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
+            ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor(), prodObjParcelable.isAtacado());
             VariantePrecificacao variantePreco = modelosDePreco.get(modoDePrecificacao);
             atualizarInterface(variantePreco);
         }
 
 
+    }
+
+    private void ativeAds() {
+        MobileAds.initialize(this, initializationStatus -> {});
+
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                container_ad_prod.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull @NotNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                //Log.d("ADSTESTE", "initializationStatus: " + loadAdError.getMessage());
+                container_ad_prod.setVisibility(View.GONE);
+            }
+        });
     }
 
 
@@ -248,14 +286,16 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
         bt_modelo_precificacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetPro bottomSheetPro = BottomSheetPro.newInstance(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
+                boolean diamante = documentoPrincipalDoUsuario != null && documentoPrincipalDoUsuario.isVipDiamante();
+                boolean atacado = prodObjParcelable.isAtacado();
+                BottomSheetPro bottomSheetPro = BottomSheetPro.newInstance(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor(), diamante, atacado);
                 bottomSheetPro.setModo(modoDePrecificacao);
                 bottomSheetPro.setListener(new BottomSheetPro.ListenerBottomSheetPro() {
                     @Override
                     public void clickBottomSheetPro(String s, int pos, VariantePrecificacao varianteDePreco) {
                         VariantePrecificacao novaVariante = varianteDePreco;
                         if(varianteDePreco == null) {
-                            ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor());
+                            ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(prodObjParcelable.getComissao(), prodObjParcelable.getProdValor(), atacado);
                             novaVariante = modelosDePreco.get(modoDePrecificacao);
 
                         }

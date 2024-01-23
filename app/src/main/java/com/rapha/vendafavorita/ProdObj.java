@@ -31,6 +31,11 @@ public class ProdObj {
     private float prodValorAtacarejo;
     private float prodValorAtacado;
 
+    private boolean atacado;
+    private String urlVideo;
+    private int numVendas;
+    private float avaliacao;
+
     private ArrayList<String> tamanhos;
     private ArrayList<String> numeros;
 
@@ -48,7 +53,8 @@ public class ProdObj {
     }
 
 
-    public ProdObj(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, long timeUpdate, int comissao, ArrayList<String> cores, float prodValorPromocional, float prodValorAtacarejo, float prodValorAtacado) {
+
+    public ProdObj(Map<String, Boolean> categorias, String descr, boolean disponivel, String idProduto, String imgCapa, ArrayList<String> imagens, String fabricante, int nivel, String prodName, float prodValor, float valorAntigo, boolean promocional, Map<String, Boolean> tag, Map<String, Double> fornecedores, int quantidade, long timeUpdate, int comissao, ArrayList<String> cores, float prodValorPromocional, float prodValorAtacarejo, float prodValorAtacado, boolean atacado, String urlVideo, int numVendas, float avaliacao) {
         this.categorias = categorias;
         this.descr = descr;
         this.disponivel = disponivel;
@@ -70,6 +76,10 @@ public class ProdObj {
         this.prodValorPromocional = prodValorPromocional;
         this.prodValorAtacarejo = prodValorAtacarejo;
         this.prodValorAtacado = prodValorAtacado;
+        this.atacado = atacado;
+        this.urlVideo = urlVideo;
+        this.numVendas = numVendas;
+        this.avaliacao = avaliacao;
     }
 
     public ArrayList<String> getCores() {
@@ -154,5 +164,21 @@ public class ProdObj {
 
     public float getProdValorAtacado() {
         return prodValorAtacado;
+    }
+
+    public boolean isAtacado() {
+        return atacado;
+    }
+
+    public String getUrlVideo() {
+        return urlVideo;
+    }
+
+    public int getNumVendas() {
+        return numVendas;
+    }
+
+    public float getAvaliacao() {
+        return avaliacao;
     }
 }

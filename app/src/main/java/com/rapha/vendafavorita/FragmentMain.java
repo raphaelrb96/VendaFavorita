@@ -1689,7 +1689,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     @Override
     public void clickProduto(ProdObj obj) {
-        ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
+        ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado(), obj.isAtacado(), obj.getUrlVideo(), obj.getNumVendas(), obj.getAvaliacao());
         Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
         ArrayList<ProdObjParcelable> relacionados = new ArrayList<>();
         String st = obj.getProdName().substring(0, 3);
@@ -1702,7 +1702,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
             if (palavraChaveExiste || palavraIdentica || palavraParecida) {
                 ProdObj obj1 = prodObjs.get(x);
-                ProdObjParcelable objParc = new ProdObjParcelable(obj1.getCategorias(), obj1.getDescr(),obj1.isDisponivel(), obj1.getIdProduto(), obj1.getImgCapa(),obj1.getImagens() ,obj1.getFabricante(), obj1.getNivel(), obj1.getProdName(), obj1.getProdValor(), obj1.getValorAntigo(), obj1.isPromocional(), obj1.getTag(), obj1.getFornecedores(), obj1.getQuantidade(), obj1.getComissao(), obj1.getCores(), obj1.getProdValorPromocional(), obj1.getProdValorAtacarejo(), obj1.getProdValorAtacado());
+                ProdObjParcelable objParc = new ProdObjParcelable(obj1.getCategorias(), obj1.getDescr(),obj1.isDisponivel(), obj1.getIdProduto(), obj1.getImgCapa(),obj1.getImagens() ,obj1.getFabricante(), obj1.getNivel(), obj1.getProdName(), obj1.getProdValor(), obj1.getValorAntigo(), obj1.isPromocional(), obj1.getTag(), obj1.getFornecedores(), obj1.getQuantidade(), obj1.getComissao(), obj1.getCores(), obj1.getProdValorPromocional(), obj1.getProdValorAtacarejo(), obj1.getProdValorAtacado(), obj1.isAtacado(), obj1.getUrlVideo(), obj1.getNumVendas(), obj1.getAvaliacao());
                 if (obj.getIdProduto() != obj1.getIdProduto()) {
                     relacionados.add(objParc);
                 }
@@ -1718,7 +1718,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     @Override
     public void openDetalhe(ProdObj obj) {
-        ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado());
+        ProdObjParcelable objParcelable = new ProdObjParcelable(obj.getCategorias(), obj.getDescr(),obj.isDisponivel(), obj.getIdProduto(), obj.getImgCapa(),obj.getImagens() ,obj.getFabricante(), obj.getNivel(), obj.getProdName(), obj.getProdValor(), obj.getValorAntigo(), obj.isPromocional(), obj.getTag(), obj.getFornecedores(), obj.getQuantidade(), obj.getComissao(), obj.getCores(), obj.getProdValorPromocional(), obj.getProdValorAtacarejo(), obj.getProdValorAtacado(), obj.isAtacado(), obj.getUrlVideo(), obj.getNumVendas(), obj.getAvaliacao());
         Intent intent = new Intent(getActivity(), ProdutoRevendaActivity.class);
         ArrayList<ProdObjParcelable> relacionados = new ArrayList<>();
         String st = obj.getProdName().substring(0, 3);
@@ -1731,7 +1731,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
             if (palavraChaveExiste || palavraIdentica || palavraParecida) {
                 ProdObj obj1 = prodObjs.get(x);
-                ProdObjParcelable objParc = new ProdObjParcelable(obj1.getCategorias(), obj1.getDescr(),obj1.isDisponivel(), obj1.getIdProduto(), obj1.getImgCapa(),obj1.getImagens() ,obj1.getFabricante(), obj1.getNivel(), obj1.getProdName(), obj1.getProdValor(), obj1.getValorAntigo(), obj1.isPromocional(), obj1.getTag(), obj1.getFornecedores(), obj1.getQuantidade(), obj1.getComissao(), obj1.getCores(), obj1.getProdValorPromocional(), obj1.getProdValorAtacarejo(), obj1.getProdValorAtacado());
+                ProdObjParcelable objParc = new ProdObjParcelable(obj1.getCategorias(), obj1.getDescr(),obj1.isDisponivel(), obj1.getIdProduto(), obj1.getImgCapa(),obj1.getImagens() ,obj1.getFabricante(), obj1.getNivel(), obj1.getProdName(), obj1.getProdValor(), obj1.getValorAntigo(), obj1.isPromocional(), obj1.getTag(), obj1.getFornecedores(), obj1.getQuantidade(), obj1.getComissao(), obj1.getCores(), obj1.getProdValorPromocional(), obj1.getProdValorAtacarejo(), obj1.getProdValorAtacado(), obj1.isAtacado(), obj1.getUrlVideo(), obj1.getNumVendas(), obj1.getAvaliacao());
                 if (obj.getIdProduto() != obj1.getIdProduto()) {
                     relacionados.add(objParc);
                 }

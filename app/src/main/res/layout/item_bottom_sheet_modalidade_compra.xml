@@ -62,7 +62,7 @@
                     <TextView
                         android:text="Valor por unidade"
                         android:textAllCaps="true"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:lines="2"
                         android:textColor="@color/colorSecondaryLight"
                         android:layout_marginBottom="2dp"
@@ -90,7 +90,7 @@
                     <TextView
                         android:text="Quantidade Minima"
                         android:textAllCaps="true"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:lines="2"
                         android:textColor="@color/colorSecondaryLight"
                         android:layout_marginBottom="2dp"
@@ -119,7 +119,7 @@
                     <TextView
                         android:text="Lucro por unidade"
                         android:textAllCaps="true"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:lines="2"
                         android:textColor="@color/colorSecondaryLight"
                         android:layout_marginBottom="2dp"
@@ -139,17 +139,18 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/container_bonus_diamante_item_bottomsheet_prod"
                     android:layout_width="0dp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:text="Valor por unidade"
+                        android:text="Bônus Diamante"
                         android:textAllCaps="true"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:lines="2"
                         android:textColor="@color/colorSecondaryLight"
                         android:layout_marginBottom="2dp"
@@ -159,9 +160,9 @@
 
                     <TextView
                         android:textStyle="bold"
-                        android:text="R$10.350"
+                        android:text="R$5"
                         android:layout_marginEnd="2dp"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/cinza_text"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:layout_width="wrap_content"

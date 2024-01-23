@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +30,8 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
     private static final String ARG_ITEM_COUNT = "BottomSheet";
     private static final String ARG_ITEM_VALOR = "Valor";
     private static final String ARG_ITEM_COMISSAO = "Comissao";
+    private static final String ARG_USER_DIAMANTE = "Diamante";
+    private static final String ARG_ATACADO = "Atacado";
 
     private ListenerBottomSheetPro listener;
     private int modeloDePrecificacao = 0;
@@ -49,11 +52,13 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
     }
 
 
-    public static BottomSheetPro newInstance(int comissao, float valor) {
+    public static BottomSheetPro newInstance(int comissao, float valor, boolean diamante, boolean atacado) {
         final BottomSheetPro fragment = new BottomSheetPro();
         final Bundle args = new Bundle();
         args.putInt(ARG_ITEM_COUNT, 4);
         args.putInt(ARG_ITEM_COMISSAO, comissao);
+        args.putBoolean(ARG_USER_DIAMANTE, diamante);
+        args.putBoolean(ARG_ATACADO, atacado);
         args.putFloat(ARG_ITEM_VALOR, valor);
         fragment.setArguments(args);
         return fragment;
@@ -67,10 +72,14 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(getArguments().getInt(ARG_ITEM_COMISSAO), getArguments().getFloat(ARG_ITEM_VALOR));
+        int argComissao = getArguments() != null ? getArguments().getInt(ARG_ITEM_COMISSAO) : 0;
+        float argValor = getArguments() != null ? getArguments().getFloat(ARG_ITEM_VALOR) : 0;
+        boolean argAtac = getArguments().getBoolean(ARG_ATACADO, false);
+        boolean argDiamante = getArguments().getBoolean(ARG_USER_DIAMANTE, false);
+        ArrayList<VariantePrecificacao> modelosDePreco = Calculos.getListaPrecificacao(argComissao, argValor, argAtac);
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        itemAdapter = new ItemAdapter(modelosDePreco, listener, modeloDePrecificacao);
+        itemAdapter = new ItemAdapter(modelosDePreco, listener, modeloDePrecificacao, argDiamante);
         recyclerView.setAdapter(itemAdapter);
     }
 
@@ -85,6 +94,7 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final LinearLayout container_bonus_diamante_item_bottomsheet_prod;
         private TextView text;
         private TextView valor, quantidade, comissao, aviso;
         private MaterialCardView card_item_modelo_precificacao;
@@ -100,7 +110,7 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
         }
 
 
-        public ViewHolder(@NonNull @NotNull View itemView, ListenerBottomSheetPro listenerPro, ChangeSelected selected) {
+        public ViewHolder(@NonNull @NotNull View itemView, ListenerBottomSheetPro listenerPro, ChangeSelected selected, boolean userDiamante) {
             super(itemView);
             text = (TextView) itemView.findViewById(R.id.text_item_modelo_preco);
             comissao = (TextView) itemView.findViewById(R.id.comissao_item_modelo_preco);
@@ -108,10 +118,16 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
             valor = (TextView) itemView.findViewById(R.id.valor_item_modelo_preco);
             aviso = (TextView) itemView.findViewById(R.id.aviso_item_modelo_preco);
             card_item_modelo_precificacao = (MaterialCardView) itemView.findViewById(R.id.card_item_modelo_precificacao);
+            container_bonus_diamante_item_bottomsheet_prod = (LinearLayout) itemView.findViewById(R.id.container_bonus_diamante_item_bottomsheet_prod);
             itemView.setOnClickListener(this);
             this.listener = listenerPro;
             this.changeSelected = selected;
             this.context = itemView.getContext();
+            if(userDiamante) {
+                container_bonus_diamante_item_bottomsheet_prod.setVisibility(View.VISIBLE);
+            } else {
+                container_bonus_diamante_item_bottomsheet_prod.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -153,13 +169,15 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
         private ListenerBottomSheetPro listenerPro;
         private int selected;
         private ArrayList<VariantePrecificacao> modelos;
+        private boolean userDiamante;
 
 
 
-        public ItemAdapter(ArrayList<VariantePrecificacao> modelosDePreco, ListenerBottomSheetPro listener, int modo) {
+        public ItemAdapter(ArrayList<VariantePrecificacao> modelosDePreco, ListenerBottomSheetPro listener, int modo, boolean argDiamante) {
             this.modelos = modelosDePreco;
             this.listenerPro = listener;
             this.selected = modo;
+            this.userDiamante = argDiamante;
         }
 
 
@@ -167,7 +185,7 @@ public class BottomSheetPro extends BottomSheetDialogFragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bottom_sheet_modalidade_compra, parent, false);
-            return new ViewHolder(view, listenerPro, this);
+            return new ViewHolder(view, listenerPro, this, userDiamante);
         }
 
         @Override
