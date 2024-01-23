@@ -77,7 +77,12 @@ public class UpgradeContaActivity extends AppCompatActivity {
                 btn_up_conta.setClickable(false);
 
                 usuarioRef = firestore.collection("Usuario").document(user.getUid());
-                usuarioRef.update("vipDiamante", true).addOnCompleteListener(this, task -> {
+
+                String username = documentoPrincipalDoUsuario.getUserName();
+                String uid = documentoPrincipalDoUsuario.getUid();
+                String path = documentoPrincipalDoUsuario.getPathFoto();
+
+                usuarioRef.update("vipDiamante", true, "admConfirmado", true, "usernameAdm", username, "uidAdm", uid, "pathFotoAdm", path).addOnCompleteListener(this, task -> {
 
                     pb_up_conta.setVisibility(View.GONE);
 

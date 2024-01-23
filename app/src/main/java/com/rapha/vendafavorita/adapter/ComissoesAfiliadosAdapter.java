@@ -1,6 +1,7 @@
 package com.rapha.vendafavorita.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.rapha.vendafavorita.DateFormatacao;
 import com.rapha.vendafavorita.R;
 import com.rapha.vendafavorita.objects.ComissaoAfiliados;
+import com.rapha.vendafavorita.objects.Usuario;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,10 +24,12 @@ public class ComissoesAfiliadosAdapter extends RecyclerView.Adapter<ComissoesAfi
 
     private Context context;
     private ArrayList<ComissaoAfiliados> comissoesAfiliados;
+    private String idUser;
 
-    public ComissoesAfiliadosAdapter(Context context, ArrayList<ComissaoAfiliados> afiliados) {
+    public ComissoesAfiliadosAdapter(Context context, ArrayList<ComissaoAfiliados> afiliados, String idUser) {
         this.context = context;
         this.comissoesAfiliados = afiliados;
+        this.idUser = idUser;
     }
 
     @NonNull
@@ -41,8 +45,9 @@ public class ComissoesAfiliadosAdapter extends RecyclerView.Adapter<ComissoesAfi
         Glide.with(context).load(comissaoAfiliado.getPathVendedor()).into(holder.img_revendedor_comissao_afiliado);
         holder.tv_horario_comissao_afiliado_revenda.setText(DateFormatacao.dataCompletaCorrigida(new Date(comissaoAfiliado.getHora()), new Date()));
         holder.tv_comissao_afiliado_revenda.setText("R$ " + comissaoAfiliado.getComissao() + ",00");
-        holder.tv_nome_vendedor_comissao_afiliados.setText(comissaoAfiliado.getNomeVendedor());
         holder.tv_descricao_comissao_afiliado_revenda.setText(comissaoAfiliado.getDescricao());
+        String mytitle = idUser.equals(comissaoAfiliado.getUidVendedor()) ? "Bônus Vip Diamante" : comissaoAfiliado.getNomeVendedor();
+        holder.tv_nome_vendedor_comissao_afiliados.setText(mytitle);
 
         switch (comissaoAfiliado.getStatusComissao()) {
             default:

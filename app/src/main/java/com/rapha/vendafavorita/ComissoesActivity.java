@@ -68,6 +68,7 @@ public class ComissoesActivity extends AppCompatActivity implements AdapterComis
         auth = FirebaseAuth.getInstance();
 
         idUsuario = getIntent().getStringExtra("id");
+        idUsuario = idUsuario == null ? auth.getUid() : idUsuario;
         nome = getIntent().getStringExtra("nome");
         path = getIntent().getStringExtra("path");
 
@@ -216,7 +217,7 @@ public class ComissoesActivity extends AppCompatActivity implements AdapterComis
 
     private void comComissoesAfiliados() {
 
-        ComissoesAfiliadosAdapter adapter = new ComissoesAfiliadosAdapter(this, listaDeComissaoAfiliados);
+        ComissoesAfiliadosAdapter adapter = new ComissoesAfiliadosAdapter(this, listaDeComissaoAfiliados, idUsuario);
         rv_comissoes_afiliados.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rv_comissoes_afiliados.setAdapter(adapter);
 

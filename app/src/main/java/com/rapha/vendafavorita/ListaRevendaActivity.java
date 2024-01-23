@@ -1,5 +1,6 @@
 package com.rapha.vendafavorita;
 
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,9 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,13 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.rapha.vendafavorita.adapter.AdapterListaRevenda;
@@ -53,8 +51,6 @@ import com.robinhood.ticker.TickerView;
 
 import java.util.ArrayList;
 
-import javax.annotation.Nullable;
-
 import static com.rapha.vendafavorita.BottomSheetOptions.TYPE_ENTREGA;
 import static com.rapha.vendafavorita.BottomSheetOptions.TYPE_GARANTIA;
 import static com.rapha.vendafavorita.BottomSheetOptions.TYPE_PAGAMENTO;
@@ -72,7 +68,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private String detalhePagamento = "";
     private CompraFinalParcelable cfp = null;
     private String nomeCliente = "";
-    private int somo, totalVenda;
+    private int totalComissaoFinal, totalVendaFinal;
     private String observacoes = "";
     private String telefoneMain = "";
     private String ruaMain = "";
@@ -81,10 +77,10 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private String nCidadeMain = "Manaus";
     private String nCepMain = "69000-000";
     private String nEstadoMain = "Amazonas";
-    private GarantiaObj garantiaFinal = Listas.getListOptionsGarantia(totalVenda).get(0);
+    private GarantiaObj garantiaFinal = Listas.getListOptionsGarantia(totalVendaFinal).get(0);
     private EntregaObj entregaFinal = Listas.getListOptionsEntregas().get(0);
     private PagamentosObj pagamentoFinal = Listas.getListOptionsPagamentos().get(0);
-    private ParcelamentoObj parcelaFinal = Listas.getListOptionsParcelamento(totalVenda).get(0);
+    private ParcelamentoObj parcelaFinal = Listas.getListOptionsParcelamento(totalVendaFinal).get(0);
 
 
 
@@ -111,6 +107,9 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
     private LinearLayout container_parcelamento_pedido;
     private TextView tv_error_pedido_vazio;
     private MaterialButton btn_confirmar_pedido;
+    private LinearLayout container_bonus_diamante;
+    private MaterialCardView container_comissao_total_pedido;
+    private MaterialCardView container_total_pedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +151,10 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
 
         container_parcelamento_pedido = (LinearLayout) findViewById(R.id.container_parcelamento_pedido);
+        container_bonus_diamante = (LinearLayout) findViewById(R.id.container_bonus_diamante);
         btn_confirmar_pedido = (MaterialButton) findViewById(R.id.btn_confirmar_pedido);
+        container_comissao_total_pedido = (MaterialCardView) findViewById(R.id.container_comissao_total_pedido);
+        container_total_pedido = (MaterialCardView) findViewById(R.id.container_total_pedido);
 
         firestore = FirebaseFirestore.getInstance();
         total_venda_lista_revenda.setCharacterLists(TickerUtils.provideNumberList());
@@ -191,79 +193,66 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
     private void botoesListener () {
 
-        voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
+        voltar.setOnClickListener(v -> onBackPressed());
+
+        option_frete_pedido.setOnClickListener(v -> {
+            int id = -1;
+            if(entregaFinal != null) {
+                id = entregaFinal.getId();
             }
+            showBottomSheetOption("Entrega", TYPE_ENTREGA, id);
         });
 
-        option_frete_pedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = -1;
-                if(entregaFinal != null) {
-                    id = entregaFinal.getId();
-                }
-                showBottomSheetOption("Entrega", TYPE_ENTREGA, id);
+        option_garantia_pedido.setOnClickListener(v -> {
+            int id = -1;
+            if(garantiaFinal != null) {
+                id = garantiaFinal.getId();
             }
+            showBottomSheetOption("Garantia", TYPE_GARANTIA, id);
         });
 
-        option_garantia_pedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = -1;
-                if(garantiaFinal != null) {
-                    id = garantiaFinal.getId();
-                }
-                showBottomSheetOption("Garantia", TYPE_GARANTIA, id);
+        option_pag_form_pedido.setOnClickListener(v -> {
+            int id = -1;
+            if(pagamentoFinal != null) {
+                id = pagamentoFinal.getId();
             }
+            showBottomSheetOption("Pagamento", TYPE_PAGAMENTO, id);
         });
 
-        option_pag_form_pedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = -1;
-                if(pagamentoFinal != null) {
-                    id = pagamentoFinal.getId();
-                }
-                showBottomSheetOption("Pagamento", TYPE_PAGAMENTO, id);
+        option_pag_parcelamento_pedido.setOnClickListener(v -> {
+            int id = -1;
+            if(parcelaFinal != null) {
+                id = parcelaFinal.getId();
             }
+            showBottomSheetOption("Parcelamento", TYPE_PARCELAMENTO, id);
         });
 
-        option_pag_parcelamento_pedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int id = -1;
-                if(parcelaFinal != null) {
-                    id = parcelaFinal.getId();
-                }
-                showBottomSheetOption("Parcelamento", TYPE_PARCELAMENTO, id);
+        btn_confirmar_pedido.setOnClickListener(v -> {
+
+            if (objProdutoRevendas.size() == 0) return;
+
+            telefoneMain = et_celular_conf_revenda.getText().toString();
+            bairroMain = et_bairro_conf_revenda.getText().toString();
+            ruaMain = et_rua_conf_revenda.getText().toString();
+            nomeCliente = et_nome_conf_revenda.getText().toString();
+
+            final ObjectRevenda objectRevenda = getDadosCompra();
+            if (objectRevenda == null) {
+                return;
             }
+
+
+            Log.d("TesteCadastroAfiliados", "Produto: " + objectRevenda.getListaDeProdutos().get(0).getProdutoName());
+
+            showDialogCompra(1, "Você deseja concluir sua venda ?", objectRevenda);
         });
 
-        btn_confirmar_pedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        container_total_pedido.setOnClickListener(view -> {
+            Alertas.showAlert(this, "Valor Total a Pagar", "Preço total cobrado pela compra, incluindo taxa de entrega, garantia e taxa de parcelamento. Caso o valor pago não estaja correto a venda será cancelada.");
+        });
 
-                if (objProdutoRevendas.size() == 0) return;
-
-                telefoneMain = et_celular_conf_revenda.getText().toString();
-                bairroMain = et_bairro_conf_revenda.getText().toString();
-                ruaMain = et_rua_conf_revenda.getText().toString();
-                nomeCliente = et_nome_conf_revenda.getText().toString();
-
-                final ObjectRevenda objectRevenda = getDadosCompra();
-                if (objectRevenda == null) {
-                    return;
-                }
-
-
-
-                Log.d("TesteCadastroAfiliados", "Produto: " + objectRevenda.getListaDeProdutos().get(0).getProdutoName());
-
-                showDialogCompra(1, "Você deseja concluir sua venda ?", objectRevenda);
-            }
+        container_comissao_total_pedido.setOnClickListener(view -> {
+            Alertas.showAlert(this, "Comissão a Receber", "Comissão total a ser repassado para o vendedor. Em caso de cobranças erradas no preço do produto, o repasse da comissão poderá ser cancelada.");
         });
 
     }
@@ -528,8 +517,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
         rv.setVisibility(View.VISIBLE);
         tv_error_pedido_vazio.setVisibility(View.GONE);
 
-        totalComissaoTV.setText(FormatoString.formartarPreco(somo));
-        total_venda_lista_revenda.setText(FormatoString.formartarPreco(totalVenda));
+        totalComissaoTV.setText(FormatoString.formartarPreco(totalComissaoFinal));
+        total_venda_lista_revenda.setText(FormatoString.formartarPreco(totalVendaFinal));
 
         title_garantia_pedido.setText(garantiaFinal.getTitulo());
         valor_garantia_pedido.setText(garantiaFinal.getValorString());
@@ -554,8 +543,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         pb.setVisibility(View.GONE);
 
-        somo = 0;
-        totalVenda = 0;
+        totalComissaoFinal = 0;
+        totalVendaFinal = 0;
         objProdutoRevendas = new ArrayList<>();
 
         if (querySnapshot == null) {
@@ -570,9 +559,16 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         for (int i = 0; i < querySnapshot.getDocuments().size(); i++) {
             ObjProdutoRevenda carComprasActivy = (ObjProdutoRevenda) querySnapshot.getDocuments().get(i).toObject(ObjProdutoRevenda.class);
-            somo = somo + (carComprasActivy.getComissaoUnidade() * carComprasActivy.getQuantidade());
-            totalVenda = totalVenda + (carComprasActivy.getValorUni() * carComprasActivy.getQuantidade());
+            totalComissaoFinal = totalComissaoFinal + (carComprasActivy.getComissaoUnidade() * carComprasActivy.getQuantidade());
+            totalVendaFinal = totalVendaFinal + (carComprasActivy.getValorUni() * carComprasActivy.getQuantidade());
             objProdutoRevendas.add(carComprasActivy);
+        }
+
+        if(documentoPrincipalDoUsuario.isVipDiamante()) {
+            totalComissaoFinal = totalComissaoFinal + 5;
+            container_bonus_diamante.setVisibility(View.VISIBLE);
+        } else {
+            container_bonus_diamante.setVisibility(View.GONE);
         }
 
         if(garantiaFinal == null) {
@@ -581,16 +577,16 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             garantiaFinal = Listas.getListOptionsGarantia(getTotalItens()).get(garantiaFinal.getId());
         }
 
-        totalVenda = totalVenda + garantiaFinal.getValor();
-        totalVenda = totalVenda + entregaFinal.getValor();
+        totalVendaFinal = totalVendaFinal + garantiaFinal.getValor();
+        totalVendaFinal = totalVendaFinal + entregaFinal.getValor();
 
         if(pagamentoFinal.getId() == 2 || pagamentoFinal.getId() == 6) {
             if(parcelaFinal == null) {
-                parcelaFinal = Listas.getListOptionsParcelamento(totalVenda).get(0);
+                parcelaFinal = Listas.getListOptionsParcelamento(totalVendaFinal).get(0);
             } else {
-                parcelaFinal = Listas.getListOptionsParcelamento(totalVenda).get(parcelaFinal.getId()-1);
+                parcelaFinal = Listas.getListOptionsParcelamento(totalVendaFinal).get(parcelaFinal.getId()-1);
             }
-            totalVenda = parcelaFinal.getTotal();
+            totalVendaFinal = parcelaFinal.getTotal();
 
             container_parcelamento_pedido.setVisibility(View.VISIBLE);
         } else {
@@ -613,11 +609,11 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         String enderecoCompacto = "";
 
-        //observacoes = "Teste teste teste";
-        //telefoneMain = "1234567890";
-        //ruaMain = "Teste teste teste";
-        //bairroMain = "Teste teste teste";
-        //nomeCliente = "Teste teste teste";
+        observacoes = "Teste teste teste";
+        telefoneMain = "1234567890";
+        ruaMain = "Teste teste teste";
+        bairroMain = "Teste teste teste";
+        nomeCliente = "Teste teste teste";
 
         if (nomeCliente.length() < 2) {
 
@@ -647,9 +643,9 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
             return null;
         }
 
-        int valorTotalVenda = totalVenda;
+        int valorTotalVenda = totalVendaFinal;
 
-        ObjectRevenda objectRevenda = new ObjectRevenda(ruaMain, somo, bairroMain, valorTotalVenda, detalhePagamento, pagamentoFinal.getId(), entregaFinal.getId(), 0, null, 0, objProdutoRevendas, 0, nomeCliente, false, auth.getCurrentUser().getPhotoUrl().getPath(), telefoneMain, 1, 0, auth.getUid(), auth.getCurrentUser().getDisplayName(), totalVenda, false, documentoPrincipalDoUsuario.isAdmConfirmado(), documentoPrincipalDoUsuario.getUidAdm(), 0, null, garantiaFinal, entregaFinal, pagamentoFinal, parcelaFinal, nCepMain, nCidadeMain, nEstadoMain, observacoes);
+        ObjectRevenda objectRevenda = new ObjectRevenda(ruaMain, totalComissaoFinal, bairroMain, valorTotalVenda, detalhePagamento, pagamentoFinal.getId(), entregaFinal.getId(), 0, null, 0, objProdutoRevendas, 0, nomeCliente, false, auth.getCurrentUser().getPhotoUrl().getPath(), telefoneMain, 1, 0, auth.getUid(), auth.getCurrentUser().getDisplayName(), totalVendaFinal, false, documentoPrincipalDoUsuario.isAdmConfirmado(), documentoPrincipalDoUsuario.getUidAdm(), 0, null, garantiaFinal, entregaFinal, pagamentoFinal, parcelaFinal, nCepMain, nCidadeMain, nEstadoMain, observacoes);
 
         return objectRevenda;
     }
@@ -747,6 +743,10 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
             String tituloComissao = "Venda da @" + documentoPrincipalDoUsuario.getUserName();
 
+            if(documentoPrincipalDoUsuario.isVipDiamante()) {
+                tituloComissao = "Bônus Diamante";
+            }
+
             String produtoAtual = "";
 
             for (int i = 0; i < objRev.getListaDeProdutos().size(); i++) {
@@ -795,8 +795,8 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
                 }
 
-                Intent intent = new Intent(ListaRevendaActivity.this, PainelRevendedorActivity.class);
-                Toast.makeText(ListaRevendaActivity.this, "Parabens, Sua venda foi um sucesso.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ListaRevendaActivity.this, VendaNovaActivity.class);
+                //Toast.makeText(ListaRevendaActivity.this, "Parabens, Sua venda foi um sucesso.", Toast.LENGTH_LONG).show();
                 startActivity(intent);
                 finish();
             }
@@ -841,7 +841,7 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
                 pagamentoFinal = Listas.getListOptionsPagamentos().get(pos);
                 break;
             case TYPE_PARCELAMENTO:
-                parcelaFinal = Listas.getListOptionsParcelamento(totalVenda).get(pos);
+                parcelaFinal = Listas.getListOptionsParcelamento(totalVendaFinal).get(pos);
                 break;
         }
 

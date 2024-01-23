@@ -93,6 +93,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity implements Adap
         auth = FirebaseAuth.getInstance();
 
         idUsuario = getIntent().getStringExtra("id");
+        idUsuario = idUsuario == null ? auth.getUid() : idUsuario;
         nome = getIntent().getStringExtra("nome");
         path = getIntent().getStringExtra("path");
         zap = getIntent().getStringExtra("zap");
@@ -257,7 +258,7 @@ public class HistoricoRevendasActivity extends AppCompatActivity implements Adap
 
     private void comComissoesAfiliados() {
 
-        ComissoesAfiliadosAdapter adapter = new ComissoesAfiliadosAdapter(this, listaDeComissaoAfiliados);
+        ComissoesAfiliadosAdapter adapter = new ComissoesAfiliadosAdapter(this, listaDeComissaoAfiliados, idUsuario);
         rv_comissoes_afiliados.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rv_comissoes_afiliados.setAdapter(adapter);
 

@@ -46,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/container_comissao_total_pedido"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="16dp"
                     app:contentPaddingLeft="3dp"
@@ -156,6 +157,130 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/container_bonus_diamante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:text="Recompensa Extra"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <com.google.android.material.card.MaterialCardView
+                    app:contentPaddingTop="10dp"
+                    app:contentPaddingBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp">
+                    <LinearLayout
+                        android:padding="6dp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_marginRight="6dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/diamante" />
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:layout_gravity="center"
+                                android:gravity="bottom|start"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Vendedor Diamante"
+                                tools:ignore="DuplicateIds" />
+                            <TextView
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:layout_gravity="center"
+                                android:textStyle="italic"
+                                android:gravity="top|start"
+                                android:layout_marginLeft="12dp"
+                                android:textColor="@color/colorSecondaryLight"
+                                android:layout_marginRight="16dp"
+                                android:lines="2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Bônus fixo por você ter alcançado o nível Diamante" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginRight="4dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:layout_gravity="top"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:paddingLeft="4dp"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginRight="4dp"
+                                android:layout_marginTop="4dp"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                android:gravity="center|top"
+                                android:layout_gravity="center|top"
+                                android:textAllCaps="true"
+                                android:text="R$ 5,00"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                            <ImageView
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="4dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorSecondaryDark"
+                                android:background="@drawable/ic_baseline_verified_24"
+                                android:gravity="center|end"
+                                android:layout_gravity="end|center" />
+                            <TextView
+                                android:visibility="gone"
+                                android:paddingLeft="4dp"
+                                android:textColor="@color/colorSecondaryDark"
+                                android:layout_marginBottom="6dp"
+                                android:layout_marginRight="4dp"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:gravity="center|top"
+                                android:layout_gravity="center|top"
+                                android:textAllCaps="true"
+                                android:text="bônus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -237,7 +362,7 @@
                             <TextView
                                 android:id="@+id/valor_entrega_pedido"
                                 android:paddingLeft="4dp"
-                                android:textColor="@color/azul_dark"
+                                android:textColor="@color/colorSecondaryDark"
                                 android:layout_marginBottom="6dp"
                                 android:layout_marginRight="4dp"
                                 android:textSize="16sp"
@@ -344,7 +469,7 @@
                             <TextView
                                 android:id="@+id/valor_garantia_pedido"
                                 android:paddingLeft="4dp"
-                                android:textColor="@color/azul_dark"
+                                android:textColor="@color/colorSecondaryDark"
                                 android:layout_marginBottom="6dp"
                                 android:layout_marginRight="4dp"
                                 android:textSize="16sp"
@@ -453,7 +578,7 @@
                             <TextView
                                 android:id="@+id/valor_pag_pedido"
                                 android:paddingLeft="4dp"
-                                android:textColor="@color/azul_dark"
+                                android:textColor="@color/colorSecondaryDark"
                                 android:layout_marginBottom="6dp"
                                 android:layout_marginRight="4dp"
                                 android:textSize="16sp"
@@ -561,7 +686,7 @@
                             <TextView
                                 android:id="@+id/valor_parcela_pedido"
                                 android:paddingLeft="4dp"
-                                android:textColor="@color/azul_dark"
+                                android:textColor="@color/colorSecondaryDark"
                                 android:layout_marginBottom="6dp"
                                 android:layout_marginRight="4dp"
                                 android:textSize="16sp"
@@ -923,6 +1048,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/container_total_pedido"
                     app:strokeColor="@color/azul_dark"
                     app:strokeWidth="1dp"
                     app:contentPaddingLeft="8dp"
