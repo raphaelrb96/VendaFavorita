@@ -6,38 +6,40 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/red_dark"
+    android:background="@color/colorLightGray"
 
     tools:context=".LoginMainActivity">
 
 
 
     <LinearLayout
-        android:background="@color/red_dark"
+        android:elevation="6dp"
+        android:background="@color/colorPrimaryLight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:textAllCaps="false"
-            android:textSize="40sp"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:textAllCaps="true"
+            android:textSize="35sp"
             android:paddingTop="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="26dp"
             android:textStyle="bold"
             android:layout_marginRight="26dp"
-            android:textColor="@color/colorPrimaryLight"
+            android:textColor="@color/colorSecondaryDark"
             android:text="Venda Favorita"
             android:layout_width="match_parent"
             android:layout_height="70dp" />
         <TextView
-            android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textAllCaps="true"
+            android:textSize="14sp"
             android:layout_marginLeft="26dp"
             android:layout_marginRight="26dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorPrimary"
-            android:text="Encontre clientes ou vendedores para nossos produtos, e ganhe comissões em dinheiro"
+            android:textColor="@color/colorSecondary"
+            android:text="Torne-se um Vendedor online Profissional, e ganhe dinheiro sem sair de casa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -82,9 +84,10 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:layout_gravity="center"
-                android:src="@drawable/cashman"
+                android:padding="2dp"
+                android:src="@drawable/intro2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
@@ -92,22 +95,23 @@
             <ProgressBar
                 android:visibility="invisible"
                 android:id="@+id/pb_login_main"
-                style="@style/PbBranco"
+                android:theme="@style/Pb"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
 
             <TextView
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="26dp"
-                android:textSize="15sp"
+                android:layout_marginTop="16dp"
+                android:textSize="12sp"
                 android:layout_marginLeft="26dp"
                 android:layout_marginRight="26dp"
-                android:textColor="@color/colorPrimary"
-                android:text="Entrar com:"
+                android:textColor="@color/colorSecondaryDark"
+                android:text="Fazer Login com:"
+                android:textAllCaps="true"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp" />
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:layout_gravity="center"
@@ -132,23 +136,24 @@
                 android:id="@+id/google_login_main"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
+                android:paddingStart="16dp"
                 app:icon="@drawable/mygooglw"
                 android:textSize="20sp"
                 app:iconSize="30dp"
                 android:text="Google"
                 android:minWidth="140dp"
-                android:layout_width="240dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:padding="10dp"
-                android:textColor="@color/back_rv"
+                android:textColor="@color/cinza_medio"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="20dp"
                 android:textStyle="italic"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:text="Faça o Login para começar vender nossos produtos, indicar pessoas, e ganhar dinheiro."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
