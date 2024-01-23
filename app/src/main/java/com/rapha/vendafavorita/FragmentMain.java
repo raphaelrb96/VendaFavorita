@@ -330,6 +330,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
     }
 
     private void ativeAds() {
+        if(getContext() == null) return;
         MobileAds.initialize(getContext(), initializationStatus -> Log.d("ADSTESTE", "initializationStatus: " + initializationStatus.getAdapterStatusMap()));
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);

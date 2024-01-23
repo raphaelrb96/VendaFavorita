@@ -94,6 +94,7 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
     private String fotoPrincipal;
     private LinearLayout container_ad_prod;
     private AdView mAdView;
+    private String obs = "";
 
 
     @Override
@@ -331,13 +332,14 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
                 public void onClick(View v) {
                     final ProdObj prodObj = prodObjParcelable.getProd();
                     final String str = prodObj.getIdProduto();
-                    ObjProdutoRevenda objProdutoRevenda = new ObjProdutoRevenda(prodObj.getImgCapa(), (totalComissao * variante.getQuantidadeMinima()), totalComissao, str, prodObj.getFabricante(), tituloString, variante.getQuantidadeMinima(), (totalProduto * variante.getQuantidadeMinima()), (totalProduto * variante.getQuantidadeMinima()), totalProduto, totalProduto, varianteAtual.getId(), varianteAtual.getNome(), variante.getQuantidadeMinima());
+                    ObjProdutoRevenda objProdutoRevenda = new ObjProdutoRevenda(prodObj.getImgCapa(), (totalComissao * variante.getQuantidadeMinima()), totalComissao, str, prodObj.getFabricante(), tituloString, variante.getQuantidadeMinima(), (totalProduto * variante.getQuantidadeMinima()), (totalProduto * variante.getQuantidadeMinima()), totalProduto, totalProduto, varianteAtual.getId(), varianteAtual.getNome(), variante.getQuantidadeMinima(), obs);
                     DocumentReference reference = firebaseFirestore.collection("listaRevendas").document("usuario").collection(auth.getCurrentUser().getUid()).document(str);
                     reference.set(objProdutoRevenda);
                     if (!ADMINISTRADOR) {
                         analitycsGoogle.logARevenderProdutoEvent(prodObj.getProdName(), str, 1, prodObj.isPromocional(), prodObj.getImgCapa(), prodObj.getProdValor());
                     }
                     Intent intent = new Intent(ProdutoRevendaActivity.this, ListaRevendaActivity.class);
+                    //intent.putExtra("obs", obs);
                     startActivity(intent);
                     finish();
                 }
@@ -420,8 +422,9 @@ public class ProdutoRevendaActivity extends AppCompatActivity implements CoresAd
 
     @Override
     public void escolherCor(String cor, int pos) {
-        tituloString = prodObjParcelable.getProdName() + " ( " + cor + " ) ";
+        tituloString = prodObjParcelable.getProdName();
         coresAdapterRevenda.trocarCor(pos);
+        obs = cor;
         //coresAdapterRevenda.notify();
 
     }

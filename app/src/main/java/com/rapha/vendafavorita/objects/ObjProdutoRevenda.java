@@ -17,7 +17,9 @@ public class ObjProdutoRevenda {
     private String modoPreco;
     private int quantidadeMinima;
 
-    public ObjProdutoRevenda(String caminhoImg, int comissaoTotal, int comissaoUnidade, String idProdut, String labo, String produtoName, int quantidade, int valorTotal, int valorTotalComComissao, int valorUni, int valorUniComComissao, int idModoPreco, String modoPreco, int quantidadeMinima) {
+    private String obs;
+
+    public ObjProdutoRevenda(String caminhoImg, int comissaoTotal, int comissaoUnidade, String idProdut, String labo, String produtoName, int quantidade, int valorTotal, int valorTotalComComissao, int valorUni, int valorUniComComissao, int idModoPreco, String modoPreco, int quantidadeMinima, String obs) {
         this.caminhoImg = caminhoImg;
         this.comissaoTotal = comissaoTotal;
         this.comissaoUnidade = comissaoUnidade;
@@ -32,10 +34,15 @@ public class ObjProdutoRevenda {
         this.modoPreco = modoPreco;
         this.idModoPreco = idModoPreco;
         this.quantidadeMinima = quantidadeMinima;
+        this.obs = obs;
     }
 
     public ObjProdutoRevenda() {
 
+    }
+
+    public String getObs() {
+        return obs;
     }
 
     public String getCaminhoImg() {

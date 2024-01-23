@@ -1,5 +1,6 @@
 package com.rapha.vendafavorita;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +42,7 @@ import com.google.firebase.firestore.WriteBatch;
 import com.rapha.vendafavorita.analitycs.AnalitycsGoogle;
 import com.rapha.vendafavorita.objects.SolicitacaoRevendedor;
 import com.rapha.vendafavorita.objects.Usuario;
+import com.rapha.vendafavorita.util.Alertas;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -124,12 +127,12 @@ public class MeuPerfilActivity extends AppCompatActivity {
             //The key argument here must match that used in the other activity
             if(value != null) {
                 intentExtraAdm = value;
-                Log.d("TesteLogin", "Perfil activity Extras: " + value);
+                //Log.d("TesteLogin", "Perfil activity Extras: " + value);
             } else {
                 //intent null
                 intentExtraAdm = getUidShareLink();
                 if(intentExtraAdm != null) {
-                    Log.d("TesteLogin", "Perfil activity Extras: getUidShareLink()");
+                    //Log.d("TesteLogin", "Perfil activity Extras: getUidShareLink()");
                 } else {
 
                 }
@@ -210,12 +213,12 @@ public class MeuPerfilActivity extends AppCompatActivity {
                 String numero = et_num_usuario_meu_perfil.getText().toString();
 
                 if (apelidoBruto.length() < 1) {
-                    Toast.makeText(MeuPerfilActivity.this, "Insira um apelido", Toast.LENGTH_LONG).show();
+                    Alertas.showAlert(MeuPerfilActivity.this, "Insira um apelido", "Dados incompletos");
                     return;
                 }
 
                 if (numero.length() < 1) {
-                    Toast.makeText(MeuPerfilActivity.this, "Insira um número pra contato", Toast.LENGTH_LONG).show();
+                    Alertas.showAlert(MeuPerfilActivity.this, "Insira um número pra contato", "Dados incompletos");
                     return;
                 }
 
@@ -233,7 +236,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
                 }
 
-                Log.d("ApelidoFormatado", nick.toString());
+                //Log.d("ApelidoFormatado", nick.toString());
 
                 firestore.collection("Usuario").whereEqualTo("userName", nick.toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -242,8 +245,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
                         if(result.isEmpty()) {
                             salvarDadosFirebase(nick.toString(), numero);
                         } else {
-                            Toast.makeText(MeuPerfilActivity.this, "Esse apelido que você escolheu ja está sendo usado por outro vendedor !", Toast.LENGTH_LONG).show();
-
+                            Alertas.showAlert(MeuPerfilActivity.this, "Escolha outro Apelido", "Esse apelido que você escolheu ja está sendo usado por outro vendedor !");
                         }
                     }
                 });
@@ -327,7 +329,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
                 pb_meu_perfil.setVisibility(View.GONE);
                 scrol_meu_perfil.setVisibility(View.VISIBLE);
                 bt_salvar_dados_meu_perfil.setVisibility(View.VISIBLE);
-                Toast.makeText(MeuPerfilActivity.this, "Erro ao salvar", Toast.LENGTH_LONG).show();
+                Alertas.showAlert(MeuPerfilActivity.this, "Erro ao salvar", "Tente Novamente");
             }
         });
     }
@@ -349,6 +351,7 @@ public class MeuPerfilActivity extends AppCompatActivity {
         scrol_meu_perfil.setVisibility(View.GONE);
 
         usuarioRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @SuppressLint("SyntheticAccessor")
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
@@ -360,44 +363,32 @@ public class MeuPerfilActivity extends AppCompatActivity {
 
                     if (usuario != null) {
                         if (usuario.getUidAdm() == null) {
-
-                            Log.d("TesteCadastroAfiliados", "Usuario sem adm");
-
+                            //Log.d("TesteCadastroAfiliados", "Usuario sem adm");
                             // usuario sem adm e sem solicitacao
                             usuarioInterface(false, false, mModoEdicao);
-
                         } else {
-
                             if (usuario.getUidAdm().length() < 1) {
                                 // usuario sem adm e sem solicitacão
                                 usuarioInterface(false, false, mModoEdicao);
-                                Log.d("TesteCadastroAfiliados", "Usuario sem adm");
+                                //Log.d("TesteCadastroAfiliados", "Usuario sem adm");
                             } else {
-
                                 if (!usuario.isAdmConfirmado()) {
                                     //usuario sem adm e com solicitacao
                                     usuarioInterface(true, false, mModoEdicao);
-                                    Log.d("TesteCadastroAfiliados", "Usuario possui uma solicitacao");
+                                    //Log.d("TesteCadastroAfiliados", "Usuario possui uma solicitacao");
                                 } else {
                                     // usuario com adm autenticado
                                     usuarioInterface(true, true, mModoEdicao);
-                                    Log.d("TesteCadastroAfiliados", "Usuario possui uma adm autenticado");
+                                    //Log.d("TesteCadastroAfiliados", "Usuario possui uma adm autenticado");
                                 }
-
                             }
-
                         }
                     } else {
-
-
                         finish();
-
                     }
-
                 }
             }
         });
-
     }
 
     private void usuarioInterface(boolean possuiAdm, boolean admVerificado, boolean modoEdicao) {
@@ -426,8 +417,14 @@ public class MeuPerfilActivity extends AppCompatActivity {
             //adm confirmado
             card_solicitacao_adm_meu_perfil.setVisibility(View.GONE);
             container_dados_adm_meu_perfil.setVisibility(View.VISIBLE);
-            Glide.with(this).load(usuario.getPathFotoAdm()).into(img_adm_meu_perfil);
-            tv_nome_adm_meu_perfil.setText("@" + usuario.getUsernameAdm());
+
+            if(usuario.isVipDiamante()) {
+                img_adm_meu_perfil.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.diamante));
+                tv_nome_adm_meu_perfil.setText("Vendedor Diamante");
+            } else {
+                Glide.with(this).load(usuario.getPathFotoAdm()).into(img_adm_meu_perfil);
+                tv_nome_adm_meu_perfil.setText("@" + usuario.getUsernameAdm());
+            }
 
         } else if (possuiAdm && !admVerificado) {
             //falta confirmar adm

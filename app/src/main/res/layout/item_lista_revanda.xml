@@ -172,6 +172,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/container_quant_min_atacado"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -210,17 +211,52 @@
                     android:layout_marginRight="6dp"
                     android:textAllCaps="true"
                     android:layout_marginLeft="6dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="0dp"
                     android:textColor="@color/cinza_text"
                     android:lines="2"
                     android:maxHeight="50dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+                <LinearLayout
+                    android:id="@+id/container_obs_modelo"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="3dp"
+                        android:padding="3dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:tint="@color/cinza_medio"
+                        android:src="@drawable/ic_baseline_info_18_blue_dark" />
+                    <TextView
+                        android:id="@+id/tv_modelo_item_pedido"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="0dp"
+                        android:layout_width="match_parent"
+                        android:drawablePadding="6dp"
+                        android:gravity="center|start"
+                        android:layout_gravity="center"
+                        android:textStyle="italic"
+                        android:textAllCaps="true"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:textSize="10sp"
+                        android:lineHeight="10dp"
+                        android:textColor="@color/cinza_text"
+                        android:drawableTint="@color/cinza_medio"
+                        android:text="Modelo" />
+                </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_marginLeft="6dp"
+                    android:layout_marginTop="12dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

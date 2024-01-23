@@ -53,6 +53,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
         holder.showAlertAtacado(obj.getIdModoPreco());
         holder.setComissao(obj.getComissaoUnidade());
         holder.setTitulo(obj.getProdutoName());
+        holder.setObs(obj.getObs());
     }
 
     public void atualizarLista(ArrayList<ObjProdutoRevenda> list) {
@@ -70,6 +71,8 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
 
     class NovoItemListRevenda extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final TextView tv_modelo_item_pedido;
+        private final LinearLayout container_obs_modelo;
         private LinearLayout container_quant_min_atacado;
         TextView bt_editar_item_lista_revenda, bt_remover_item_lista_revenda, quantidade, titulo_prod_revenda, valor_produto_detalhe_revenda;
         TextView text_bt_modelo_precificacao_item_carrinho, comissao_produto_item_lista_revenda;
@@ -87,18 +90,34 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
             aumentar = (View) itemView.findViewById(R.id.bt_aumentar_prod_lista_revenda);
             diminuir = (View) itemView.findViewById(R.id.bt_diminui_prod_lista_revenda);
             quantidade = (TextView) itemView.findViewById(R.id.quantidade_prod_lista_revenda);
+            tv_modelo_item_pedido = (TextView) itemView.findViewById(R.id.tv_modelo_item_pedido);
             titulo_prod_revenda = (TextView) itemView.findViewById(R.id.titulo_prod_revenda);
             valor_produto_detalhe_revenda = (TextView) itemView.findViewById(R.id.valor_produto_detalhe_revenda);
             comissao_produto_item_lista_revenda = (TextView) itemView.findViewById(R.id.comissao_produto_item_lista_revenda);
             text_bt_modelo_precificacao_item_carrinho = (TextView) itemView.findViewById(R.id.text_bt_modelo_precificacao_item_carrinho);
             img_prod_revenda = (ImageView) itemView.findViewById(R.id.img_prod_revenda);
             container_quant_min_atacado = (LinearLayout) itemView.findViewById(R.id.container_quant_min_atacado);
+            container_obs_modelo = (LinearLayout) itemView.findViewById(R.id.container_obs_modelo);
 
             aumentar.setOnClickListener(this);
             diminuir.setOnClickListener(this);
 
             bt_editar_item_lista_revenda.setOnClickListener(this);
             bt_remover_item_lista_revenda.setOnClickListener(this);
+
+        }
+
+        public void setObs(String obs) {
+
+            if (obs != null) {
+                if(!obs.equals("")) {
+                    tv_modelo_item_pedido.setText(obs);
+                    container_obs_modelo.setVisibility(View.VISIBLE);
+                    return;
+                }
+            }
+
+            container_obs_modelo.setVisibility(View.GONE);
 
         }
 
@@ -151,7 +170,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
             ObjProdutoRevenda ob = listaRevendas.get(getBindingAdapterPosition());
             int valComComiss = ob.getValorUniComComissao() * quant;
             int comissaoTotal = ob.getComissaoUnidade() * quant;
-            ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima());
+            ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima(), ob.getObs());
             listaner.alteracao(novoObj);
         }
 
@@ -162,7 +181,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
                 ObjProdutoRevenda ob = listaRevendas.get(getBindingAdapterPosition());
                 int valComComiss = ob.getValorUniComComissao() * quant;
                 int comissaoTotal = ob.getComissaoUnidade() * quant;
-                ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima());
+                ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima(), ob.getObs());
                 listaner.alteracao(novoObj);
             } else {
                 //ObjProdutoRevenda ob = listaRevendas.get(getBindingAdapterPosition());
@@ -240,7 +259,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
             ObjProdutoRevenda ob = listaRevendas.get(getAdapterPosition());
             int valComComiss = ob.getValorUniComComissao() * quant;
             int comissaoTotal = ob.getComissaoUnidade() * quant;
-            ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima());
+            ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima(), ob.getObs());
             listaner.alteracao(novoObj);
         }
 
@@ -251,7 +270,7 @@ public class AdapterListaRevenda extends RecyclerView.Adapter<AdapterListaRevend
                 ObjProdutoRevenda ob = listaRevendas.get(getAdapterPosition());
                 int valComComiss = ob.getValorUniComComissao() * quant;
                 int comissaoTotal = ob.getComissaoUnidade() * quant;
-                ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima());
+                ObjProdutoRevenda novoObj = new ObjProdutoRevenda(ob.getCaminhoImg(), comissaoTotal, ob.getComissaoUnidade(), ob.getIdProdut(), ob.getLabo(), ob.getProdutoName(), quant, val, valComComiss, ob.getValorUni(), ob.getValorUniComComissao(), ob.getIdModoPreco(), ob.getModoPreco(), ob.getQuantidadeMinima(), ob.getObs());
                 listaner.alteracao(novoObj);
             } else {
                 ObjProdutoRevenda ob = listaRevendas.get(getAdapterPosition());
