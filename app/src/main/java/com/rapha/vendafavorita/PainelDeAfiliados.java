@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,6 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +52,8 @@ import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
 import static com.rapha.vendafavorita.FragmentMain.pathFotoUser;
 import static com.rapha.vendafavorita.FragmentMain.user;
 
+import org.jetbrains.annotations.NotNull;
+
 public class PainelDeAfiliados extends AppCompatActivity {
 
     private TextView tv_toolbar_painel_afiliados, tv_info_card_afiliados, bt_add_revendedor;
@@ -67,6 +77,8 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
     private boolean cadastroIniciado = false;
     private AnalitycsGoogle analitycsGoogle;
+    private AdView mAdView;
+    private LinearLayout container_ad_venda_nova;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +113,8 @@ public class PainelDeAfiliados extends AppCompatActivity {
 
         verificarUser();
 
+        ativeAds();
+
         analitycsGoogle = new AnalitycsGoogle(this);
 
 
@@ -122,6 +136,34 @@ public class PainelDeAfiliados extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+
+    }
+
+    private void ativeAds() {
+
+        mAdView = (AdView) findViewById(R.id.adView_afiliados);
+        container_ad_venda_nova = (LinearLayout) findViewById(R.id.container_ad_afiliados);
+
+        MobileAds.initialize(this, initializationStatus -> {});
+
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                container_ad_venda_nova.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull @NotNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                //Log.d("ADSTESTE", "initializationStatus: " + loadAdError.getMessage());
+                container_ad_venda_nova.setVisibility(View.GONE);
             }
         });
 
@@ -195,12 +237,19 @@ public class PainelDeAfiliados extends AppCompatActivity {
                     for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
 
                         Usuario umAfiliado = queryDocumentSnapshots.getDocuments().get(i).toObject(Usuario.class);
-                        if (umAfiliado.isAdmConfirmado()) {
-                            numAutenticados++;
-                        } else {
-                            numEmAnalise++;
+
+                        if(mAuth.getUid() != null && umAfiliado != null) {
+                            if(!mAuth.getUid().equals(umAfiliado.getUid())) {
+                                if (umAfiliado.isAdmConfirmado()) {
+                                    numAutenticados++;
+                                } else {
+                                    numEmAnalise++;
+                                }
+                                meusAfiliados.add(umAfiliado);
+                            }
                         }
-                        meusAfiliados.add(umAfiliado);
+
+
                     }
 
                     total_afiliados_autenticados.setText(String.valueOf(numAutenticados));
@@ -212,7 +261,7 @@ public class PainelDeAfiliados extends AppCompatActivity {
                         titulo_meus_revendedores.setVisibility(View.GONE);
                     }
 
-                    AdapterAfiliados adapterAfiliados = new AdapterAfiliados(meusAfiliados,PainelDeAfiliados.this);
+                    AdapterAfiliados adapterAfiliados = new AdapterAfiliados(meusAfiliados,PainelDeAfiliados.this, mAuth.getUid());
                     rv_painel_afiliados.setLayoutManager(new LinearLayoutManager(PainelDeAfiliados.this));
                     rv_painel_afiliados.setAdapter(adapterAfiliados);
 

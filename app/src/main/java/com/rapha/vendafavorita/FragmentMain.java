@@ -160,6 +160,8 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     private int tipoReferencia = 0;
     private Query query;
+
+    //TODO 001: MARCAR FALSE EM VERSOES DE LANÇAMENTO E PRODUÇÃO
     public static final boolean ADMINISTRADOR = false;
     private ImageView fundo;
 
@@ -900,7 +902,6 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
             ids.clear();
             ids = new ArrayList();
             if (isDeviceOnline()) {
-                //TODO 001: TROCAR NA COMPILACAO DE ADM
                 //loginAdmin();
                 //ou
                 //loginUsuarioAnonimo();
@@ -925,8 +926,8 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
 
     private void painelAdm() {
         if (ADMINISTRADOR) {
-            //TODO DESCOMENTAR NA VERSAO ADM
-            startActivity(new Intent(getActivity(), Secretaria.class));
+            //TODO 002: DESCOMENTAR NA VERSAO ADM
+            //startActivity(new Intent(getActivity(), Secretaria.class));
         } else {
             startActivity(new Intent(getActivity(), MeuPerfilActivity.class));
         }

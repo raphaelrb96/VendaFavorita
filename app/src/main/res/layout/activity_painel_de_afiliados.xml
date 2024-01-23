@@ -170,6 +170,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+
             <TextView
                 android:text="Recrutamento Automático"
                 android:layout_marginTop="32dp"
@@ -184,7 +185,6 @@
 
             <LinearLayout
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
                 android:layout_width="match_parent"
@@ -227,6 +227,39 @@
                     android:drawableTint="@color/colorSecondary"
                     android:layout_height="wrap_content"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/container_ad_afiliados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Anuncio Patrocinado"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/adView_afiliados"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    ads:adSize="SMART_BANNER"
+                    ads:adUnitId="ca-app-pub-8108209584809121/5945341061"/>
             </LinearLayout>
 
             <TextView

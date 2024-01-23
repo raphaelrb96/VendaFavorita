@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +49,8 @@ import javax.annotation.Nullable;
 import static com.rapha.vendafavorita.FragmentMain.ADMINISTRADOR;
 import static com.rapha.vendafavorita.FragmentMain.documentoPrincipalDoUsuario;
 
+import org.jetbrains.annotations.NotNull;
+
 public class PainelRevendedorActivity extends AppCompatActivity implements AdapterProdutosPainelRevendedor.ProdutoPainelListener, AdapterInterfaceMain.ListenerPrincipal {
 
     private FirebaseFirestore firestore;
@@ -69,6 +76,8 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
     private String idUsuario, nome, path, zap;
     private AnalitycsGoogle analitycsGoogle;
     private TextView titulo_painel_revendedor;
+    private AdView mAdView;
+    private LinearLayout container_ad_venda_nova;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +108,8 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         }
 
         //titulo_painel_revendedor.setText("Categorias");
+
+        ativeAds();
 
         queryProd = firestore.collection("produtos");
         revendedorDocRef = firestore.collection("Revendedores").document("amacompras").collection("ativos").document(auth.getCurrentUser().getUid());
@@ -222,6 +233,34 @@ public class PainelRevendedorActivity extends AppCompatActivity implements Adapt
         }
     }
 
+
+    private void ativeAds() {
+
+        mAdView = (AdView) findViewById(R.id.adView_painel_revendedor);
+        container_ad_venda_nova = (LinearLayout) findViewById(R.id.container_ad_painel_revendedor);
+
+        MobileAds.initialize(this, initializationStatus -> {});
+
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                container_ad_venda_nova.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(@androidx.annotation.NonNull @NotNull LoadAdError loadAdError) {
+                super.onAdFailedToLoad(loadAdError);
+                //Log.d("ADSTESTE", "initializationStatus: " + loadAdError.getMessage());
+                container_ad_venda_nova.setVisibility(View.GONE);
+            }
+        });
+
+
+    }
 
 
     private void telaSucess() {

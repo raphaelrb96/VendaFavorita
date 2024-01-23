@@ -15,9 +15,9 @@ android {
     defaultConfig {
         applicationId "com.rapha.vendafavorita"
         minSdkVersion 19
-        targetSdkVersion 31
-        versionCode 8
-        versionName "7.2"
+        targetSdkVersion 33
+        versionCode 9
+        versionName "9"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -94,7 +94,7 @@ dependencies {
 
     implementation 'com.robinhood.ticker:ticker:2.0.4'
     implementation 'com.google.firebase:firebase-core:21.0.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.5'
+    implementation 'com.google.firebase:firebase-messaging:23.4.0'
     implementation 'com.google.firebase:firebase-auth:21.0.4'
     implementation 'com.google.firebase:firebase-firestore:24.1.2'
     implementation 'com.google.android.gms:play-services-auth:20.2.0'

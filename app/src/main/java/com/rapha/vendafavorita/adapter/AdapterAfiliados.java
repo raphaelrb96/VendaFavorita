@@ -23,10 +23,12 @@ public class AdapterAfiliados extends RecyclerView.Adapter<AdapterAfiliados.Afil
 
     private ArrayList<Usuario> usuarios;
     private Context context;
+    private String authUid;
 
-    public AdapterAfiliados(ArrayList<Usuario> usuarios, Context context) {
+    public AdapterAfiliados(ArrayList<Usuario> usuarios, Context context, String uid) {
         this.usuarios = usuarios;
         this.context = context;
+        this.authUid = uid;
     }
 
     @NonNull
@@ -39,6 +41,11 @@ public class AdapterAfiliados extends RecyclerView.Adapter<AdapterAfiliados.Afil
     @Override
     public void onBindViewHolder(@NonNull AfiliadosViewHolder holder, int position) {
         Usuario usuario = usuarios.get(position);
+
+        if (usuario.getUid().equals(authUid)) {
+            holder.desativeItem();
+            return;
+        }
 
         Glide.with(context).load(usuario.getPathFoto()).into(holder.img_perfil_usuario_afiliado);
 
@@ -80,14 +87,22 @@ public class AdapterAfiliados extends RecyclerView.Adapter<AdapterAfiliados.Afil
         private ImageView img_perfil_usuario_afiliado, icon_afiliado_em_autenticado, icon_afiliado_em_analise;
         private TextView tv_nome_afiliado, tv_apelido_afiliado, tv_hora_cadastro;
 
+        private View container;
+
         public AfiliadosViewHolder(@NonNull View itemView) {
             super(itemView);
+            container = itemView;
             img_perfil_usuario_afiliado = (ImageView) itemView.findViewById(R.id.img_perfil_usuario_afiliado);
             icon_afiliado_em_autenticado = (ImageView) itemView.findViewById(R.id.icon_afiliado_em_autenticado);
             icon_afiliado_em_analise = (ImageView) itemView.findViewById(R.id.icon_afiliado_em_analise);
             tv_nome_afiliado = (TextView) itemView.findViewById(R.id.tv_nome_afiliado);
             tv_apelido_afiliado = (TextView) itemView.findViewById(R.id.tv_apelido_afiliado);
             tv_hora_cadastro = (TextView) itemView.findViewById(R.id.tv_hora_cadastro);
+        }
+
+
+        public void desativeItem() {
+            container.setVisibility(View.GONE);
         }
     }
 

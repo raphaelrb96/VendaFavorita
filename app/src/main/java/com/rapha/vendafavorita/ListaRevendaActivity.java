@@ -609,11 +609,12 @@ public class ListaRevendaActivity extends AppCompatActivity implements AdapterLi
 
         String enderecoCompacto = "";
 
-        observacoes = "Teste teste teste";
-        telefoneMain = "1234567890";
-        ruaMain = "Teste teste teste";
-        bairroMain = "Teste teste teste";
-        nomeCliente = "Teste teste teste";
+        //TODO 003: COMENTAR EM VERSOES DE LANÇAMENTO E PRODUÇÃO
+        //observacoes = "Teste teste teste";
+        //telefoneMain = "1234567890";
+        //ruaMain = "Teste teste teste";
+        //bairroMain = "Teste teste teste";
+        //nomeCliente = "Teste teste teste";
 
         if (nomeCliente.length() < 2) {
 

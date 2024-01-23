@@ -48,10 +48,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intentMinhasCompras = new Intent(this, MinhasComprasActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        PendingIntent pendingIntentCentMsg = PendingIntent.getActivity(this, 1, intentCentMsg, 0);
-        PendingIntent centralCompras = PendingIntent.getActivity(this, 2, intentCentralCompras, 0);
-        PendingIntent minhasCompras = PendingIntent.getActivity(this, 3, intentMinhasCompras, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntentCentMsg = PendingIntent.getActivity(this, 1, intentCentMsg, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent centralCompras = PendingIntent.getActivity(this, 2, intentCentralCompras, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent minhasCompras = PendingIntent.getActivity(this, 3, intentMinhasCompras, PendingIntent.FLAG_IMMUTABLE);
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MEU_CANAL);
