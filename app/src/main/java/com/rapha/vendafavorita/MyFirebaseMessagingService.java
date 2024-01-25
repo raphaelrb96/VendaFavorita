@@ -26,11 +26,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        notificacaoSimple(remoteMessage);
+        //notificacaoSimple(remoteMessage);
     }
 
 
     private void notificacaoSimple(RemoteMessage message) {
+
+        /*
 
         String title = message.getData().get("title");
         String body = message.getData().get("body");
@@ -79,6 +81,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(1, builder.build());
+
+
+         */
 
     }
 }

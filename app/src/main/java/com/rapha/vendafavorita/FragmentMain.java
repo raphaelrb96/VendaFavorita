@@ -1012,7 +1012,7 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
                 pathFotoUser = FragmentMain.this.getFotoUser(user);
             }
 
-            if (userDoc.exists()) {
+            if (userDoc != null) {
 
                 usuarioExiste = true;
 
@@ -1021,15 +1021,11 @@ public class FragmentMain extends Fragment implements AdapterInterfaceMain.Liste
                 Log.d("EventUserListener", "DATA: " + usuarioObj.isVipDiamante());
                 documentoPrincipalDoUsuario = usuarioObj;
 
-                if(documentoPrincipalDoUsuario != null) {
-
-                    if (documentoPrincipalDoUsuario.isVipDiamante()) {
-                        container_upgrade_main.setVisibility(View.GONE);
-                    } else {
-                        container_upgrade_main.setVisibility(View.VISIBLE);
-                        Glide.with(requireActivity()).asGif().diskCacheStrategy(DiskCacheStrategy.RESOURCE).load(R.drawable.carreira).into(gif_upgrade_profile);
-                    }
-
+                if (documentoPrincipalDoUsuario.isVipDiamante()) {
+                    container_upgrade_main.setVisibility(View.GONE);
+                } else {
+                    container_upgrade_main.setVisibility(View.VISIBLE);
+                    Glide.with(requireActivity()).asGif().diskCacheStrategy(DiskCacheStrategy.RESOURCE).load(R.drawable.carreira).into(gif_upgrade_profile);
                 }
 
             } else {

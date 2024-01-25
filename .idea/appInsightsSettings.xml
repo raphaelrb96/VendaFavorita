@@ -18,7 +18,7 @@
                 </list>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
-              <option name="timeIntervalDays" value="SEVEN_DAYS" />
+              <option name="timeIntervalDays" value="ONE_DAY" />
               <option name="visibilityType" value="ALL" />
             </InsightsFilterSettings>
           </value>
@@ -34,8 +34,11 @@
                   <option name="projectNumber" value="978500802251" />
                 </ConnectionSetting>
               </option>
+              <option name="failureTypes">
+                <list />
+              </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
-              <option name="timeIntervalDays" value="THIRTY_DAYS" />
+              <option name="timeIntervalDays" value="ONE_DAY" />
               <option name="visibilityType" value="ALL" />
             </InsightsFilterSettings>
           </value>
